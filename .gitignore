@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# Build
+dist/
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Misc
+*.local
+.DS_Store
+Thumbs.db
+
+# Vercel
+.vercel
+
+# Tests
+coverage/
+playwright-report/
+test-results/
+
+# Sanity
+.sanity/
