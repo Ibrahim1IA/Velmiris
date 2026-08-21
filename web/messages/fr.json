@@ -49,6 +49,24 @@
       "r3Text": "Zones et délais confirmés sur WhatsApp lors de la commande."
     }
   },
+  "boutique": {
+    "title": "Boutique",
+    "subtitle": "Chaque teinte a sa tuile — cliquez pour voir le modèle complet.",
+    "filters": {
+      "all": "Tout",
+      "foulard": "Foulards",
+      "bonnet": "Bonnets",
+      "epingle": "Épingles",
+      "label": "Filtrer par catégorie"
+    },
+    "tile": {
+      "cta": "Voir",
+      "outOfStock": "Épuisé",
+      "from": "à partir de"
+    },
+    "empty": "Aucun article dans cette catégorie pour l'instant.",
+    "count": "{count} teintes"
+  },
   "footer": {
     "shopTitle": "Boutique",
     "helpTitle": "Aide",
