@@ -32,10 +32,14 @@ type Product = {
 };
 
 export async function generateStaticParams() {
-  const slugs: Array<{ slug: { current: string } }> = await client.fetch(
-    `*[_type == "product" && defined(slug.current)]{ slug }`,
-  );
-  return slugs.map((p) => ({ slug: p.slug.current }));
+  try {
+    const slugs: Array<{ slug: { current: string } }> = await client.fetch(
+      `*[_type == "product" && defined(slug.current)]{ slug }`,
+    );
+    return slugs.map((p) => ({ slug: p.slug.current }));
+  } catch {
+    return [];
+  }
 }
 
 export async function generateMetadata({

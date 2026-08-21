@@ -88,6 +88,25 @@
     "suggestions": "Se combine avec",
     "notFound": "Produit introuvable."
   },
+  "cart": {
+    "title": "Panier",
+    "empty": "Votre panier est vide.",
+    "emptyCta": "Découvrir la boutique",
+    "continueShopping": "Continuer vos achats",
+    "clear": "Vider le panier",
+    "qty": "Qté",
+    "remove": "Retirer",
+    "subtotal": "Sous-total",
+    "total": "Total",
+    "checkout": "Commander sur WhatsApp",
+    "seeCart": "Voir mon panier",
+    "box": "Box cadeau",
+    "boxCount": "Box n°{n}",
+    "giftMessage": "Message",
+    "card": "Carte",
+    "added": "Ajouté au panier",
+    "drawerTitle": "Panier"
+  },
   "footer": {
     "shopTitle": "Boutique",
     "helpTitle": "Aide",

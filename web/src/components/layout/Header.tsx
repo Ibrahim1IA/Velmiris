@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import CartDrawerTrigger from "@/components/cart/CartDrawerTrigger";
 
 export default function Header() {
   const t = useTranslations("nav");
@@ -26,8 +27,12 @@ export default function Header() {
         </nav>
         <div className="flex items-center gap-4 text-sm">
           {/* TODO : sélecteur de devise FCFA/EUR (PRD §2 / G2) */}
-          <Link href="/panier" aria-label={t("cart")} className="transition-colors hover:text-accent">
-            {t("cart")} (0)
+          <CartDrawerTrigger />
+          <Link
+            href="/panier"
+            className="hidden text-sm underline-offset-4 hover:underline md:inline"
+          >
+            Voir
           </Link>
         </div>
       </div>
