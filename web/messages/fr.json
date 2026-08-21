@@ -67,6 +67,27 @@
     "empty": "Aucun article dans cette catégorie pour l'instant.",
     "count": "{count} teintes"
   },
+  "product": {
+    "back": "Retour boutique",
+    "category": {
+      "foulard": "Foulard",
+      "bonnet": "Bonnet",
+      "epingle": "Épingles"
+    },
+    "color": "Coloris",
+    "inStock": "En stock — confirmation sur WhatsApp",
+    "outOfStock": "Épuisé — indisponible",
+    "description": "Description",
+    "material": "Matière",
+    "care": "Entretien",
+    "price": "Prix",
+    "addToCart": "Ajouter au panier",
+    "addToBox": "Ajouter à une box",
+    "added": "Ajouté ✓",
+    "chooseVariant": "Choisissez un coloris",
+    "suggestions": "Se combine avec",
+    "notFound": "Produit introuvable."
+  },
   "footer": {
     "shopTitle": "Boutique",
     "helpTitle": "Aide",
