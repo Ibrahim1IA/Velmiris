@@ -1,0 +1,59 @@
+{
+  "nav": {
+    "shop": "Boutique",
+    "box": "Box cadeau",
+    "about": "À propos",
+    "contact": "Contact",
+    "cart": "Panier"
+  },
+  "home": {
+    "hero": {
+      "surtitle": "VELMIRYS",
+      "title": "Le voile, porté comme un présent.",
+      "baseline": "Des foulards d'exception, une palette de teintes douces, et des box cadeaux composées à la main.",
+      "ctaPrimary": "Composer votre box",
+      "ctaSecondary": "Découvrir la boutique",
+      "scrollHint": "Faites défiler — la boîte s'ouvre"
+    },
+    "manifesto": {
+      "title": "Un beau tissu se donne comme il se porte — avec intention.",
+      "text": "Chez VELMIRYS, chaque voile est choisi pour sa douceur, chaque teinte pour sa justesse. Nous plions, emballons et glissons une carte à la main, parce qu'un cadeau commence bien avant l'ouverture de la boîte."
+    },
+    "shades": {
+      "title": "Six teintes, une seule exigence.",
+      "text": "Du rose poudré au bleu ardoise, notre palette est pensée pour flatter toutes les carnations et traverser les saisons. Trouvez la vôtre.",
+      "ctaTile": "Voir ce coloris",
+      "ctaAll": "Toute la boutique"
+    },
+    "builder": {
+      "title": "Composez une box à son image",
+      "text": "Un foulard dans sa teinte préférée, un bonnet assorti, des épingles délicates… Choisissez 2 à 5 articles, ajoutez vos mots : nous nous chargeons du reste.",
+      "step1Title": "Choisissez",
+      "step1Text": "2 à 5 articles parmi nos foulards, bonnets et épingles.",
+      "step2Title": "Personnalisez",
+      "step2Text": "Une carte, un message : les mots qui comptent, imprimés avec soin.",
+      "step3Title": "Offrez",
+      "step3Text": "L'emballage cadeau est offert. Elle n'a plus qu'à ouvrir.",
+      "cta": "Commencer ma box"
+    },
+    "editorial": {
+      "title": "La douceur n'est pas un détail.",
+      "text": "Un jersey fluide qui ne glisse pas, une maille respirante qui tient toute la journée, des finitions nettes. Nous choisissons nos tissus comme on choisit un tissu pour soi — sans compromis."
+    },
+    "reassurance": {
+      "r1Title": "Emballage soigné offert",
+      "r1Text": "Boîte brandée, papier de soie et carte dans chaque commande.",
+      "r2Title": "Commande simple",
+      "r2Text": "Validez votre panier : tout se confirme sur WhatsApp en quelques minutes.",
+      "r3Title": "Livraison",
+      "r3Text": "Zones et délais confirmés sur WhatsApp lors de la commande."
+    }
+  },
+  "footer": {
+    "shopTitle": "Boutique",
+    "helpTitle": "Aide",
+    "houseTitle": "Maison",
+    "followTitle": "Suivez-nous",
+    "copyright": "© 2026 VELMIRYS"
+  }
+}

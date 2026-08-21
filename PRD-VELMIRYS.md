@@ -398,6 +398,8 @@ Techniques : SSG/ISR Next.js pour toutes les pages catalogue ; code splitting pa
 
 ⚠️ Sécurité : tokens à scopes limités (lecture seule en dev), environnements dev/prod séparés. **Décision client actée : aucun MCP supplémentaire pour la V2** (Stripe, Sentry, WhatsApp Business exclus du périmètre d'outillage).
 
+Config : `./opencode.json` (projet). Auth — Sanity : OAuth navigateur (remote `mcp.sanity.io`) ; GitHub : PAT fine-grained via env système `GITHUB_PERSONAL_ACCESS_TOKEN` ; Supabase : PAT compte via env système `SUPABASE_ACCESS_TOKEN` ; Playwright/Context7 : sans auth. Aucun secret dans le fichier de config.
+
 ---
 
 ## 10. Gestion du catalogue (Sanity)

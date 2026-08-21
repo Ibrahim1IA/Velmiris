@@ -1,26 +1,34 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Design tokens VELMIRYS — PRD §7.2 */
+@theme {
+  --color-cream: #faf7f2;   /* Fond principal */
+  --color-sand: #f3ede4;    /* Fonds alternés, cartes */
+  --color-ink: #1c1917;     /* Texte principal */
+  --color-blush: #e8c4c4;   /* Pastel — rose poudré */
+  --color-slate: #3e4c63;   /* Pastel — bleu ardoise */
+  --color-choco: #5c3a2e;   /* Pastel — chocolat */
+  --color-wine: #4a1f24;    /* Pastel — bordeaux */
+  --color-mauve: #9b7e8c;   /* Pastel — mauve */
+  --color-accent: #b4413c;  /* Accent (carte "Thank You") — CTA, badges */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-serif: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-cream);
+  color: var(--color-ink);
+}
+
+/* Accessibilité : respect de prefers-reduced-motion (PRD §8.2) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

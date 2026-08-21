@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "seed": "sanity exec scripts/seed-sanity.ts",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.8",
@@ -37,6 +39,7 @@
     "@types/three": "^0.185.4",
     "eslint": "^9",
     "eslint-config-next": "16.3.1",
+    "supabase": "^2.115.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   },
