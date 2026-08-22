@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useCart } from "@/store/cart";
@@ -46,6 +47,13 @@ export default function CartDrawer({
   }, [open, lines]);
 
   const { totalXof } = cartTotals(resolved);
+  const count = lines.reduce(
+    (acc, l) => (l.kind === "product" ? acc + l.qty : acc + l.items.reduce((s, it) => s + it.qty, 0)),
+    0,
+  );
+  const [mounted, setMounted] = useState(false);
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- portal mount guard
+  useEffect(() => setMounted(true), []);
 
   // lock scroll when open
   useEffect(() => {
@@ -56,24 +64,30 @@ export default function CartDrawer({
     };
   }, [open]);
 
-  if (!open) return null;
+  // Portal + animation : évite le bug fixed-in-backdrop-filter du header (z-50 backdrop-blur)
+  // et permet le déroulé translate-x
+  if (!mounted) return null;
 
-  return (
-    <div className="fixed inset-0 z-[60] flex justify-end">
+  const overlay = (
+    <div
+      className={`fixed inset-0 z-[60] flex justify-end ${open ? "pointer-events-auto" : "pointer-events-none"}`}
+      aria-hidden={!open}
+    >
       <button
         aria-label="Fermer le panier"
         onClick={onClose}
-        className="absolute inset-0 bg-ink/40 backdrop-blur-sm"
+        tabIndex={open ? 0 : -1}
+        className={`absolute inset-0 bg-ink/40 backdrop-blur-sm transition-opacity duration-300 ${open ? "opacity-100" : "opacity-0"}`}
       />
       <aside
         role="dialog"
         aria-modal="true"
         aria-label={t("drawerTitle")}
-        className="relative flex h-full w-full max-w-md flex-col bg-cream shadow-xl"
+        className={`relative flex h-full w-full max-w-md flex-col bg-cream shadow-xl transition-transform duration-300 ease-out ${open ? "translate-x-0" : "translate-x-full"}`}
       >
         <header className="flex items-center justify-between border-b border-sand px-6 py-4">
           <h2 className="font-serif text-xl">
-            {t("drawerTitle")} ({lines.length})
+            {t("drawerTitle")} ({count})
           </h2>
           <button
             onClick={onClose}
@@ -213,4 +227,6 @@ export default function CartDrawer({
       </aside>
     </div>
   );
+
+  return createPortal(overlay, document.body);
 }
