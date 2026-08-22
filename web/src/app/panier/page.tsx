@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useCart } from "@/store/cart";
 import { formatPrice } from "@/lib/format";
+import CheckoutForm from "@/components/checkout/CheckoutForm";
 import {
   resolveCartLines,
   cartTotals,
@@ -209,18 +210,10 @@ export default function PanierPage() {
               <dd>{formatPrice(totalXof, "XOF")}</dd>
             </div>
           </dl>
-          <p className="mt-3 text-xs text-ink/50">
-            Livraison à confirmer sur WhatsApp — emballage offert.
-          </p>
-          <Link
-            href="/panier"
-            className="mt-6 block w-full rounded-full bg-ink py-3 text-center text-sm font-medium text-cream hover:bg-accent"
-          >
-            {t("checkout")} — TODO
-          </Link>
+          <CheckoutForm totalXof={totalXof} totalEur={totalEur} />
           <Link
             href="/boutique"
-            className="mt-3 block w-full rounded-full border border-ink/15 py-3 text-center text-sm hover:border-ink"
+            className="mt-4 block w-full rounded-full border border-ink/15 py-3 text-center text-sm hover:border-ink"
           >
             {t("continueShopping")}
           </Link>
