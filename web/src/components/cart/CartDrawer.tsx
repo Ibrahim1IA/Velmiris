@@ -34,6 +34,9 @@ export default function CartDrawer({
       .then((r) => {
         if (!cancelled) setResolved(r);
       })
+      .catch(() => {
+        if (!cancelled) setResolved([]);
+      })
       .finally(() => {
         if (!cancelled) setLoading(false);
       });

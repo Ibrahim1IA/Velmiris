@@ -19,8 +19,12 @@ export default function PanierPage() {
   const clear = useCart((s) => s.clear);
   const [resolved, setResolved] = useState<ResolvedLine[]>([]);
   const [loading, setLoading] = useState(true);
+  const [hydrated, setHydrated] = useState(false);
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- hydration guard
+  useEffect(() => setHydrated(true), []);
 
   useEffect(() => {
+    if (!hydrated) return;
     let cancelled = false;
     // eslint-disable-next-line react-hooks/set-state-in-effect -- initial load of cart
     setLoading(true);
@@ -28,17 +32,20 @@ export default function PanierPage() {
       .then((r) => {
         if (!cancelled) setResolved(r);
       })
+      .catch(() => {
+        if (!cancelled) setResolved([]);
+      })
       .finally(() => {
         if (!cancelled) setLoading(false);
       });
     return () => {
       cancelled = true;
     };
-  }, [lines]);
+  }, [lines, hydrated]);
 
   const { totalXof, totalEur, count } = cartTotals(resolved);
 
-  if (loading) {
+  if (!hydrated || loading) {
     return (
       <div className="mx-auto max-w-6xl px-6 py-16">
         <p className="text-center text-sm text-ink/50">Chargement…</p>

@@ -51,13 +51,19 @@ export async function resolveCartLines(lines: CartLine[]): Promise<ResolvedLine[
     ),
   );
   if (ids.length === 0) return [];
-  const products: ResolvedProduct[] = await client.fetch(
-    `*[_type == "product" && _id in $ids]{
-      _id, title, slug, priceXof, priceEur,
-      variants[]{ _key, colorName, hex, inStock, sku }
-    }`,
-    { ids },
-  );
+  let products: ResolvedProduct[] = [];
+  try {
+    products = await client.fetch(
+      `*[_type == "product" && _id in $ids]{
+        _id, title, slug, priceXof, priceEur,
+        variants[]{ _key, colorName, hex, inStock, sku }
+      }`,
+      { ids },
+    );
+  } catch (err) {
+    console.warn("[cart] resolveCartLines: Sanity fetch failed (CORS ?)", err);
+    return [];
+  }
   const byId = new Map(products.map((p) => [p._id, p]));
 
   const resolved: ResolvedLine[] = [];

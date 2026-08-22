@@ -5,7 +5,7 @@ import CartDrawerTrigger from "@/components/cart/CartDrawerTrigger";
 export default function Header() {
   const t = useTranslations("nav");
   return (
-    <header className="sticky top-0 z-50 border-b border-sand bg-cream/80 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-sand bg-cream supports-[backdrop-filter]:bg-cream/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         {/* TODO-CONTENU : remplacer par le logo SVG (CONTENUS-A-FOURNIR.md §A1) */}
         <Link href="/" className="font-serif text-2xl tracking-tight">
