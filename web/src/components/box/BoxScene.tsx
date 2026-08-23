@@ -3,7 +3,7 @@
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, ContactShadows, Environment } from "@react-three/drei";
-import BoxModel from "./BoxModel";
+import ProceduralBox from "./ProceduralBox";
 import TissuePaper from "./TissuePaper";
 import BoxItems from "./BoxItems";
 import { useAdaptiveQuality, dprForTier } from "./AdaptiveQuality";
@@ -24,10 +24,10 @@ interface Props {
 }
 
 /**
- * Scène mutualisée accueil / builder (PRD §5.3, §7.3)
- * - Une seule scène WebGL, asset /models/box.glb
- * - DPR plafonné, pas de shadow maps temps réel coûteux
- * - Fallback 2.5D auto si Tier low ou prefers-reduced-motion
+ * Scène mutualisée accueil / builder — Niveau 2 Three.js procédural (PRD §5.3, §7.3)
+ * - ProceduralBox PBR (pas de .glb), hinge parfait, CanvasTexture logo
+ * - DPR plafonné, mouse parallax léger, Environment studio
+ * - Fallback 2.5D uniquement si tier low
  */
 export default function BoxScene({ lidOpen, items, float = true, enableOrbit = false, className }: Props) {
   const tier = useAdaptiveQuality();
@@ -70,7 +70,7 @@ export default function BoxScene({ lidOpen, items, float = true, enableOrbit = f
         <Suspense fallback={null}>
           <Environment preset="studio" environmentIntensity={0.6} />
           <group position={[0, -0.05, 0]}>
-            <BoxModel lidOpen={lidOpen} float={effectiveFloat} />
+            <ProceduralBox lidOpen={lidOpen} float={effectiveFloat} />
             <TissuePaper count={items.length} />
             <BoxItems items={items} />
           </group>

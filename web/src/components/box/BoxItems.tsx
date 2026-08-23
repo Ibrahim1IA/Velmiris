@@ -1,6 +1,9 @@
 "use client";
 
+import { useRef } from "react";
+import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 interface Item {
   hex: string;
@@ -19,8 +22,18 @@ interface Props {
  * Pas de modélisation réaliste, perf ≤150Ko
  */
 export default function BoxItems({ items }: Props) {
+  const groupRef = useRef<THREE.Group>(null);
+  const reduced = usePrefersReducedMotion();
+
+  useFrame((state) => {
+    if (reduced || !groupRef.current) return;
+    const t = state.clock.elapsedTime;
+    // Légère spirale / wobble global quand la box contient des items (builder)
+    groupRef.current.rotation.y = Math.sin(t * 0.15) * 0.04;
+  });
+
   return (
-    <group position={[0, 0.015, 0]}>
+    <group ref={groupRef} position={[0, 0.015, 0]}>
       {items.map((it, i) => {
         const offset = (i - (items.length - 1) / 2) * 0.05;
         const y = 0.01 + (i % 2) * 0.015;
