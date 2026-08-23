@@ -122,7 +122,7 @@ export default function Home() {
           </h1>
         </ScrollReveal>
         <ScrollReveal delay={0.16} y={10}>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink/60">{t("hero.baseline")}</p>
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink/70">{t("hero.baseline")}</p>
         </ScrollReveal>
         <ScrollReveal delay={0.22} y={8}>
           <div className="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -135,7 +135,7 @@ export default function Home() {
             <Link
               href="/boutique"
               prefetch
-              className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-ink/15 bg-cream/70 px-8 py-3 text-sm font-medium backdrop-blur transition-colors hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-ink/25 bg-white px-8 py-3 text-sm font-medium shadow-sm backdrop-blur transition-colors hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
               {t("hero.ctaSecondary")}
             </Link>
@@ -156,7 +156,7 @@ export default function Home() {
         className="relative mx-auto max-w-6xl px-6 py-24 md:py-28 grain overflow-hidden"
         aria-labelledby="manifesto-title"
       >
-        <p aria-hidden="true" className="pointer-events-none absolute -top-6 left-0 select-none font-serif text-[28vw] leading-none tracking-tighter text-outline-ink md:text-[18vw] lg:text-[14vw]">
+        <p aria-hidden="true" className="pointer-events-none absolute -top-6 left-0 hidden select-none font-serif text-[28vw] leading-none tracking-tighter text-outline-ink md:block md:text-[18vw] lg:text-[14vw]">
           01
         </p>
         <div className="relative grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
@@ -264,8 +264,8 @@ export default function Home() {
       </section>
 
       {/* Box Builder — 3 steps + visuel packaging — grain + serif outline 02 */}
-      <section className="relative mx-auto max-w-6xl px-6 py-8 grain" aria-labelledby="builder-title">
-        <p aria-hidden="true" className="pointer-events-none absolute -top-2 right-2 select-none font-serif text-[22vw] leading-none tracking-tighter text-outline-accent md:text-[12vw]">
+      <section className="relative mx-auto max-w-6xl px-6 py-12 md:py-16 grain" aria-labelledby="builder-title">
+        <p aria-hidden="true" className="pointer-events-none absolute -top-2 right-2 hidden select-none font-serif text-[22vw] leading-none tracking-tighter text-outline-accent md:block md:text-[12vw]">
           02
         </p>
         <div className="overflow-hidden rounded-[32px] border border-ink/5 bg-sand shadow-sm">
@@ -326,7 +326,7 @@ export default function Home() {
 
       {/* Éditorial — La douceur n'est pas un détail : parallax lifestyle — grain + serif outline 03 */}
       <section className="relative mx-auto max-w-6xl px-6 py-24 md:py-28 grain" aria-labelledby="editorial-title">
-        <p aria-hidden="true" className="pointer-events-none absolute -top-4 left-0 select-none font-serif text-[22vw] leading-none tracking-tighter text-outline-ink md:text-[12vw]">
+        <p aria-hidden="true" className="pointer-events-none absolute -top-4 left-0 hidden select-none font-serif text-[22vw] leading-none tracking-tighter text-outline-ink md:block md:text-[12vw]">
           03
         </p>
         <div className="overflow-hidden rounded-[32px] border border-sand bg-cream shadow-sm">
