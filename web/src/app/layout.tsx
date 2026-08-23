@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import "./globals.css";
@@ -8,15 +7,8 @@ import Footer from "@/components/layout/Footer";
 import Umami from "@/components/analytics/Umami";
 import { getSiteUrl } from "@/lib/site";
 
-// Duo serif éditorial / sans-serif (PRD §7.2)
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
-  subsets: ["latin"],
-});
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
+// Fonts via CSS import (globals.css) — évite @vercel/turbopack-next/internal/font bug en build Turbopack Next 16.3
+// Fraunces + Inter chargés via Google Fonts display=swap, variables --font-fraunces / --font-inter définies en CSS
 
 const siteUrl = getSiteUrl();
 
@@ -93,10 +85,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     inLanguage: "fr-FR",
   };
   return (
-    <html
-      lang="fr"
-      className={`${fraunces.variable} ${inter.variable} h-full antialiased`}
-    >
+    <html lang="fr" className="h-full antialiased">
       <head>
         <Umami />
       </head>

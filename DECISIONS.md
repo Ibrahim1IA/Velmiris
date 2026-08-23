@@ -1,3 +1,22 @@
+# DECISIONS — VELMIRYS
+
+## 2026-08-23 — Fix build font Turbopack + images homepage
+
+### 1. Build Error `Can't resolve '@vercel/turbopack-next/internal/font/google/font'`
+- Cause: Next.js 16.3.1 Turbopack interne `@vercel/turbopack-next/internal/font` échoue avec `next/font/google` (Fraunces + Inter) en `next build` (Turbopack).
+- Choix: supprimer `next/font/google` de `web/src/app/layout.tsx:2` (`Fraunces`/`Inter` via `next/font`), migrer vers CSS import Google Fonts dans `web/src/app/globals.css:1` (`@import url('https://fonts.googleapis.com/css2?family=Fraunces...&family=Inter...&display=swap')`) + ` :root { --font-fraunces / --font-inter }`. Variables Tailwind `--font-serif`/`--font-sans` conservent `var(--font-fraunces)` sans dépendance JS.
+- Raison: `next/font` génère des `module.css` internes avec `src: url(@vercel/turbopack-next/...)` non résolu en build Turbopack (import map). CSS import est compatible Turbopack + webpack, pas de dépendance interne, `display=swap` garde perf, pas de CLS. Alternative `next build --no-turbopack` est invalide (`unknown option`).
+- Effet: `pnpm build` Turbopack passe de `Build Error Module not found` à `✓ Compiled successfully` 22/22 pages (après déplacement `@import url` avant `@import "tailwindcss"` pour éviter ` @import rules must precede` warning).
+- Fichiers: `web/src/app/layout.tsx`, `web/src/app/globals.css`, `web/next.config.ts` (ajout `experimental.optimizePackageImports` conserve).
+
+### 2. Images homepage non chargées
+- Cause: `web/next.config.ts:8` `images.remotePatterns` sans `pathname: "/**"` → Next Image bloquait `images.unsplash.com` avec query `?w=800&q=80...` (pattern trop strict). + `ParallaxImage`/`ScrollReveal` utilisaient `next/image` sans `unoptimized` fallback et sans `remotePatterns` complet pour `plus.unsplash.com`, `cdn.pixabay.com`, etc.
+- Choix: étendre `remotePatterns` avec `pathname: "/**"` pour `cdn.sanity.io`, `images.unsplash.com`, `plus.unsplash.com`, `cdn.pixabay.com`, `images.pexels.com`, `pixabay.com`. Garder `next/image` optimisé (webp auto, `sizes`, `priority` hero, `loading="lazy"` hors hero, `alt` descriptif). Pas de `unoptimized: true` (garde perf PRD §8.1).
+- Vérif: `pnpm build` sitemap/OG vert, homepage 5 visuels Unsplash `ATTRIBUTIONS.md` chargent en dev/prod (`next/image` 1200x630 webp), `ParallaxImage` `aspect` fixe évite CLS.
+- Fichiers: `web/next.config.ts`, `web/src/app/page.tsx` (IMAGES 5 Unsplash), `web/src/components/home/ParallaxImage.tsx`.
+
+---
+
 # DECISIONS — Phase 13 SEO technique (PRD §8.3)
 
 ## 2026-08-23 — Choix SEO
