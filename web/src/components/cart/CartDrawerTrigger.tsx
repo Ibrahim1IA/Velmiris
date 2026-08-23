@@ -24,9 +24,12 @@ export default function CartDrawerTrigger() {
   return (
     <>
       <button
+        type="button"
         onClick={() => setOpen(true)}
         aria-label={`${t("cart")} — ${count} articles`}
-        className="transition-colors hover:text-accent"
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        className="inline-flex min-h-[44px] items-center rounded-full px-2 transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
       >
         {t("cart")} ({count})
       </button>

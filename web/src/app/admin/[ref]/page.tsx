@@ -32,11 +32,11 @@ export default async function AdminDetailPage({ params }: { params: Promise<{ re
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-8">
-      <Link href="/admin" className="text-sm text-ink/50 hover:text-accent">← Retour liste</Link>
+      <Link href="/admin" className="text-sm text-ink/60 hover:text-accent">← Retour liste</Link>
       <div className="mt-4 flex flex-wrap items-start justify-between gap-4">
         <div>
           <h1 className="font-serif text-3xl">Commande {order.ref}</h1>
-          <p className="mt-1 text-sm text-ink/50">{new Date(order.created_at).toLocaleString("fr-FR")} · {order.currency} · {formatPrice(Number(order.total), order.currency as "XOF"|"EUR")}</p>
+          <p className="mt-1 text-sm text-ink/60">{new Date(order.created_at).toLocaleString("fr-FR")} · {order.currency} · {formatPrice(Number(order.total), order.currency as "XOF"|"EUR")}</p>
           <p className="mt-2 text-sm"><span className="font-medium">{(order.customers as unknown as {full_name:string})?.full_name}</span> — {(order.customers as unknown as {phone:string})?.phone} — {(order.customers as unknown as {delivery_zone:string})?.delivery_zone}</p>
         </div>
         <StatusForm refCode={order.ref} current={order.status} />
@@ -60,7 +60,7 @@ export default async function AdminDetailPage({ params }: { params: Promise<{ re
 
         <div className="rounded-2xl border border-sand p-6">
           <h2 className="font-medium">Détail technique (Supabase)</h2>
-          <p className="mt-2 text-xs text-ink/50">Boxes: {boxes?.length ?? 0} · Items: {items?.length ?? 0}</p>
+          <p className="mt-2 text-xs text-ink/60">Boxes: {boxes?.length ?? 0} · Items: {items?.length ?? 0}</p>
           <ul className="mt-2 text-xs">
             {items?.map((it: unknown) => {
               const row = it as { product_id:string; variant_id:string; qty:number; unit_price:number; parent_box_id:string|null };

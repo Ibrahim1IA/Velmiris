@@ -1,0 +1,40 @@
+{
+  "ci": {
+    "collect": {
+      "url": [
+        "http://localhost:3000/",
+        "http://localhost:3000/boutique",
+        "http://localhost:3000/box",
+        "http://localhost:3000/panier"
+      ],
+      "numberOfRuns": 3,
+      "settings": {
+        "preset": "desktop",
+        "chromeFlags": "--no-sandbox --headless"
+      }
+    },
+    "assert": {
+      "assertions": {
+        "categories:performance": ["warn", { "minScore": 0.9, "aggregationMethod": "median" }],
+        "categories:accessibility": ["warn", { "minScore": 0.9, "aggregationMethod": "median" }],
+        "categories:best-practices": ["warn", { "minScore": 0.9, "aggregationMethod": "median" }],
+        "categories:seo": ["warn", { "minScore": 0.9 }],
+        "first-contentful-paint": ["warn", { "maxNumericValue": 2500, "aggregationMethod": "median" }],
+        "largest-contentful-paint": ["warn", { "maxNumericValue": 2500, "aggregationMethod": "median" }],
+        "cumulative-layout-shift": ["warn", { "maxNumericValue": 0.05, "aggregationMethod": "median" }],
+        "interactive": ["warn", { "maxNumericValue": 5000, "aggregationMethod": "median" }],
+        "interaction-to-next-paint": ["warn", { "maxNumericValue": 200, "aggregationMethod": "median" }],
+        "total-blocking-time": ["warn", { "maxNumericValue": 200, "aggregationMethod": "median" }],
+        "max-potential-fid": ["warn", { "maxNumericValue": 200, "aggregationMethod": "median" }],
+        "total-byte-weight": ["warn", { "maxNumericValue": 1200000, "aggregationMethod": "median" }],
+        "resource-summary:script:size": ["warn", { "maxNumericValue": 400000 }],
+        "resource-summary:image:size": ["warn", { "maxNumericValue": 800000 }],
+        "resource-summary:document:size": ["warn", { "maxNumericValue": 100000 }],
+        "resource-summary:stylesheet:size": ["warn", { "maxNumericValue": 100000 }]
+      }
+    },
+    "upload": {
+      "target": "temporary-public-storage"
+    }
+  }
+}

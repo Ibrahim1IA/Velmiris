@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 
 type GalleryImage = { asset?: unknown; hotspot?: unknown; crop?: unknown };
@@ -31,18 +32,20 @@ export default function ProductGallery({
     .width(900)
     .height(1125)
     .fit("crop")
+    .quality(80)
     .auto("format")
     .url();
 
   return (
     <div className="flex flex-col gap-3">
       <div className="overflow-hidden rounded-2xl bg-sand">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src={mainUrl}
           alt={`${title} — ${colorName}`}
           width={900}
           height={1125}
+          sizes="(max-width: 768px) 100vw, 55vw"
+          priority
           className="h-auto w-full object-cover"
         />
       </div>
@@ -53,16 +56,17 @@ export default function ProductGallery({
               .width(200)
               .height(250)
               .fit("crop")
+              .quality(75)
               .auto("format")
               .url();
             return (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
+              <Image
                 key={i}
                 src={thumbUrl}
                 alt=""
                 width={200}
                 height={250}
+                sizes="15vw"
                 loading="lazy"
                 className="aspect-[4/5] rounded-xl object-cover"
               />

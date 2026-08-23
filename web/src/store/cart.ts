@@ -48,3 +48,7 @@ export const useCart = create<CartState>()(
     { name: "velmirys-cart" },
   ),
 );
+
+if (typeof window !== "undefined") {
+  (window as unknown as Record<string, unknown>).__velmirysCart = useCart;
+}

@@ -1,5 +1,29 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Performance & Analytics — Phase 15 (PRD §8.1, §8.5, §9.3)
+
+### Umami (PRD §8.5) — sans cookies, respect DNT
+- Script `defer` auto-hébergé DigitalOcean : `NEXT_PUBLIC_UMAMI_SRC` (fallback `https://umami.velmirys.com/script.js` ou `https://cloud.umami.is/script.js` si DO indisponible)
+- `NEXT_PUBLIC_UMAMI_WEBSITE_ID` : UUID du site (vide = analytics désactivé, no-op — le site ne casse jamais)
+- `data-domains` = `NEXT_PUBLIC_SITE_URL` (sans protocole), `data-do-not-track="true"`, `data-auto-track="true"`, `data-cache="true"`
+- Composant : `src/components/analytics/Umami.tsx` (guard si `WEBSITE_ID` vide) intégré dans `src/app/layout.tsx` (`<head><Umami/></head>`)
+- RGPD : Umami est cookie-less → pas de bandeau bloquant requis (bandeau léger non bloquant optionnel)
+- Events : `umami.track("add_to_cart")` dans `AddToCartButton`, `umami.track("add_to_box")` dans `BoxBuilder handleAddBox`, `umami.track("checkout_whatsapp")` dans `CheckoutForm onSubmit` via helper `src/lib/analytics.ts` (`window.umami?.track` guardé)
+
+### Budgets perf (PRD §8.1 §15)
+- `lighthouserc.json` (LHCI) : `categories:performance ≥0.90`, `accessibility ≥0.90`, `first-contentful-paint <2500`, `largest-contentful-paint <2500`, `cumulative-layout-shift <0.05`, `interactive <5000` + `interaction-to-next-paint <200` + `total-blocking-time <200` + `max-potential-fid <200` (proxies INP <200), budgets `resource-summary:script <400KB`, `image <800KB`, `document <100KB`, `stylesheet <100KB`, `total-byte-weight <1.2MB`, 3 runs median desktop
+- `bundlesize` dans `package.json` : `.next/static/chunks/*.js <350 kB`, `.next/static/css/*.css <80 kB`
+- Scripts : `pnpm perf` (`lhci autorun`) et `pnpm perf:ci` (`lhci autorun --config=./lighthouserc.json`)
+- CI : `npx bundlesize || warn` + `npx @lhci/cli autorun || warn` (warn only, n’empêche pas le build)
+
+### E2E Playwright — parcours A/B (PRD §9.3)
+- Config : `playwright.config.ts` — `baseURL http://localhost:3000`, `webServer` `pnpm dev` (local) / `pnpm build && pnpm start` (CI), `timeout 30s`, `retries 2` en CI, `trace on-first-retry`
+- Specs : `e2e/checkout.spec.ts` — Parcours A (achat simple : `/` → `/boutique` → tuile → `/boutique/[slug]` add to cart → drawer → `/panier` → formulaire → mock `/api/orders` → `wa.me` encodée + `confirmation?ref=VEL-`) et Parcours B (box : `/box` 2 articles → personnalise message + carte → preview → add to cart → `/panier` Box n°1 détaillée → checkout) ; `localStorage.clear()` beforeEach, `networkidle` modéré, `console.error` guard, mocks Sanity `*sanity.io/**` + `**/api/orders` pour passer offline (Supabase/Sanity indisponibles → fallback injection `localStorage` zustand `velmirys-cart` / `velmirys-box-draft`)
+- Lancer : `pnpm build && pnpm start` (CI) ou `pnpm dev` hors CI, puis `pnpm test:e2e` (`playwright test --reporter=list`)
+
+### CI budgets perf (PRD §9.3)
+- Workflow `.github/workflows/ci.yml` : jobs `lint` (`pnpm lint`), `typecheck` (`tsc --noEmit`), `build` (`pnpm build` + `bundlesize` + `lhci`), `e2e` (`playwright install --with-deps chromium` + `pnpm build && pnpm test:e2e`) — cache pnpm, Node 20
+
 ## Getting Started
 
 First, run the development server:

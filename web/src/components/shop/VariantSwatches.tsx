@@ -20,8 +20,10 @@ export default function VariantSwatches({
 }) {
   return (
     <div>
-      <p className="mb-3 text-sm font-medium">{label}</p>
-      <div className="flex flex-wrap gap-3">
+      <p id="variant-label" className="mb-3 text-sm font-medium">
+        {label}
+      </p>
+      <div className="flex flex-wrap gap-3" role="group" aria-labelledby="variant-label">
         {variants.map((v) => {
           const isActive = v._key === activeKey;
           return (
@@ -29,10 +31,10 @@ export default function VariantSwatches({
               key={v._key}
               href={`${basePath}?variant=${v._key}`}
               scroll={false}
-              aria-label={`${v.colorName}${!v.inStock ? " — Épuisé" : ""}`}
+              aria-label={`${v.colorName}${!v.inStock ? " — Épuisé" : isActive ? " — sélectionné" : ""}`}
               aria-current={isActive ? "true" : undefined}
-              title={`${v.colorName}${!v.inStock ? " (Épuisé)" : ""}`}
-              className={`relative flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all ${
+              title={`${v.colorName}${!v.inStock ? " (Épuisé)" : isActive ? " (sélectionné)" : ""}`}
+              className={`relative flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-full border-2 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 ${
                 isActive
                   ? "border-ink ring-2 ring-ink ring-offset-2"
                   : "border-transparent hover:border-ink/20"
@@ -41,12 +43,12 @@ export default function VariantSwatches({
               <span
                 className="h-8 w-8 rounded-full border border-black/10"
                 style={{ backgroundColor: v.hex }}
-                aria-hidden
+                aria-hidden="true"
               />
               {!v.inStock && (
                 <span
                   className="absolute inset-0 flex items-center justify-center"
-                  aria-hidden
+                  aria-hidden="true"
                 >
                   <span className="h-[2px] w-8 rotate-45 bg-ink/60" />
                 </span>
@@ -55,7 +57,7 @@ export default function VariantSwatches({
           );
         })}
       </div>
-      <p className="mt-2 text-sm text-ink/60">
+      <p className="mt-2 text-sm text-ink/60" aria-live="polite" aria-atomic="true">
         {variants.find((v) => v._key === activeKey)?.colorName}
       </p>
     </div>

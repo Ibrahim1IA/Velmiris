@@ -61,7 +61,7 @@ export default async function AdminPage({
       <div className="flex flex-wrap items-center justify-between gap-4">
         <h1 className="font-serif text-3xl">Admin — Commandes ({orders?.length ?? 0})</h1>
         <div className="flex items-center gap-2">
-          <span className="text-sm text-ink/50">{user.email}</span>
+          <span className="text-sm text-ink/60">{user.email}</span>
           <form action="/admin/logout" method="post">
             <button className="rounded-full border border-ink/15 px-4 py-1.5 text-sm hover:border-ink">Déconnexion</button>
           </form>
@@ -100,7 +100,7 @@ export default async function AdminPage({
                   <td className="px-4 py-3 font-mono text-xs">{order.ref}</td>
                   <td className="px-4 py-3">
                     <div className="font-medium">{order.customers?.full_name ?? "—"}</div>
-                    <div className="text-xs text-ink/50">{order.customers?.phone} · {order.customers?.delivery_zone}</div>
+                    <div className="text-xs text-ink/60">{order.customers?.phone} · {order.customers?.delivery_zone}</div>
                   </td>
                   <td className="px-4 py-3">{formatPrice(Number(order.total), order.currency as "XOF" | "EUR")}</td>
                   <td className="px-4 py-3">
@@ -108,7 +108,7 @@ export default async function AdminPage({
                       {STATUS_LABEL[order.status] ?? order.status}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-xs text-ink/50">{new Date(order.created_at).toLocaleString("fr-FR")}</td>
+                  <td className="px-4 py-3 text-xs text-ink/60">{new Date(order.created_at).toLocaleString("fr-FR")}</td>
                   <td className="px-4 py-3">
                     <Link href={`/admin/${order.ref}`} className="text-xs underline hover:text-accent">Détail</Link>
                   </td>
@@ -116,7 +116,7 @@ export default async function AdminPage({
               );
             })}
             {(!orders || orders.length === 0) && (
-              <tr><td colSpan={6} className="px-4 py-12 text-center text-ink/50">Aucune commande.</td></tr>
+              <tr><td colSpan={6} className="px-4 py-12 text-center text-ink/60">Aucune commande.</td></tr>
             )}
           </tbody>
         </table>

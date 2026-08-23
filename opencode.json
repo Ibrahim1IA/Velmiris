@@ -48,6 +48,18 @@
       ],
       "enabled": true,
       "timeout": 60000
+    },
+    "blender": {
+      "type": "local",
+      "command": [
+        "node",
+        "C:\\Users\\Hp Elitebook\\AppData\\Roaming\\npm\\node_modules\\blender-mcp\\dist\\index.js"
+      ],
+      "enabled": true,
+      "environment": {
+        "BLENDER_EXECUTABLE": "C:\\Program Files\\Blender Foundation\\Blender 5.2\\blender.exe"
+      },
+      "timeout": 120000
     }
   }
 }

@@ -98,7 +98,7 @@ export default function AdminLoginPage() {
               placeholder="velmirys/*2003"
               className="mt-1 w-full rounded-xl border border-ink/15 bg-cream px-4 py-3 text-sm outline-none focus:border-ink"
             />
-            <p className="mt-1 text-xs text-ink/50">Pour tester : velmirys/*2003 (compte alphasecondd@gmail.com).</p>
+            <p className="mt-1 text-xs text-ink/60">Pour tester : velmirys/*2003 (compte alphasecondd@gmail.com).</p>
           </div>
           {error && <p role="alert" className="rounded-xl bg-accent/10 px-4 py-3 text-sm text-accent">{error}</p>}
           <button type="submit" disabled={loading} className="w-full rounded-full bg-ink py-3 text-sm font-medium text-cream hover:bg-accent disabled:opacity-50">
@@ -109,7 +109,7 @@ export default function AdminLoginPage() {
         <div className="mt-6 rounded-2xl border border-sand bg-sand/30 p-6">
           <p className="text-sm font-medium">Lien envoyé ✓</p>
           <p className="mt-2 text-sm text-ink/70">Vérifiez votre boîte <span className="font-medium">{email}</span> (et spams) puis cliquez sur le lien.</p>
-          <p className="mt-2 text-xs text-ink/50">Le lien expire rapidement. Vous pouvez fermer cette page.</p>
+          <p className="mt-2 text-xs text-ink/60">Le lien expire rapidement. Vous pouvez fermer cette page.</p>
           <button onClick={() => setSent(false)} className="mt-4 text-sm underline hover:text-accent">Renvoyer</button>
         </div>
       ) : (
@@ -124,13 +124,13 @@ export default function AdminLoginPage() {
               required
               className="mt-1 w-full rounded-xl border border-ink/15 bg-cream px-4 py-3 text-sm outline-none focus:border-ink"
             />
-            <p className="mt-1 text-xs text-ink/50">Seul alphasecondd@gmail.com est autorisé (ADMIN_EMAIL).</p>
+            <p className="mt-1 text-xs text-ink/60">Seul alphasecondd@gmail.com est autorisé (ADMIN_EMAIL).</p>
           </div>
           {error && <p role="alert" className="rounded-xl bg-accent/10 px-4 py-3 text-sm text-accent">{error}</p>}
           <button type="submit" disabled={loading} className="w-full rounded-full bg-ink py-3 text-sm font-medium text-cream hover:bg-accent disabled:opacity-50">
             {loading ? "Envoi…" : "Envoyer le lien magique"}
           </button>
-          <p className="text-center text-xs text-ink/40">Rate limit 30s entre 2 envois.</p>
+          <p className="text-center text-xs text-ink/60">Rate limit 30s entre 2 envois.</p>
         </form>
       )}
     </div>

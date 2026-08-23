@@ -38,22 +38,29 @@ export default function ConfirmationActions({
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full rounded-full bg-[#25D366] py-3.5 text-center text-sm font-medium text-white hover:bg-[#1da851]"
+          aria-label={`Rouvrir WhatsApp pour la commande ${refCode}`}
+          className="inline-flex min-h-[44px] w-full items-center justify-center rounded-full bg-[#25D366] py-3.5 text-center text-sm font-medium text-white hover:bg-[#1da851] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
         >
           Rouvrir WhatsApp — {refCode}
         </a>
       ) : (
-        <p className="rounded-xl bg-accent/10 px-4 py-3 text-sm text-accent">Numéro WhatsApp non configuré.</p>
+        <p className="rounded-xl bg-accent/10 px-4 py-3 text-sm text-accent" role="alert">
+          Numéro WhatsApp non configuré.
+        </p>
       )}
       <button
+        type="button"
         onClick={copy}
-        className="w-full rounded-full border border-ink/15 py-3 text-sm hover:border-ink"
+        aria-live="polite"
+        className="inline-flex min-h-[44px] w-full items-center justify-center rounded-full border border-ink/15 py-3 text-sm hover:border-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
       >
         {copied ? "Message copié ✓" : "Copier le message"}
       </button>
       <details className="rounded-xl border border-sand bg-cream p-4">
-        <summary className="cursor-pointer text-sm font-medium">Voir le message pré-rempli</summary>
-        <pre className="mt-3 whitespace-pre-wrap text-sm text-ink/70">{message}</pre>
+        <summary className="cursor-pointer text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-md">
+          Voir le message pré-rempli
+        </summary>
+        <pre className="mt-3 whitespace-pre-wrap text-sm text-ink/60">{message}</pre>
       </details>
     </div>
   );

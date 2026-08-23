@@ -19,7 +19,7 @@ export default async function ConfirmationPage({
       <div className="mx-auto max-w-2xl px-6 py-16 text-center">
         <h1 className="font-serif text-3xl">Commande introuvable</h1>
         <p className="mt-4 text-ink/60">Référence manquante.</p>
-        <Link href="/boutique" className="mt-6 inline-block rounded-full bg-ink px-8 py-3 text-sm text-cream hover:bg-accent">
+        <Link href="/boutique" className="mt-6 inline-flex min-h-[44px] items-center justify-center rounded-full bg-ink px-8 py-3 text-sm text-cream hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
           Retour boutique
         </Link>
       </div>
@@ -42,7 +42,7 @@ export default async function ConfirmationPage({
       <div className="mx-auto max-w-2xl px-6 py-16 text-center">
         <h1 className="font-serif text-3xl">Commande {ref} introuvable</h1>
         <p className="mt-4 text-ink/60">Vérifiez la référence ou contactez la boutique sur WhatsApp.</p>
-        <Link href="/boutique" className="mt-6 inline-block rounded-full bg-ink px-8 py-3 text-sm text-cream hover:bg-accent">
+        <Link href="/boutique" className="mt-6 inline-flex min-h-[44px] items-center justify-center rounded-full bg-ink px-8 py-3 text-sm text-cream hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
           Retour boutique
         </Link>
       </div>
@@ -57,12 +57,12 @@ export default async function ConfirmationPage({
   return (
     <div className="mx-auto max-w-2xl px-6 py-12 md:py-16">
       <div className="rounded-2xl border border-sand bg-cream p-8 text-center">
-        <p className="text-xs uppercase tracking-[0.2em] text-ink/50">Merci 🤍</p>
+        <p className="text-xs uppercase tracking-[0.2em] text-ink/60">Merci 🤍</p>
         <h1 className="mt-3 font-serif text-3xl tracking-tight">Commande {order.ref} enregistrée</h1>
-        <p className="mt-4 text-ink/70">
+        <p className="mt-4 text-ink/60">
           Votre commande est bien enregistrée en statut <span className="font-medium">en attente</span>. Ouvrez WhatsApp pour confirmer avec la boutique.
         </p>
-        <p className="mt-2 text-sm text-ink/50">Référence à rappeler : <span className="font-mono font-medium text-ink">{order.ref}</span></p>
+        <p className="mt-2 text-sm text-ink/60">Référence à rappeler : <span className="font-mono font-medium text-ink">{order.ref}</span></p>
       </div>
 
       <div className="mt-8 rounded-2xl border border-sand bg-sand/30 p-6">
@@ -77,7 +77,7 @@ export default async function ConfirmationPage({
           {payload.boxes.map((b, idx) => (
             <li key={`b-${idx}`} className="mt-2 rounded-xl bg-cream p-3">
               <p className="font-medium">Box n°{idx + 1} — {formatPrice(b.subtotal, payload.currency)}</p>
-              <ul className="mt-1 text-ink/70">
+              <ul className="mt-1 text-ink/60">
                 {b.items.map((it, j) => (
                   <li key={j}>• {it.name} — {it.color} ×{it.qty}</li>
                 ))}
@@ -91,16 +91,16 @@ export default async function ConfirmationPage({
           <span>Total</span>
           <span>{formatPrice(payload.total, payload.currency)}</span>
         </div>
-        <p className="mt-2 text-xs text-ink/50">Livraison à confirmer ensemble sur WhatsApp.</p>
+        <p className="mt-2 text-xs text-ink/60">Livraison à confirmer ensemble sur WhatsApp.</p>
       </div>
 
       <ConfirmationActions whatsappUrl={whatsappUrl} message={message} refCode={order.ref} />
 
       <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-        <Link href="/boutique" className="flex-1 rounded-full border border-ink/15 py-3 text-center text-sm hover:border-ink">
+        <Link href="/boutique" className="flex min-h-[44px] flex-1 items-center justify-center rounded-full border border-ink/15 py-3 text-center text-sm hover:border-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
           Retour boutique
         </Link>
-        <Link href="/panier" className="flex-1 rounded-full bg-ink py-3 text-center text-sm text-cream hover:bg-accent">
+        <Link href="/panier" className="flex min-h-[44px] flex-1 items-center justify-center rounded-full bg-ink py-3 text-center text-sm text-cream hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
           Nouveau panier
         </Link>
       </div>

@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useCart } from "@/store/cart";
+import { useCurrency } from "@/store/currency";
 import { formatPrice } from "@/lib/format";
 import {
   resolveCartLines,
@@ -23,6 +24,7 @@ export default function CartDrawer({
   const lines = useCart((s) => s.lines);
   const removeLine = useCart((s) => s.removeLine);
   const updateQty = useCart((s) => s.updateQty);
+  const currency = useCurrency((s) => s.currency);
   const [resolved, setResolved] = useState<ResolvedLine[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -46,23 +48,82 @@ export default function CartDrawer({
     };
   }, [open, lines]);
 
-  const { totalXof } = cartTotals(resolved);
+  const { totalXof, totalEur } = cartTotals(resolved);
+  const total = currency === "XOF" ? totalXof : totalEur;
   const count = lines.reduce(
     (acc, l) => (l.kind === "product" ? acc + l.qty : acc + l.items.reduce((s, it) => s + it.qty, 0)),
     0,
   );
   const [mounted, setMounted] = useState(false);
+  const asideRef = useRef<HTMLElement>(null);
+  const previouslyFocused = useRef<HTMLElement | null>(null);
   // eslint-disable-next-line react-hooks/set-state-in-effect -- portal mount guard
   useEffect(() => setMounted(true), []);
 
-  // lock scroll when open
+  // lock scroll when open + focus management (WCAG 2.1)
   useEffect(() => {
-    if (open) document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "";
+    if (open) {
+      previouslyFocused.current = document.activeElement as HTMLElement | null;
+      document.body.style.overflow = "hidden";
+      // Focus premier élément focusable dans le drawer
+      requestAnimationFrame(() => {
+        const aside = asideRef.current;
+        if (!aside) return;
+        const focusable = aside.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])',
+        );
+        const first = focusable[0] ?? aside;
+        (first as HTMLElement).focus();
+      });
+    } else {
+      document.body.style.overflow = "";
+      // restore focus
+      if (previouslyFocused.current) {
+        previouslyFocused.current.focus();
+        previouslyFocused.current = null;
+      }
+    }
     return () => {
       document.body.style.overflow = "";
     };
   }, [open]);
+
+  // Esc close + focus trap
+  useEffect(() => {
+    if (!open) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onClose();
+        return;
+      }
+      if (e.key === "Tab") {
+        const aside = asideRef.current;
+        if (!aside) return;
+        const focusable = Array.from(
+          aside.querySelectorAll<HTMLElement>(
+            'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])',
+          ),
+        ).filter((el) => el.offsetParent !== null || el === document.activeElement);
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else {
+          if (document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      }
+    }
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
 
   // Portal + animation : évite le bug fixed-in-backdrop-filter du header (z-50 backdrop-blur)
   // et permet le déroulé translate-x
@@ -74,27 +135,29 @@ export default function CartDrawer({
       aria-hidden={!open}
     >
       <button
-        aria-label="Fermer le panier"
+        aria-label="Fermer le panier — Échap"
         onClick={onClose}
         tabIndex={open ? 0 : -1}
-        className={`absolute inset-0 bg-ink/40 backdrop-blur-sm transition-opacity duration-300 ${open ? "opacity-100" : "opacity-0"}`}
+        className={`absolute inset-0 bg-ink/40 backdrop-blur-sm transition-opacity duration-300 focus-visible:outline-none ${open ? "opacity-100" : "opacity-0"}`}
       />
       <aside
+        ref={asideRef}
         role="dialog"
         aria-modal="true"
         aria-label={t("drawerTitle")}
+        aria-labelledby="cart-drawer-title"
         className={`relative flex h-full w-full max-w-md flex-col bg-cream shadow-xl transition-transform duration-300 ease-out ${open ? "translate-x-0" : "translate-x-full"}`}
       >
         <header className="flex items-center justify-between border-b border-sand px-6 py-4">
-          <h2 className="font-serif text-xl">
+          <h2 id="cart-drawer-title" className="font-serif text-xl">
             {t("drawerTitle")} ({count})
           </h2>
           <button
             onClick={onClose}
-            className="rounded-full p-2 hover:bg-sand"
-            aria-label="Fermer"
+            className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full p-2 hover:bg-sand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+            aria-label="Fermer le panier"
           >
-            ✕
+            <span aria-hidden>✕</span>
           </button>
         </header>
 
@@ -104,14 +167,17 @@ export default function CartDrawer({
               <p className="text-ink/60">{t("empty")}</p>
               <Link
                 href="/boutique"
+                prefetch
                 onClick={onClose}
-                className="mt-4 inline-block rounded-full bg-ink px-6 py-2 text-sm text-cream hover:bg-accent"
+                className="mt-4 inline-flex min-h-[44px] items-center justify-center rounded-full bg-ink px-6 py-2 text-sm text-cream hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
               >
                 {t("emptyCta")}
               </Link>
             </div>
           ) : loading ? (
-            <p className="py-8 text-center text-sm text-ink/50">Chargement…</p>
+            <p className="py-8 text-center text-sm text-ink/60" role="status" aria-live="polite">
+              Chargement…
+            </p>
           ) : (
             <ul className="flex flex-col gap-6">
               {resolved.map((r) =>
@@ -129,7 +195,7 @@ export default function CartDrawer({
                       <Link
                         href={`/boutique/${r.product.slug.current}?variant=${r.variant._key}`}
                         onClick={onClose}
-                        className="text-sm font-medium hover:text-accent"
+                        className="rounded-sm text-sm font-medium hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                       >
                         {r.product.title}
                       </Link>
@@ -137,29 +203,30 @@ export default function CartDrawer({
                         {r.variant.colorName}
                       </p>
                       <p className="mt-1 text-sm font-medium">
-                        {formatPrice(r.product.priceXof, "XOF")}
+                        {formatPrice(currency === "XOF" ? r.product.priceXof : r.product.priceEur, currency)}
                       </p>
                       <div className="mt-2 flex items-center gap-2">
                         <button
                           onClick={() => updateQty(r.index, r.qty - 1)}
-                          className="h-7 w-7 rounded-full border border-ink/15 text-sm hover:border-ink"
-                          aria-label="Diminuer quantité"
+                          className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-ink/15 text-sm hover:border-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                          aria-label={`Diminuer quantité de ${r.product.title}`}
                         >
-                          −
+                          <span aria-hidden>−</span>
                         </button>
-                        <span className="min-w-6 text-center text-sm">
+                        <span className="min-w-6 text-center text-sm" aria-live="polite" aria-atomic="true">
                           {r.qty}
                         </span>
                         <button
                           onClick={() => updateQty(r.index, r.qty + 1)}
-                          className="h-7 w-7 rounded-full border border-ink/15 text-sm hover:border-ink"
-                          aria-label="Augmenter quantité"
+                          className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-ink/15 text-sm hover:border-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                          aria-label={`Augmenter quantité de ${r.product.title}`}
                         >
-                          +
+                          <span aria-hidden>+</span>
                         </button>
                         <button
                           onClick={() => removeLine(r.index)}
-                          className="ml-auto text-xs text-ink/50 hover:text-accent"
+                          className="ml-auto inline-flex min-h-[44px] items-center rounded-full px-3 text-xs text-ink/60 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                          aria-label={`Retirer ${r.product.title} — ${r.variant.colorName} du panier`}
                         >
                           {t("remove")}
                         </button>
@@ -189,11 +256,12 @@ export default function CartDrawer({
                       </p>
                     )}
                     <p className="mt-2 text-sm font-medium">
-                      {formatPrice(r.subtotalXof, "XOF")}
+                      {formatPrice(currency === "XOF" ? r.subtotalXof : r.subtotalEur, currency)}
                     </p>
                     <button
                       onClick={() => removeLine(r.index)}
-                      className="mt-2 text-xs text-ink/50 hover:text-accent"
+                      className="mt-2 inline-flex min-h-[44px] items-center rounded-full px-3 text-xs text-ink/60 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                      aria-label={`Retirer Box n°${r.index + 1} du panier`}
                     >
                       {t("remove")}
                     </button>
@@ -209,17 +277,17 @@ export default function CartDrawer({
             <div className="flex items-center justify-between text-sm">
               <span className="font-medium">{t("total")}</span>
               <span className="font-medium">
-                {formatPrice(totalXof, "XOF")}
+                {formatPrice(total, currency)}
               </span>
             </div>
             <Link
               href="/panier"
               onClick={onClose}
-              className="mt-4 block w-full rounded-full bg-ink py-3 text-center text-sm font-medium text-cream hover:bg-accent"
+              className="mt-4 flex min-h-[44px] w-full items-center justify-center rounded-full bg-ink py-3 text-center text-sm font-medium text-cream hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
             >
               {t("seeCart")}
             </Link>
-            <p className="mt-2 text-center text-xs text-ink/50">
+            <p className="mt-2 text-center text-xs text-ink/60">
               Emballage cadeau offert
             </p>
           </footer>

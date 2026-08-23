@@ -4,7 +4,7 @@ import { createClient } from "@supabase/supabase-js";
 export function createServerClient() {
   const url = process.env.SUPABASE_PROJECT_URL;
   const key = process.env.SUPABASE_SECRET_KEY;
-  if (!url || !key || url === "TODO") {
+  if (!url || !key) {
     throw new Error(
       "Supabase non configuré : renseigner SUPABASE_PROJECT_URL et SUPABASE_SECRET_KEY dans .env.local",
     );

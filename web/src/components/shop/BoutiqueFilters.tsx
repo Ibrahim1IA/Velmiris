@@ -35,8 +35,9 @@ export default function BoutiqueFilters({
           <Link
             key={c.label}
             href={hrefFor(c.value)}
+            prefetch
             aria-current={isActive ? "true" : undefined}
-            className={`rounded-full border px-4 py-1.5 text-sm transition-colors ${
+            className={`inline-flex min-h-[44px] items-center rounded-full border px-4 py-1.5 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 ${
               isActive
                 ? "border-ink bg-ink text-cream"
                 : "border-ink/15 bg-cream text-ink hover:border-accent hover:text-accent"
