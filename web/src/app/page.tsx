@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import HomeHero3D from "@/components/box/HomeHero3D";
 import ScrollReveal from "@/components/home/ScrollReveal";
 import ParallaxImage from "@/components/home/ParallaxImage";
 import { getSiteUrl } from "@/lib/site";
@@ -89,66 +88,60 @@ export default function Home() {
   const t = useTranslations("home");
   return (
     <>
-      {/* Hero immersif — sticky 3D + serif outline + grain (Awwwards) — PRD §7.3 */}
+      {/* Hero editorial premium — matière avant boîte (sans 3D) — PRD §7.3 */}
       <section
-        className="relative flex min-h-[88vh] flex-col items-center justify-center overflow-hidden px-6 text-center grain"
+        className="relative overflow-hidden grain"
         aria-labelledby="hero-title"
       >
-        {/* Serif outline géant en fond — Awwwards */}
-        <p
-          aria-hidden="true"
-          className="pointer-events-none absolute left-1/2 top-[18%] -translate-x-1/2 select-none font-serif text-[18vw] leading-none tracking-[-0.04em] text-outline-ink md:top-[14%] md:text-[13vw]"
-        >
-          VELMIRYS
-        </p>
-        {/* Radials premium + grain */}
-        <div
-          className="pointer-events-none absolute inset-0 -z-10"
-          aria-hidden="true"
-          style={{
-            background:
-              "radial-gradient(ellipse 80% 60% at 50% 0%, #F3EDE4 0%, transparent 55%), radial-gradient(ellipse 60% 40% at 80% 85%, #FAF7F2 0%, transparent 60%)",
-          }}
-        />
-        <ScrollReveal y={12}>
-          <p className="text-xs tracking-[0.35em] text-ink/60">{t("hero.surtitle")}</p>
-        </ScrollReveal>
-        <ScrollReveal delay={0.08} y={14}>
-          <h1
-            id="hero-title"
-            className="mt-6 max-w-3xl font-serif text-5xl leading-[0.95] tracking-tight md:text-7xl"
-          >
-            {t("hero.title")}
-          </h1>
-        </ScrollReveal>
-        <ScrollReveal delay={0.16} y={10}>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink/70">{t("hero.baseline")}</p>
-        </ScrollReveal>
-        <ScrollReveal delay={0.22} y={8}>
-          <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-            <Link
-              href="/box"
-              className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-ink px-8 py-3 text-sm font-medium text-cream shadow-sm transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
-            >
-              {t("hero.ctaPrimary")}
-            </Link>
-            <Link
-              href="/boutique"
-              prefetch
-              className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-ink/25 bg-white px-8 py-3 text-sm font-medium shadow-sm backdrop-blur transition-colors hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-            >
-              {t("hero.ctaSecondary")}
-            </Link>
+        <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true" style={{ background: "radial-gradient(ellipse 90% 55% at 50% 0%, #F3EDE4 0%, transparent 58%), radial-gradient(ellipse 70% 45% at 85% 85%, #FAF7F2 0%, transparent 60%)" }} />
+        <div className="mx-auto grid max-w-6xl items-center gap-10 px-6 py-14 md:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:py-16">
+          <div className="text-center lg:text-left">
+            <ScrollReveal y={10}>
+              <p className="text-xs tracking-[0.32em] text-ink/60">{t("hero.surtitle")}</p>
+            </ScrollReveal>
+            <ScrollReveal delay={0.07} y={14}>
+              <h1 id="hero-title" className="mt-5 font-serif text-5xl leading-[0.92] tracking-tight md:text-6xl lg:text-7xl">
+                {t("hero.title")}
+              </h1>
+            </ScrollReveal>
+            <ScrollReveal delay={0.14} y={10}>
+              <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-ink/70 lg:mx-0">{t("hero.baseline")}</p>
+            </ScrollReveal>
+            <ScrollReveal delay={0.20} y={8}>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
+                <Link href="/box" className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-ink px-8 py-3 text-sm font-medium text-cream shadow-sm transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2">
+                  {t("hero.ctaPrimary")}
+                </Link>
+                <Link href="/boutique" prefetch className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-ink/25 bg-white px-8 py-3 text-sm font-medium shadow-sm transition-colors hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+                  {t("hero.ctaSecondary")}
+                </Link>
+              </div>
+            </ScrollReveal>
+            <ScrollReveal delay={0.26} y={6}>
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-3 text-xs text-ink/55 lg:justify-start">
+                <span className="inline-flex items-center gap-2 rounded-full border border-ink/10 bg-white/80 px-3 py-1.5 shadow-sm"><span className="h-2 w-2 rounded-full bg-accent" aria-hidden="true" /> Emballage offert</span>
+                <span className="hidden sm:inline text-ink/30">•</span>
+                <span>Jersey qui ne glisse pas</span>
+              </div>
+            </ScrollReveal>
           </div>
-        </ScrollReveal>
-        <div className="mt-10 w-full max-w-3xl">
-          <HomeHero3D />
+          <ScrollReveal delay={0.12} y={10}>
+            <div className="relative">
+              <ParallaxImage
+                src={IMAGES.manifeste}
+                alt="Portrait d'une femme élégante portant un hijab en jersey crème, lumière naturelle douce, fond neutre — univers VELMIRYS"
+                sizes="(max-width: 1024px) 100vw, 560px"
+                aspect="aspect-[4/5]"
+                containerClassName="rounded-[28px] shadow-[0_16px_48px_rgba(28,25,23,0.12)] border border-ink/5"
+                priority
+              />
+              <div className="pointer-events-none absolute -bottom-5 -left-5 hidden rounded-2xl bg-white p-4 shadow-lg border border-ink/5 md:block">
+                <p className="font-serif text-sm">Douceur &amp; tenue</p>
+                <p className="mt-1 max-w-[18ch] text-xs leading-relaxed text-ink/60">Jersey premium qui ne glisse pas, maille respirante — choisi sans compromis.</p>
+              </div>
+            </div>
+          </ScrollReveal>
         </div>
-        <p className="mt-2 flex items-center gap-2 text-xs tracking-wide text-ink/55" aria-hidden="true">
-          <span className="inline-block h-4 w-[1px] animate-pulse bg-ink/30" />
-          {t("hero.scrollHint")}
-          <span className="inline-block h-4 w-[1px] animate-pulse bg-ink/30" />
-        </p>
       </section>
 
       {/* Manifeste — grid 2 cols premium + image lifestyle + serif outline */}
