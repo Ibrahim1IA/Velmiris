@@ -84,31 +84,42 @@ export default function HomeHero3D() {
       role="img"
       aria-label="Box VELMIRYS ouverte en 3D — animation décorative d'unboxing. Faites défiler pour ouvrir la boîte, ou touchez la boîte sur mobile. Texte alternatif : la boîte s'ouvre, papier de soie scellé, tissus aux teintes douces. Contenu disponible aussi en navigation textuelle."
     >
-      {/* Scene sticky */}
+      {/* Scene sticky — socle contrasté pour que la boîte crème ressorte */}
       <div className="sticky top-0 flex h-[68vh] items-center justify-center -mb-8 md:h-[72vh]">
-        <button
-          type="button"
-          onClick={() => !reduced && setTapOpen((v) => !v)}
-          aria-label={effectiveLid > 0.5 ? "Fermer la boîte 3D" : "Ouvrir la boîte 3D"}
-          className="w-full max-w-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-2xl"
-        >
-          <BoxScene
-            lidOpen={effectiveLid}
-            items={[]}
-            float={!reduced}
-            enableOrbit={false}
-            className="h-[420px] w-full md:h-[520px]"
+        <div className="relative w-full max-w-xl">
+          {/* Socle / stage — évite le ton-sur-ton cream #FAF7F2 */}
+          <div
+            className="pointer-events-none absolute inset-0 -z-10 rounded-[32px] border border-ink/[0.06] shadow-[0_12px_40px_rgba(28,25,23,0.08)]"
+            style={{
+              background:
+                "radial-gradient(ellipse 90% 70% at 50% 38%, #FFFFFF 0%, #F3EDE4 48%, #EDE6D6 78%, #E8DDD0 100%)",
+            }}
+            aria-hidden="true"
           />
-        </button>
-        {/* halo lumière chaude à l'ouverture — intensifié */}
-        <div
-          className="pointer-events-none absolute left-1/2 top-1/2 h-44 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl transition-opacity duration-500"
-          style={{
-            background: "radial-gradient(ellipse at center, rgba(255,240,220,0.65) 0%, rgba(255,235,210,0.25) 35%, transparent 70%)",
-            opacity: reduced ? 0.7 : effectiveLid * 0.95,
-          }}
-          aria-hidden="true"
-        />
+          {/* Halo chaud au-dessus du socle */}
+          <div
+            className="pointer-events-none absolute left-1/2 top-[46%] h-44 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl transition-opacity duration-500"
+            style={{
+              background: "radial-gradient(ellipse at center, rgba(255,240,220,0.7) 0%, rgba(255,235,210,0.3) 35%, transparent 70%)",
+              opacity: reduced ? 0.55 : effectiveLid * 0.75,
+            }}
+            aria-hidden="true"
+          />
+          <button
+            type="button"
+            onClick={() => !reduced && setTapOpen((v) => !v)}
+            aria-label={effectiveLid > 0.5 ? "Fermer la boîte 3D" : "Ouvrir la boîte 3D"}
+            className="w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-[32px]"
+          >
+            <BoxScene
+              lidOpen={effectiveLid}
+              items={[]}
+              float={!reduced}
+              enableOrbit={false}
+              className="h-[420px] w-full md:h-[520px]"
+            />
+          </button>
+        </div>
       </div>
 
       {/* Scrollytelling spacer pour timeline Unboxing — caché si reduced */}

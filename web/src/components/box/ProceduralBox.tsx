@@ -70,36 +70,36 @@ export default function ProceduralBox({ lidOpen, float = true }: Props) {
 
   return (
     <group ref={groupRef}>
-      {/* Base — creuse visuellement via épaisseur mais BoxGeometry simple + PBR */}
+      {/* Base — contraste vs fond cream #FAF7F2 : kraft chaud */}
       <mesh position={[0, 0.02, 0]} castShadow={false} receiveShadow={false}>
         <boxGeometry args={[0.52, 0.1, 0.32]} />
         <meshPhysicalMaterial
-          color="#FAF7F2"
-          roughness={0.88}
+          color="#EDE3D3"
+          roughness={0.82}
           metalness={0}
-          clearcoat={0.12}
-          clearcoatRoughness={0.9}
-          sheen={0.2}
-          sheenColor="#F3EDE4"
+          clearcoat={0.14}
+          clearcoatRoughness={0.88}
+          sheen={0.18}
+          sheenColor="#FFF8EE"
         />
       </mesh>
-      {/* Fond intérieur légèrement plus sombre pour profondeur */}
+      {/* Fond intérieur plus sombre pour profondeur */}
       <mesh position={[0, 0.02, 0]}>
         <boxGeometry args={[0.5, 0.098, 0.3]} />
-        <meshStandardMaterial color="#F3EDE4" roughness={0.92} side={THREE.BackSide} />
+        <meshStandardMaterial color="#E8DDD0" roughness={0.9} side={THREE.BackSide} />
       </mesh>
 
       {/* Charnière — groupe pivot à l'arête arrière supérieure de la base */}
       <group ref={lidGroupRef} position={[0, 0.07, -0.16]}>
-        {/* Couvercle */}
+        {/* Couvercle — légèrement plus clair que la base pour lire la charnière */}
         <mesh position={[0, 0.01, 0.16]} castShadow={false} receiveShadow={false}>
           <boxGeometry args={[0.54, 0.02, 0.34]} />
           <meshPhysicalMaterial
-            color="#FFFBF6"
-            roughness={0.86}
+            color="#FFFEFB"
+            roughness={0.84}
             metalness={0}
-            clearcoat={0.14}
-            clearcoatRoughness={0.85}
+            clearcoat={0.16}
+            clearcoatRoughness={0.82}
           />
         </mesh>
         {/* Logo sur couvercle — plan avec texture canvas */}
