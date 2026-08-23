@@ -5,6 +5,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Umami from "@/components/analytics/Umami";
+import LenisProvider from "@/components/home/LenisProvider";
 import { getSiteUrl } from "@/lib/site";
 
 // Fonts via CSS import (globals.css) — évite @vercel/turbopack-next/internal/font bug en build Turbopack Next 16.3
@@ -99,14 +100,16 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
         <NextIntlClientProvider messages={messages}>
-          <a href="#main" className="skip-link">
-            Aller au contenu principal
-          </a>
-          <Header />
-          <main id="main" tabIndex={-1} className="flex-1 focus:outline-none">
-            {children}
-          </main>
-          <Footer />
+          <LenisProvider>
+            <a href="#main" className="skip-link">
+              Aller au contenu principal
+            </a>
+            <Header />
+            <main id="main" tabIndex={-1} className="flex-1 focus:outline-none">
+              {children}
+            </main>
+            <Footer />
+          </LenisProvider>
         </NextIntlClientProvider>
       </body>
     </html>

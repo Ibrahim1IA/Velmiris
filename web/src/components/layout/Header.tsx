@@ -83,16 +83,16 @@ export default function Header() {
             {t("contact")}
           </Link>
         </nav>
-        <div className="flex items-center gap-3 text-sm">
-          <CurrencySwitcher />
+        <div className="flex items-center gap-2 text-sm">
+          {/* Desktop : pill devise */}
+          <div className="hidden md:flex">
+            <CurrencySwitcher variant="pill" />
+          </div>
+          {/* Mobile : icône compacte devise active */}
+          <div className="flex md:hidden">
+            <CurrencySwitcher variant="compact" onCompactClick={() => setMenuOpen(true)} />
+          </div>
           <CartDrawerTrigger />
-          <Link
-            href="/panier"
-            aria-label="Voir le panier"
-            className="hidden min-h-[44px] items-center text-sm underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-full px-2 md:inline-flex"
-          >
-            Voir
-          </Link>
           {/* Burger mobile */}
           <button
             type="button"
@@ -157,6 +157,14 @@ export default function Header() {
               Panier — Voir
             </Link>
           </nav>
+          {/* Devise dans le drawer mobile — Option A */}
+          <div className="mt-6 border-t border-sand pt-6">
+            <p className="text-xs tracking-[0.2em] text-ink/60">DEVISE</p>
+            <p className="mt-1 text-xs text-ink/60">Afficher les prix en</p>
+            <div className="mt-3">
+              <CurrencySwitcher variant="pill" />
+            </div>
+          </div>
           <button
             ref={closeBtnRef}
             type="button"

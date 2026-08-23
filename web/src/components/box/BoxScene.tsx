@@ -2,7 +2,7 @@
 
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, ContactShadows } from "@react-three/drei";
+import { OrbitControls, ContactShadows, Environment } from "@react-three/drei";
 import BoxModel from "./BoxModel";
 import TissuePaper from "./TissuePaper";
 import BoxItems from "./BoxItems";
@@ -35,7 +35,8 @@ export default function BoxScene({ lidOpen, items, float = true, enableOrbit = f
   const dpr = dprForTier(tier);
   const effectiveFloat = reduced ? false : float;
 
-  if (tier === "low" || reduced) {
+  // Fallback 2.5D uniquement si tier low. prefers-reduced-motion garde la 3D statique (sans float/orbit)
+  if (tier === "low") {
     return <BoxFallback2D lidOpen={lidOpen} itemCount={items.length} />;
   }
 
@@ -55,24 +56,25 @@ export default function BoxScene({ lidOpen, items, float = true, enableOrbit = f
         camera={{ position: [0.45, 0.5, 0.55], fov: 34 }}
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
         onCreated={({ gl }) => {
-          gl.toneMappingExposure = 1.05;
+          gl.toneMappingExposure = 1.15;
         }}
         style={{ background: "transparent" }}
         aria-hidden="true"
       >
-        {/* Lumière studio douce — sans HDRI externe pour éviter timeout github */}
-        <ambientLight intensity={0.95} />
-        <directionalLight position={[1, 1.5, 1]} intensity={1.2} />
-        <directionalLight position={[-0.8, 0.9, -0.6]} intensity={0.4} />
-        <hemisphereLight args={["#fffaf5", "#1C1917", 0.35]} />
+        {/* Lumière studio + HDRI (validé) — Environment studio léger */}
+        <ambientLight intensity={0.9} />
+        <directionalLight position={[1, 1.5, 1]} intensity={1.1} />
+        <directionalLight position={[-0.8, 0.9, -0.6]} intensity={0.35} />
+        <hemisphereLight args={["#fffaf5", "#1C1917", 0.3]} />
 
         <Suspense fallback={null}>
+          <Environment preset="studio" environmentIntensity={0.6} />
           <group position={[0, -0.05, 0]}>
             <BoxModel lidOpen={lidOpen} float={effectiveFloat} />
             <TissuePaper count={items.length} />
             <BoxItems items={items} />
           </group>
-          <ContactShadows position={[0, -0.02, 0]} opacity={0.22} scale={0.9} blur={1.4} far={0.6} color="#1C1917" />
+          <ContactShadows position={[0, -0.02, 0]} opacity={0.24} scale={0.95} blur={1.6} far={0.7} color="#1C1917" />
         </Suspense>
 
         {enableOrbit && !reduced && (

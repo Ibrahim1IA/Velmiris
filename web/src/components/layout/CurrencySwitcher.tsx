@@ -4,7 +4,9 @@ import { useEffect } from "react";
 import { useCurrency } from "@/store/currency";
 import type { Currency } from "@/lib/types";
 
-export default function CurrencySwitcher() {
+type Variant = "pill" | "compact";
+
+export default function CurrencySwitcher({ variant = "pill", onCompactClick }: { variant?: Variant; onCompactClick?: () => void }) {
   const currency = useCurrency((s) => s.currency);
   const setCurrency = useCurrency((s) => s.setCurrency);
   const hydrated = useCurrency((s) => s.hydrated);
@@ -15,6 +17,16 @@ export default function CurrencySwitcher() {
   }, [setHydrated]);
 
   if (!hydrated) {
+    if (variant === "compact") {
+      return (
+        <div
+          className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-ink/10 text-xs opacity-50"
+          aria-hidden
+        >
+          <span className="px-3 py-1">FCFA</span>
+        </div>
+      );
+    }
     return (
       <div className="flex rounded-full border border-ink/10 p-0.5 text-xs opacity-50" aria-hidden>
         <span className="rounded-full px-2.5 py-1">FCFA</span>
@@ -25,6 +37,21 @@ export default function CurrencySwitcher() {
 
   function select(c: Currency) {
     setCurrency(c);
+  }
+
+  if (variant === "compact") {
+    const label = currency === "XOF" ? "FCFA" : "€";
+    const nextLabel = currency === "XOF" ? "Euros" : "Francs CFA";
+    return (
+      <button
+        type="button"
+        onClick={() => (onCompactClick ? onCompactClick() : select(currency === "XOF" ? "EUR" : "XOF"))}
+        aria-label={`Devise actuelle : ${label}. Toucher pour passer en ${nextLabel} ou ouvrir le menu pour choisir`}
+        className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-ink/10 px-3 text-xs font-medium hover:border-ink/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+      >
+        {label}
+      </button>
+    );
   }
 
   return (

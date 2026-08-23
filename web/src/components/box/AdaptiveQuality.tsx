@@ -6,18 +6,20 @@ export type Tier = "high" | "low";
 
 function detectTier(): Tier {
   if (typeof window === "undefined") return "high";
-  // prefers-reduced-motion → low
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return "low";
-  // saveData
+  // Forcé via ?force3d=1
+  try {
+    if (typeof window !== "undefined" && window.location.search.includes("force3d=1")) return "high";
+  } catch {}
+  // saveData / 2G restent low (vrai besoin éco)
   const conn = (navigator as unknown as { connection?: { effectiveType?: string; saveData?: boolean } }).connection;
   if (conn?.saveData) return "low";
   if (conn?.effectiveType && ["slow-2g", "2g"].includes(conn.effectiveType)) return "low";
-  // deviceMemory
+  // Seuils assouplis : only very low-end → low (avant: mem<=3 / cores<=4 bannissait 80% Android)
   const mem = (navigator as unknown as { deviceMemory?: number }).deviceMemory;
-  if (mem !== undefined && mem <= 3) return "low";
-  // hardwareConcurrency
+  if (mem !== undefined && mem <= 2) return "low";
   const cores = navigator.hardwareConcurrency;
-  if (cores !== undefined && cores <= 4) return "low";
+  if (cores !== undefined && cores <= 2) return "low";
+  // prefers-reduced-motion ne force plus low ici (géré dans BoxScene pour garder 3D statique)
   return "high";
 }
 

@@ -24,6 +24,9 @@ export default function HomeHero3D() {
   const [lidOpen, setLidOpen] = useState(0);
   const lidRef = useRef({ v: 0 });
 
+  // Tap-to-open sur mobile (secours si ScrollTrigger peu perceptible)
+  const [tapOpen, setTapOpen] = useState(false);
+
   useEffect(() => {
     if (reduced) {
       // prefers-reduced-motion : boîte ouverte fixe, pas de ScrollTrigger
@@ -45,9 +48,12 @@ export default function HomeHero3D() {
             trigger: section,
             start: "top top",
             end: "bottom top",
-            scrub: 0.6,
-            // markers: true,
-            onUpdate: (self) => setLidOpen(self.progress < 0.25 ? self.progress / 0.25 : 1),
+            scrub: 0.8,
+            onUpdate: (self) => {
+              // 0-30% : ouverture couvercle, ensuite hold ouvert (phases suivantes visuelles)
+              const p = self.progress;
+              setLidOpen(p < 0.3 ? p / 0.3 : 1);
+            },
           },
         }
       );
@@ -69,39 +75,46 @@ export default function HomeHero3D() {
   // En reduced-motion on fige la position, sinon n'afficher que si ouvert
   const showOrbit = reduced ? true : lidOpen > 0.3;
 
+  const effectiveLid = reduced ? 1 : tapOpen ? 1 : lidOpen;
+
   return (
     <div
       ref={sectionRef}
       className="relative"
       role="img"
-      aria-label="Box VELMIRYS ouverte en 3D — animation décorative d'unboxing. Faites défiler pour ouvrir la boîte. Texte alternatif : la boîte s'ouvre, papier de soie scellé, tissus aux teintes douces. Contenu disponible aussi en navigation textuelle."
+      aria-label="Box VELMIRYS ouverte en 3D — animation décorative d'unboxing. Faites défiler pour ouvrir la boîte, ou touchez la boîte sur mobile. Texte alternatif : la boîte s'ouvre, papier de soie scellé, tissus aux teintes douces. Contenu disponible aussi en navigation textuelle."
     >
       {/* Scene sticky */}
       <div className="sticky top-0 flex h-[68vh] items-center justify-center -mb-8 md:h-[72vh]">
-        <div className="w-full max-w-xl">
+        <button
+          type="button"
+          onClick={() => !reduced && setTapOpen((v) => !v)}
+          aria-label={effectiveLid > 0.5 ? "Fermer la boîte 3D" : "Ouvrir la boîte 3D"}
+          className="w-full max-w-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-2xl"
+        >
           <BoxScene
-            lidOpen={reduced ? 1 : lidOpen}
+            lidOpen={effectiveLid}
             items={[]}
             float={!reduced}
             enableOrbit={false}
             className="h-[420px] w-full md:h-[520px]"
           />
-        </div>
-        {/* halo lumière chaude à l'ouverture */}
+        </button>
+        {/* halo lumière chaude à l'ouverture — intensifié */}
         <div
-          className="pointer-events-none absolute left-1/2 top-1/2 h-40 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl transition-opacity duration-500"
+          className="pointer-events-none absolute left-1/2 top-1/2 h-44 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl transition-opacity duration-500"
           style={{
-            background: "radial-gradient(ellipse at center, rgba(255,240,220,0.55) 0%, transparent 70%)",
-            opacity: reduced ? 0.7 : lidOpen * 0.9,
+            background: "radial-gradient(ellipse at center, rgba(255,240,220,0.65) 0%, rgba(255,235,210,0.25) 35%, transparent 70%)",
+            opacity: reduced ? 0.7 : effectiveLid * 0.95,
           }}
           aria-hidden="true"
         />
       </div>
 
       {/* Scrollytelling spacer pour timeline Unboxing — caché si reduced */}
-      <div className={`pointer-events-none ${reduced ? "h-[10vh]" : "h-[60vh]"}`} aria-hidden="true" />
+      <div className={`pointer-events-none ${reduced ? "h-[10vh]" : "h-[90vh]"}`} aria-hidden="true" />
 
-      {/* Tissus orbitants (simulés en DOM 2D pour perf) */}
+      {/* Tissus orbitants (simulés en DOM 2D — phase 3 du scrollytelling) */}
       {showOrbit && (
         <div
           className="pointer-events-none absolute inset-x-0 top-[18vh] flex justify-center gap-3 opacity-70 md:gap-4"

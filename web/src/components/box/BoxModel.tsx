@@ -7,10 +7,13 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
-// Draco decoder pour box.glb optimisé (5 Ko draco) — public/draco/
+// Draco decoder pour box.glb (KHR_draco_mesh_compression) — public/draco/
 if (typeof window !== "undefined") {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (useGLTF as any).setDecoderPath?.("/draco/");
+  try {
+    // drei 10 : useGLTF.setDecoderPath est l'API officielle
+    const maybe = useGLTF as unknown as { setDecoderPath?: (p: string) => void };
+    maybe.setDecoderPath?.("/draco/");
+  } catch {}
 }
 
 interface Props {

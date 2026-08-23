@@ -89,12 +89,19 @@ export default function Home() {
   const t = useTranslations("home");
   return (
     <>
-      {/* Hero — Scène Unboxing R3F pilotée au scroll (PRD §7.3) — asset mutualisé Box_Base/Lid */}
+      {/* Hero immersif — sticky 3D + serif outline + grain (Awwwards) — PRD §7.3 */}
       <section
-        className="relative flex min-h-[88vh] flex-col items-center justify-center overflow-hidden px-6 text-center"
+        className="relative flex min-h-[88vh] flex-col items-center justify-center overflow-hidden px-6 text-center grain"
         aria-labelledby="hero-title"
       >
-        {/* Subtle premium radial — keeps epuré, PRD §7.1 beaucoup de blanc */}
+        {/* Serif outline géant en fond — Awwwards */}
+        <p
+          aria-hidden="true"
+          className="pointer-events-none absolute left-1/2 top-[18%] -translate-x-1/2 select-none font-serif text-[18vw] leading-none tracking-[-0.04em] text-outline-ink md:top-[14%] md:text-[13vw]"
+        >
+          VELMIRYS
+        </p>
+        {/* Radials premium + grain */}
         <div
           className="pointer-events-none absolute inset-0 -z-10"
           aria-hidden="true"
@@ -137,17 +144,22 @@ export default function Home() {
         <div className="mt-10 w-full max-w-3xl">
           <HomeHero3D />
         </div>
-        <p className="mt-2 text-xs tracking-wide text-ink/55" aria-hidden="true">
+        <p className="mt-2 flex items-center gap-2 text-xs tracking-wide text-ink/55" aria-hidden="true">
+          <span className="inline-block h-4 w-[1px] animate-pulse bg-ink/30" />
           {t("hero.scrollHint")}
+          <span className="inline-block h-4 w-[1px] animate-pulse bg-ink/30" />
         </p>
       </section>
 
-      {/* Manifeste — grid 2 cols premium + image lifestyle */}
+      {/* Manifeste — grid 2 cols premium + image lifestyle + serif outline */}
       <section
-        className="mx-auto max-w-6xl px-6 py-24 md:py-28"
+        className="relative mx-auto max-w-6xl px-6 py-24 md:py-28 grain overflow-hidden"
         aria-labelledby="manifesto-title"
       >
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+        <p aria-hidden="true" className="pointer-events-none absolute -top-6 left-0 select-none font-serif text-[28vw] leading-none tracking-tighter text-outline-ink md:text-[18vw] lg:text-[14vw]">
+          01
+        </p>
+        <div className="relative grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <ScrollReveal>
             <div className="max-w-xl">
               <p className="text-xs tracking-[0.28em] text-accent/80">MANIFESTE</p>
@@ -187,8 +199,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Nos teintes — tuiles coloris → fiche produit pré-sélectionnée (PRD §B2) */}
-      <section className="mx-auto max-w-6xl px-6 py-24 md:py-28" aria-labelledby="shades-title">
+      {/* Nos teintes — tuiles coloris → fiche produit pré-sélectionnée (PRD §B2) — hover enrichi */}
+      <section className="relative mx-auto max-w-6xl px-6 py-24 md:py-28 grain" aria-labelledby="shades-title">
         <ScrollReveal>
           <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
@@ -216,25 +228,25 @@ export default function Home() {
                 className="group flex flex-col gap-3 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
                 aria-label={`${t("shades.ctaTile")} : ${shade.name}`}
               >
-                <div
-                  className={`relative aspect-[4/5] overflow-hidden rounded-2xl border border-ink/[0.06] shadow-sm ${shade.className} transition-transform duration-500 group-hover:scale-[1.02] group-active:scale-[0.98]`}
-                  aria-hidden="true"
-                >
-                  {/* Premium flatlay overlay au hover — très subtil, garde couleur */}
-                  <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-[0.09]">
-                    <Image
-                      src={IMAGES.flatlay}
-                      alt=""
-                      fill
-                      sizes="200px"
-                      className="object-cover"
-                      loading="lazy"
-                    />
+                  <div
+                    className={`relative aspect-[4/5] overflow-hidden rounded-2xl border border-ink/[0.06] shadow-sm ${shade.className} transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-md group-active:scale-[0.98]`}
+                    aria-hidden="true"
+                  >
+                    {/* Premium flatlay overlay au hover — plus visible (Awwwards) */}
+                    <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-[0.14]">
+                      <Image
+                        src={IMAGES.flatlay}
+                        alt=""
+                        fill
+                        sizes="200px"
+                        className="object-cover"
+                        loading="lazy"
+                      />
+                    </div>
+                    <span className="absolute bottom-3 left-3 rounded-full bg-cream/95 px-2.5 py-1 text-[11px] font-medium tracking-wide opacity-0 backdrop-blur transition-opacity duration-300 group-hover:opacity-100 shadow-sm">
+                      Voir
+                    </span>
                   </div>
-                  <span className="absolute bottom-3 left-3 rounded-full bg-cream/90 px-2.5 py-1 text-[11px] font-medium tracking-wide opacity-0 backdrop-blur transition-opacity duration-300 group-hover:opacity-100">
-                    Voir
-                  </span>
-                </div>
                 <span className="text-sm font-medium tracking-tight text-ink/85 group-hover:text-accent">
                   {shade.name}
                 </span>
@@ -251,8 +263,11 @@ export default function Home() {
         </Link>
       </section>
 
-      {/* Box Builder — 3 steps + visuel packaging */}
-      <section className="mx-auto max-w-6xl px-6 py-8" aria-labelledby="builder-title">
+      {/* Box Builder — 3 steps + visuel packaging — grain + serif outline 02 */}
+      <section className="relative mx-auto max-w-6xl px-6 py-8 grain" aria-labelledby="builder-title">
+        <p aria-hidden="true" className="pointer-events-none absolute -top-2 right-2 select-none font-serif text-[22vw] leading-none tracking-tighter text-outline-accent md:text-[12vw]">
+          02
+        </p>
         <div className="overflow-hidden rounded-[32px] border border-ink/5 bg-sand shadow-sm">
           <div className="grid gap-0 lg:grid-cols-2">
             <div className="p-8 md:p-10 lg:p-12">
@@ -309,8 +324,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Éditorial — La douceur n'est pas un détail : parallax lifestyle */}
-      <section className="mx-auto max-w-6xl px-6 py-24 md:py-28" aria-labelledby="editorial-title">
+      {/* Éditorial — La douceur n'est pas un détail : parallax lifestyle — grain + serif outline 03 */}
+      <section className="relative mx-auto max-w-6xl px-6 py-24 md:py-28 grain" aria-labelledby="editorial-title">
+        <p aria-hidden="true" className="pointer-events-none absolute -top-4 left-0 select-none font-serif text-[22vw] leading-none tracking-tighter text-outline-ink md:text-[12vw]">
+          03
+        </p>
         <div className="overflow-hidden rounded-[32px] border border-sand bg-cream shadow-sm">
           <div className="grid lg:grid-cols-2">
             <ScrollReveal delay={0.05} className="order-2 lg:order-1">
