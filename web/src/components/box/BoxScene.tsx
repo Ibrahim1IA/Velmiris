@@ -22,5 +22,5 @@ interface Props {
  */
 export default function BoxScene({ lidOpen, items }: Props) {
   // Retour 2.5D initial : toujours le fallback CSS sur /box
-  return <BoxFallback2D lidOpen={lidOpen} itemCount={items.length} />;
+  return <BoxFallback2D lidOpen={lidOpen} items={items} />;
 }

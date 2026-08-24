@@ -5,6 +5,7 @@ import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import Price from "@/components/shop/Price";
 import BoutiqueFilters from "@/components/shop/BoutiqueFilters";
+import BoutiqueSearchBar from "@/components/shop/BoutiqueSearchBar";
 import { getSiteUrl } from "@/lib/site";
 
 // ISR 60s — revalidé par webhook Sanity en prod (PRD §9.2)
@@ -29,7 +30,7 @@ type Product = {
   variants: ProductVariant[];
 };
 
-type SearchParams = { category?: string };
+type SearchParams = { category?: string; q?: string };
 
 export async function generateMetadata(): Promise<import("next").Metadata> {
   const t = await getTranslations("boutique");
@@ -65,11 +66,13 @@ export default async function BoutiquePage({
 }: {
   searchParams: Promise<SearchParams>;
 }) {
-  const { category } = await searchParams;
+  const { category, q } = await searchParams;
   const validCategory =
     category && ["foulard", "bonnet", "epingle"].includes(category)
       ? category
       : null;
+  const query = q?.trim() ? q.trim() : null;
+  const normalize = (s: string) => s.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "");
 
   // Parallélise i18n + fetch Sanity ; filtre poussé côté GROQ pour + perf
   // Fallback offline : si Sanity timeout (e2e sans réseau), on rend boutique vide mais sans crasher
@@ -105,8 +108,13 @@ export default async function BoutiquePage({
     p.variants.map((v) => ({ product: p, variant: v })),
   );
 
-  // Déjà filtré côté GROQ — pas de second filtre mémoire
-  const filtered = tiles;
+  // Filtre texte q côté serveur (hybride, instant sans re-fetch GROQ match accent-insensible)
+  const filtered = query
+    ? tiles.filter(({ product, variant }) => {
+        const hay = normalize(`${product.title} ${product.category} ${variant.colorName} ${variant.sku ?? ""}`);
+        return hay.includes(normalize(query));
+      })
+    : tiles;
 
   const siteUrlBC = getSiteUrl();
   const breadcrumbLd = {
@@ -141,15 +149,23 @@ export default async function BoutiquePage({
         <p className="mt-3 max-w-2xl text-ink/60">{t("subtitle")}</p>
       </header>
 
-      <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <div className="sticky top-[69px] z-30 -mx-6 mb-8 flex flex-col gap-3 border-y border-sand bg-cream/90 px-6 py-3 backdrop-blur supports-[backdrop-filter]:bg-cream/85 md:flex-row md:items-center md:justify-between">
         <BoutiqueFilters labels={filterLabels} />
-        <p className="text-sm text-ink/60" aria-live="polite" aria-atomic="true">
-          {t("count", { count: filtered.length })}
-        </p>
+        <div className="flex items-center gap-3">
+          <BoutiqueSearchBar placeholder={t("search.placeholder")} label={t("search.label")} />
+          <p className="hidden text-sm text-ink/60 md:block" aria-live="polite" aria-atomic="true">
+            {t("count", { count: filtered.length })}
+          </p>
+        </div>
       </div>
+      <p className="mb-4 text-sm text-ink/60 md:hidden" aria-live="polite" aria-atomic="true">
+        {t("count", { count: filtered.length })}
+      </p>
 
       {filtered.length === 0 ? (
-        <p className="py-16 text-center text-ink/60">{t("empty")}</p>
+        <p className="py-16 text-center text-ink/60">
+          {query ? t("search.noResults", { q: query }) : t("empty")}
+        </p>
       ) : (
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
           {filtered.map(({ product, variant }, index) => {

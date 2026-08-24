@@ -19,8 +19,11 @@ export default function BoutiqueFilters({
   const active = searchParams.get("category") ?? undefined;
 
   function hrefFor(cat: string | undefined) {
-    if (!cat) return "/boutique";
-    return `/boutique?category=${cat}`;
+    const params = new URLSearchParams(searchParams.toString());
+    if (!cat) params.delete("category");
+    else params.set("category", cat);
+    const qs = params.toString();
+    return qs ? `/boutique?${qs}` : "/boutique";
   }
 
   return (

@@ -193,7 +193,7 @@ export default function Home() {
       </section>
 
       {/* Nos teintes — tuiles coloris → fiche produit pré-sélectionnée (PRD §B2) — hover enrichi */}
-      <section className="relative mx-auto max-w-6xl px-6 py-24 md:py-28 grain" aria-labelledby="shades-title">
+      <section className="relative mx-auto max-w-6xl px-6 py-24 md:py-28" aria-labelledby="shades-title">
         <ScrollReveal>
           <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
@@ -256,8 +256,8 @@ export default function Home() {
         </Link>
       </section>
 
-      {/* Box Builder — 3 steps + visuel packaging — grain + serif outline 02 */}
-      <section className="relative mx-auto max-w-6xl px-6 py-12 md:py-16 grain" aria-labelledby="builder-title">
+      {/* Box Builder — 3 steps + visuel packaging — serif outline 02 */}
+      <section className="relative mx-auto max-w-6xl px-6 py-12 md:py-16" aria-labelledby="builder-title">
         <p aria-hidden="true" className="pointer-events-none absolute -top-2 right-2 hidden select-none font-serif text-[22vw] leading-none tracking-tighter text-outline-accent md:block md:text-[12vw]">
           02
         </p>

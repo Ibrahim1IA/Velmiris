@@ -9,6 +9,7 @@ import { useCurrency } from "@/store/currency";
 import { formatPrice } from "@/lib/format";
 import { urlFor } from "@/sanity/lib/image";
 import FlyingItem from "@/components/box/FlyingItem";
+import BoxMiniSticky from "@/components/box/BoxMiniSticky";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { track } from "@/lib/analytics";
 
@@ -227,16 +228,19 @@ export default function BoxBuilder({ products, cards, giftExamples, initialAdd }
         </ol>
       </nav>
 
+      {/* Mobile mini sticky header — garde la box visible en scroll */}
+      <BoxMiniSticky items={boxSceneItems} lidOpen={lidAnim} />
+
       <div className="mt-8 grid gap-8 lg:grid-cols-[1.05fr_1fr]">
-        {/* Scène 3D — décorative, jamais seule porteuse d'info (liste textuelle en dessous) */}
+        {/* Scène 2.5D — décorative, jamais seule porteuse d'info (liste textuelle en dessous) */}
         <div className="lg:sticky lg:top-24 lg:h-fit">
           <div
             id="box-scene-anchor"
             className="rounded-2xl border border-sand bg-cream p-2"
             role="group"
-            aria-label={`Visualisation 3D de la box — ${items.length}/5 articles`}
+            aria-label={`Visualisation de la box — ${items.length}/5 articles`}
           >
-            <BoxScene lidOpen={lidAnim} items={boxSceneItems} float={!reduced && step !== "preview"} />
+            <BoxScene lidOpen={lidAnim} items={boxSceneItems} />
             <p className="sr-only">
               Scène 3D décorative de la boîte VELMIRYS. Le contenu réel de votre box est listé ci-dessous en texte et reste accessible sans la 3D.
             </p>

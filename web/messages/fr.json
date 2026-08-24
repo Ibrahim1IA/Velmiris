@@ -59,6 +59,12 @@
       "epingle": "Épingles",
       "label": "Filtrer par catégorie"
     },
+    "search": {
+      "placeholder": "Rechercher couleur, matière…",
+      "clear": "Effacer",
+      "noResults": "Aucun résultat pour « {q} »",
+      "label": "Rechercher un produit"
+    },
     "tile": {
       "cta": "Voir",
       "outOfStock": "Épuisé",
