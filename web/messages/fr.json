@@ -47,6 +47,20 @@
       "r2Text": "Validez votre panier : tout se confirme sur WhatsApp en quelques minutes.",
       "r3Title": "Livraison",
       "r3Text": "Zones et délais confirmés sur WhatsApp lors de la commande."
+    },
+    "engagements": {
+      "title": "Nos engagements",
+      "e1Title": "QUALITÉ SUPÉRIEURE",
+      "e1Text": "Des matières nobles sélectionnées avec le plus grand soin pour une durabilité exceptionnelle.",
+      "e2Title": "DOUCEUR ABSOLUE",
+      "e2Text": "Un toucher soyeux et léger, pensé pour le confort et l'élégance au quotidien.",
+      "e3Title": "SÉLECTION À LA MAIN",
+      "e3Text": "Chaque pièce est méticuleusement vérifiée et emballée par nos artisans passionnés."
+    },
+    "testimonials": {
+      "surtitle": "AVIS CLIENTS",
+      "quote": "Un magnifique foulard, la matière est d'une douceur incroyable. Le packaging cadeau était juste parfait, une très belle attention.",
+      "author": "ÉLODIE M. — ACHAT VÉRIFIÉ"
     }
   },
   "boutique": {

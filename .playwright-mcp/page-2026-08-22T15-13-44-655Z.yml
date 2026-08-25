@@ -1,0 +1,63 @@
+- generic [active] [ref=f15e1]:
+  - banner [ref=f15e2]:
+    - generic [ref=f15e3]:
+      - link "VELMIRYS" [ref=f15e4] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=f15e5]:
+        - link "Boutique" [ref=f15e6] [cursor=pointer]:
+          - /url: /boutique
+        - link "Box cadeau" [ref=f15e7] [cursor=pointer]:
+          - /url: /box
+        - link "À propos" [ref=f15e8] [cursor=pointer]:
+          - /url: /a-propos
+        - link "Contact" [ref=f15e9] [cursor=pointer]:
+          - /url: /contact
+      - generic [ref=f15e10]:
+        - generic [ref=f15e11]:
+          - generic [ref=f15e12]: FCFA
+          - generic [ref=f15e13]: €
+        - button "Panier — 0 articles" [ref=f15e14]: Panier (0)
+        - link "Voir" [ref=f15e15] [cursor=pointer]:
+          - /url: /panier
+  - main [ref=f15e16]:
+    - paragraph [ref=f15e18]: Chargement…
+  - contentinfo [ref=f15e19]:
+    - generic [ref=f15e20]:
+      - paragraph [ref=f15e22]: VELMIRYS
+      - generic [ref=f15e23]:
+        - paragraph [ref=f15e24]: Boutique
+        - list [ref=f15e25]:
+          - listitem [ref=f15e26]:
+            - link "Foulards" [ref=f15e27] [cursor=pointer]:
+              - /url: /boutique
+          - listitem [ref=f15e28]:
+            - link "Bonnets" [ref=f15e29] [cursor=pointer]:
+              - /url: /boutique
+          - listitem [ref=f15e30]:
+            - link "Épingles" [ref=f15e31] [cursor=pointer]:
+              - /url: /boutique
+          - listitem [ref=f15e32]:
+            - link "Box cadeau" [ref=f15e33] [cursor=pointer]:
+              - /url: /box
+      - generic [ref=f15e34]:
+        - paragraph [ref=f15e35]: Aide
+        - list [ref=f15e36]:
+          - listitem [ref=f15e37]:
+            - link "Contact" [ref=f15e38] [cursor=pointer]:
+              - /url: /contact
+          - listitem [ref=f15e39]:
+            - link "Livraison & retours" [ref=f15e40] [cursor=pointer]:
+              - /url: /legal/livraison-retours
+      - generic [ref=f15e41]:
+        - paragraph [ref=f15e42]: Suivez-nous
+        - list [ref=f15e43]:
+          - listitem [ref=f15e44]: Instagram
+          - listitem [ref=f15e45]: TikTok
+    - generic [ref=f15e46]:
+      - text: © 2026 VELMIRYS ·
+      - link "CGV" [ref=f15e47] [cursor=pointer]:
+        - /url: /legal/cgv
+      - text: ·
+      - link "Confidentialité" [ref=f15e48] [cursor=pointer]:
+        - /url: /legal/confidentialite
+  - button "Open Next.js Dev Tools" [ref=f15e54] [cursor=pointer]

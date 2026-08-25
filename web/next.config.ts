@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "cdn.pixabay.com", pathname: "/**" },
       { protocol: "https", hostname: "images.pexels.com", pathname: "/**" },
       { protocol: "https", hostname: "pixabay.com", pathname: "/**" },
+      { protocol: "https", hostname: "lh3.googleusercontent.com", pathname: "/**" },
     ],
   },
   // Turbopack font loader fix: Next 16.3 Turbopack interne @vercel/turbopack-next/internal/font échoue en build

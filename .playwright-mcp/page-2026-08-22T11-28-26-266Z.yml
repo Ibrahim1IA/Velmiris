@@ -1,0 +1,201 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "VELMIRYS" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=e5]:
+        - link "Boutique" [ref=e6] [cursor=pointer]:
+          - /url: /boutique
+        - link "Box cadeau" [ref=e7] [cursor=pointer]:
+          - /url: /box
+        - link "À propos" [ref=e8] [cursor=pointer]:
+          - /url: /a-propos
+        - link "Contact" [ref=e9] [cursor=pointer]:
+          - /url: /contact
+      - generic [ref=e10]:
+        - button "Panier — 0 articles" [ref=e11]: Panier (0)
+        - link "Voir" [ref=e12] [cursor=pointer]:
+          - /url: /panier
+  - main [ref=e13]:
+    - generic [ref=e14]:
+      - generic [ref=e15]:
+        - heading "Boutique" [level=1] [ref=e16]
+        - paragraph [ref=e17]: Chaque teinte a sa tuile — cliquez pour voir le modèle complet.
+      - generic [ref=e18]:
+        - group "Filtrer par catégorie" [ref=e19]:
+          - link "Tout" [ref=e20] [cursor=pointer]:
+            - /url: /boutique
+          - link "Foulards" [ref=e21] [cursor=pointer]:
+            - /url: /boutique?category=foulard
+          - link "Bonnets" [ref=e22] [cursor=pointer]:
+            - /url: /boutique?category=bonnet
+          - link "Épingles" [ref=e23] [cursor=pointer]:
+            - /url: /boutique?category=epingle
+        - paragraph [ref=e24]: 14 teintes
+      - generic [ref=e25]:
+        - link "Bonnet Sous-Hijab — Chocolat" [ref=e26] [cursor=pointer]:
+          - /url: /boutique/bonnet-sous-hijab?variant=chocolat
+          - generic [ref=e27]: Chocolat
+          - generic [ref=e30]:
+            - paragraph [ref=e31]: Bonnet Sous-Hijab
+            - paragraph [ref=e32]: Chocolat
+            - paragraph [ref=e33]:
+              - generic [ref=e34]: 5 000 F CFA
+              - generic [ref=e35]: 8,00 €
+        - link "Bonnet Sous-Hijab — Bordeaux" [ref=e36] [cursor=pointer]:
+          - /url: /boutique/bonnet-sous-hijab?variant=bordeaux
+          - generic [ref=e37]: Bordeaux
+          - generic [ref=e40]:
+            - paragraph [ref=e41]: Bonnet Sous-Hijab
+            - paragraph [ref=e42]: Bordeaux
+            - paragraph [ref=e43]:
+              - generic [ref=e44]: 5 000 F CFA
+              - generic [ref=e45]: 8,00 €
+        - link "Bonnet Sous-Hijab — Noir" [ref=e46] [cursor=pointer]:
+          - /url: /boutique/bonnet-sous-hijab?variant=noir
+          - generic [ref=e47]: Noir
+          - generic [ref=e50]:
+            - paragraph [ref=e51]: Bonnet Sous-Hijab
+            - paragraph [ref=e52]: Noir
+            - paragraph [ref=e53]:
+              - generic [ref=e54]: 5 000 F CFA
+              - generic [ref=e55]: 8,00 €
+        - link "Coffret Épingles à hijab — set de 6 — Tons pastel" [ref=e56] [cursor=pointer]:
+          - /url: /boutique/coffret-epingles?variant=tons-pastel
+          - generic [ref=e57]: Tons pastel
+          - generic [ref=e60]:
+            - paragraph [ref=e61]: Coffret Épingles à hijab — set de 6
+            - paragraph [ref=e62]: Tons pastel
+            - paragraph [ref=e63]:
+              - generic [ref=e64]: 6 500 F CFA
+              - generic [ref=e65]: 10,00 €
+        - link "Coffret Épingles à hijab — set de 6 — Tons neutres" [ref=e66] [cursor=pointer]:
+          - /url: /boutique/coffret-epingles?variant=tons-neutres
+          - generic [ref=e67]: Tons neutres
+          - generic [ref=e70]:
+            - paragraph [ref=e71]: Coffret Épingles à hijab — set de 6
+            - paragraph [ref=e72]: Tons neutres
+            - paragraph [ref=e73]:
+              - generic [ref=e74]: 6 500 F CFA
+              - generic [ref=e75]: 10,00 €
+        - link "Coffret Épingles à hijab — set de 6 — Tons bleus" [ref=e76] [cursor=pointer]:
+          - /url: /boutique/coffret-epingles?variant=tons-bleus
+          - generic [ref=e77]: Tons bleus
+          - generic [ref=e80]:
+            - paragraph [ref=e81]: Coffret Épingles à hijab — set de 6
+            - paragraph [ref=e82]: Tons bleus
+            - paragraph [ref=e83]:
+              - generic [ref=e84]: 6 500 F CFA
+              - generic [ref=e85]: 10,00 €
+        - link "Coffret Épingles à hijab — set de 6 — Noir & blanc" [ref=e86] [cursor=pointer]:
+          - /url: /boutique/coffret-epingles?variant=noir-blanc
+          - generic [ref=e87]: Noir & blanc
+          - generic [ref=e90]:
+            - paragraph [ref=e91]: Coffret Épingles à hijab — set de 6
+            - paragraph [ref=e92]: Noir & blanc
+            - paragraph [ref=e93]:
+              - generic [ref=e94]: 6 500 F CFA
+              - generic [ref=e95]: 10,00 €
+        - link "Foulard Jersey Premium — Rose poudré" [ref=e96] [cursor=pointer]:
+          - /url: /boutique/foulard-jersey-premium?variant=rose-poudre
+          - generic [ref=e97]: Rose poudré
+          - generic [ref=e100]:
+            - paragraph [ref=e101]: Foulard Jersey Premium
+            - paragraph [ref=e102]: Rose poudré
+            - paragraph [ref=e103]:
+              - generic [ref=e104]: 12 000 F CFA
+              - generic [ref=e105]: 18,00 €
+        - link "Foulard Jersey Premium — Bleu ardoise" [ref=e106] [cursor=pointer]:
+          - /url: /boutique/foulard-jersey-premium?variant=bleu-ardoise
+          - generic [ref=e107]: Bleu ardoise
+          - generic [ref=e110]:
+            - paragraph [ref=e111]: Foulard Jersey Premium
+            - paragraph [ref=e112]: Bleu ardoise
+            - paragraph [ref=e113]:
+              - generic [ref=e114]: 12 000 F CFA
+              - generic [ref=e115]: 18,00 €
+        - link "Foulard Jersey Premium — Mauve brume" [ref=e116] [cursor=pointer]:
+          - /url: /boutique/foulard-jersey-premium?variant=mauve-brume
+          - generic [ref=e117]: Mauve brume
+          - generic [ref=e120]:
+            - paragraph [ref=e121]: Foulard Jersey Premium
+            - paragraph [ref=e122]: Mauve brume
+            - paragraph [ref=e123]:
+              - generic [ref=e124]: 12 000 F CFA
+              - generic [ref=e125]: 18,00 €
+        - link "Foulard Jersey Premium — Crème nude" [ref=e126] [cursor=pointer]:
+          - /url: /boutique/foulard-jersey-premium?variant=creme-nude
+          - generic [ref=e127]: Crème nude
+          - generic [ref=e130]:
+            - paragraph [ref=e131]: Foulard Jersey Premium
+            - paragraph [ref=e132]: Crème nude
+            - paragraph [ref=e133]:
+              - generic [ref=e134]: 12 000 F CFA
+              - generic [ref=e135]: 18,00 €
+        - link "Foulard Jersey Premium — Noir" [ref=e136] [cursor=pointer]:
+          - /url: /boutique/foulard-jersey-premium?variant=noir
+          - generic [ref=e137]: Noir
+          - generic [ref=e140]:
+            - paragraph [ref=e141]: Foulard Jersey Premium
+            - paragraph [ref=e142]: Noir
+            - paragraph [ref=e143]:
+              - generic [ref=e144]: 12 000 F CFA
+              - generic [ref=e145]: 18,00 €
+        - link "Foulard Jersey Premium — Bordeaux" [ref=e146] [cursor=pointer]:
+          - /url: /boutique/foulard-jersey-premium?variant=bordeaux
+          - generic [ref=e147]: Bordeaux
+          - generic [ref=e150]:
+            - paragraph [ref=e151]: Foulard Jersey Premium
+            - paragraph [ref=e152]: Bordeaux
+            - paragraph [ref=e153]:
+              - generic [ref=e154]: 12 000 F CFA
+              - generic [ref=e155]: 18,00 €
+        - link "Plaquette Épingles Perles — set de 12 — Multicolore pastel" [ref=e156] [cursor=pointer]:
+          - /url: /boutique/plaquette-epingles-perles?variant=multicolore-pastel
+          - generic [ref=e157]: Multicolore pastel
+          - generic [ref=e160]:
+            - paragraph [ref=e161]: Plaquette Épingles Perles — set de 12
+            - paragraph [ref=e162]: Multicolore pastel
+            - paragraph [ref=e163]:
+              - generic [ref=e164]: 4 000 F CFA
+              - generic [ref=e165]: 6,00 €
+  - contentinfo [ref=e166]:
+    - generic [ref=e167]:
+      - paragraph [ref=e169]: VELMIRYS
+      - generic [ref=e170]:
+        - paragraph [ref=e171]: Boutique
+        - list [ref=e172]:
+          - listitem [ref=e173]:
+            - link "Foulards" [ref=e174] [cursor=pointer]:
+              - /url: /boutique
+          - listitem [ref=e175]:
+            - link "Bonnets" [ref=e176] [cursor=pointer]:
+              - /url: /boutique
+          - listitem [ref=e177]:
+            - link "Épingles" [ref=e178] [cursor=pointer]:
+              - /url: /boutique
+          - listitem [ref=e179]:
+            - link "Box cadeau" [ref=e180] [cursor=pointer]:
+              - /url: /box
+      - generic [ref=e181]:
+        - paragraph [ref=e182]: Aide
+        - list [ref=e183]:
+          - listitem [ref=e184]:
+            - link "Contact" [ref=e185] [cursor=pointer]:
+              - /url: /contact
+          - listitem [ref=e186]:
+            - link "Livraison & retours" [ref=e187] [cursor=pointer]:
+              - /url: /legal/livraison-retours
+      - generic [ref=e188]:
+        - paragraph [ref=e189]: Suivez-nous
+        - list [ref=e190]:
+          - listitem [ref=e191]: Instagram
+          - listitem [ref=e192]: TikTok
+    - generic [ref=e193]:
+      - text: © 2026 VELMIRYS ·
+      - link "CGV" [ref=e194] [cursor=pointer]:
+        - /url: /legal/cgv
+      - text: ·
+      - link "Confidentialité" [ref=e195] [cursor=pointer]:
+        - /url: /legal/confidentialite
+  - button "Open Next.js Dev Tools" [ref=e201] [cursor=pointer]

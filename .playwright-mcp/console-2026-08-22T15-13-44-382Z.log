@@ -1,0 +1,15 @@
+[     191ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[     210ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[     693ms] [WARNING] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead. @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[   17890ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[   17908ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[   18383ms] [WARNING] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead. @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  224265ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  224516ms] [LOG] [Fast Refresh] done in 18ms @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  338081ms] [LOG] [Fast Refresh] done in 18ms @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  338471ms] [LOG] [Fast Refresh] done in 18ms @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  338509ms] [LOG] [Fast Refresh] done in 18ms @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  339310ms] [LOG] [Fast Refresh] done in 18ms @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  341417ms] [LOG] [Fast Refresh] done in 18ms @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  348686ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  349027ms] [LOG] [Fast Refresh] done in 451ms @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776

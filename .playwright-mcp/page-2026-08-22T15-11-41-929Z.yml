@@ -1,0 +1,132 @@
+- generic [active] [ref=f12e1]:
+  - banner [ref=f12e2]:
+    - generic [ref=f12e3]:
+      - link "VELMIRYS" [ref=f12e4] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=f12e5]:
+        - link "Boutique" [ref=f12e6] [cursor=pointer]:
+          - /url: /boutique
+        - link "Box cadeau" [ref=f12e7] [cursor=pointer]:
+          - /url: /box
+        - link "À propos" [ref=f12e8] [cursor=pointer]:
+          - /url: /a-propos
+        - link "Contact" [ref=f12e9] [cursor=pointer]:
+          - /url: /contact
+      - generic [ref=f12e10]:
+        - generic [ref=f12e11]:
+          - generic [ref=f12e12]: FCFA
+          - generic [ref=f12e13]: €
+        - button "Panier — 0 articles" [ref=f12e14]: Panier (0)
+        - link "Voir" [ref=f12e15] [cursor=pointer]:
+          - /url: /panier
+  - main [ref=f12e16]:
+    - generic [ref=f12e17]:
+      - paragraph [ref=f12e18]: VELMIRYS
+      - heading "Le voile, porté comme un présent." [level=1] [ref=f12e19]
+      - paragraph [ref=f12e20]: Des foulards d'exception, une palette de teintes douces, et des box cadeaux composées à la main.
+      - generic [ref=f12e21]:
+        - link "Composer votre box" [ref=f12e22] [cursor=pointer]:
+          - /url: /box
+        - link "Découvrir la boutique" [ref=f12e23] [cursor=pointer]:
+          - /url: /boutique
+      - paragraph [ref=f12e27]: Faites défiler — la boîte s'ouvre
+    - generic [ref=f12e28]:
+      - heading "Un beau tissu se donne comme il se porte — avec intention." [level=2] [ref=f12e29]
+      - paragraph [ref=f12e30]: Chez VELMIRYS, chaque voile est choisi pour sa douceur, chaque teinte pour sa justesse. Nous plions, emballons et glissons une carte à la main, parce qu'un cadeau commence bien avant l'ouverture de la boîte.
+    - generic [ref=f12e31]:
+      - generic [ref=f12e32]:
+        - generic [ref=f12e33]:
+          - heading "Six teintes, une seule exigence." [level=2] [ref=f12e34]
+          - paragraph [ref=f12e35]: Du rose poudré au bleu ardoise, notre palette est pensée pour flatter toutes les carnations et traverser les saisons. Trouvez la vôtre.
+        - link "Toute la boutique" [ref=f12e36] [cursor=pointer]:
+          - /url: /boutique
+      - generic [ref=f12e37]:
+        - 'link "Voir ce coloris : Rose poudré" [ref=f12e38] [cursor=pointer]':
+          - /url: /boutique
+          - generic [ref=f12e40]: Rose poudré
+        - 'link "Voir ce coloris : Bleu ardoise" [ref=f12e41] [cursor=pointer]':
+          - /url: /boutique
+          - generic [ref=f12e43]: Bleu ardoise
+        - 'link "Voir ce coloris : Mauve brume" [ref=f12e44] [cursor=pointer]':
+          - /url: /boutique
+          - generic [ref=f12e46]: Mauve brume
+        - 'link "Voir ce coloris : Crème nude" [ref=f12e47] [cursor=pointer]':
+          - /url: /boutique
+          - generic [ref=f12e49]: Crème nude
+        - 'link "Voir ce coloris : Noir" [ref=f12e50] [cursor=pointer]':
+          - /url: /boutique
+          - generic [ref=f12e52]: Noir
+        - 'link "Voir ce coloris : Bordeaux" [ref=f12e53] [cursor=pointer]':
+          - /url: /boutique
+          - generic [ref=f12e55]: Bordeaux
+    - generic [ref=f12e57]:
+      - heading "Composez une box à son image" [level=2] [ref=f12e58]
+      - paragraph [ref=f12e59]: "Un foulard dans sa teinte préférée, un bonnet assorti, des épingles délicates… Choisissez 2 à 5 articles, ajoutez vos mots : nous nous chargeons du reste."
+      - generic [ref=f12e60]:
+        - generic [ref=f12e61]:
+          - paragraph [ref=f12e62]: "1"
+          - heading "Choisissez" [level=3] [ref=f12e63]
+          - paragraph [ref=f12e64]: 2 à 5 articles parmi nos foulards, bonnets et épingles.
+        - generic [ref=f12e65]:
+          - paragraph [ref=f12e66]: "2"
+          - heading "Personnalisez" [level=3] [ref=f12e67]
+          - paragraph [ref=f12e68]: "Une carte, un message : les mots qui comptent, imprimés avec soin."
+        - generic [ref=f12e69]:
+          - paragraph [ref=f12e70]: "3"
+          - heading "Offrez" [level=3] [ref=f12e71]
+          - paragraph [ref=f12e72]: L'emballage cadeau est offert. Elle n'a plus qu'à ouvrir.
+      - link "Commencer ma box" [ref=f12e73] [cursor=pointer]:
+        - /url: /box
+    - generic [ref=f12e74]:
+      - heading "La douceur n'est pas un détail." [level=2] [ref=f12e75]
+      - paragraph [ref=f12e76]: Un jersey fluide qui ne glisse pas, une maille respirante qui tient toute la journée, des finitions nettes. Nous choisissons nos tissus comme on choisit un tissu pour soi — sans compromis.
+    - generic [ref=f12e78]:
+      - generic [ref=f12e79]:
+        - heading "Emballage soigné offert" [level=3] [ref=f12e80]
+        - paragraph [ref=f12e81]: Boîte brandée, papier de soie et carte dans chaque commande.
+      - generic [ref=f12e82]:
+        - heading "Commande simple" [level=3] [ref=f12e83]
+        - paragraph [ref=f12e84]: "Validez votre panier : tout se confirme sur WhatsApp en quelques minutes."
+      - generic [ref=f12e85]:
+        - heading "Livraison" [level=3] [ref=f12e86]
+        - paragraph [ref=f12e87]: Zones et délais confirmés sur WhatsApp lors de la commande.
+  - contentinfo [ref=f12e88]:
+    - generic [ref=f12e89]:
+      - paragraph [ref=f12e91]: VELMIRYS
+      - generic [ref=f12e92]:
+        - paragraph [ref=f12e93]: Boutique
+        - list [ref=f12e94]:
+          - listitem [ref=f12e95]:
+            - link "Foulards" [ref=f12e96] [cursor=pointer]:
+              - /url: /boutique
+          - listitem [ref=f12e97]:
+            - link "Bonnets" [ref=f12e98] [cursor=pointer]:
+              - /url: /boutique
+          - listitem [ref=f12e99]:
+            - link "Épingles" [ref=f12e100] [cursor=pointer]:
+              - /url: /boutique
+          - listitem [ref=f12e101]:
+            - link "Box cadeau" [ref=f12e102] [cursor=pointer]:
+              - /url: /box
+      - generic [ref=f12e103]:
+        - paragraph [ref=f12e104]: Aide
+        - list [ref=f12e105]:
+          - listitem [ref=f12e106]:
+            - link "Contact" [ref=f12e107] [cursor=pointer]:
+              - /url: /contact
+          - listitem [ref=f12e108]:
+            - link "Livraison & retours" [ref=f12e109] [cursor=pointer]:
+              - /url: /legal/livraison-retours
+      - generic [ref=f12e110]:
+        - paragraph [ref=f12e111]: Suivez-nous
+        - list [ref=f12e112]:
+          - listitem [ref=f12e113]: Instagram
+          - listitem [ref=f12e114]: TikTok
+    - generic [ref=f12e115]:
+      - text: © 2026 VELMIRYS ·
+      - link "CGV" [ref=f12e116] [cursor=pointer]:
+        - /url: /legal/cgv
+      - text: ·
+      - link "Confidentialité" [ref=f12e117] [cursor=pointer]:
+        - /url: /legal/confidentialite
+  - button "Open Next.js Dev Tools" [ref=f12e123] [cursor=pointer]

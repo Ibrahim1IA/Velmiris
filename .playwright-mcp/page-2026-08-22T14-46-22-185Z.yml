@@ -1,0 +1,193 @@
+- generic [active] [ref=f9e1]:
+  - banner [ref=f9e2]:
+    - generic [ref=f9e3]:
+      - link "VELMIRYS" [ref=f9e4] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=f9e5]:
+        - link "Boutique" [ref=f9e6] [cursor=pointer]:
+          - /url: /boutique
+        - link "Box cadeau" [ref=f9e7] [cursor=pointer]:
+          - /url: /box
+        - link "À propos" [ref=f9e8] [cursor=pointer]:
+          - /url: /a-propos
+        - link "Contact" [ref=f9e9] [cursor=pointer]:
+          - /url: /contact
+      - generic [ref=f9e10]:
+        - button "Panier — 0 articles" [ref=f9e11]: Panier (0)
+        - link "Voir" [ref=f9e12] [cursor=pointer]:
+          - /url: /panier
+  - main [ref=f9e13]:
+    - generic [ref=f9e14]:
+      - generic [ref=f9e15]:
+        - heading "Composez votre box" [level=1] [ref=f9e16]
+        - paragraph [ref=f9e17]: Choisissez 2 à 5 articles. La boîte, le papier de soie et la carte sont offerts.
+      - generic [ref=f9e18]:
+        - generic [ref=f9e19]: 1. Choisissez
+        - generic [ref=f9e20]: 2. Personnalisez
+        - generic [ref=f9e21]: 3. Prévisualisez
+      - generic [ref=f9e22]:
+        - generic [ref=f9e23]:
+          - generic [ref=f9e29]:
+            - generic [ref=f9e30]:
+              - heading "Vos articles (0/5)" [level=3] [ref=f9e31]
+              - generic [ref=f9e32]: Votre box est vide — ajoutez un premier article pour la voir se remplir.
+            - paragraph [ref=f9e33]: Emballage cadeau offert
+          - button "Personnaliser ma box" [disabled] [ref=f9e34]
+        - generic [ref=f9e35]:
+          - generic [ref=f9e36]:
+            - button "Tout" [ref=f9e37]
+            - button "Foulards" [ref=f9e38]
+            - button "Bonnets" [ref=f9e39]
+            - button "Épingles" [ref=f9e40]
+          - generic [ref=f9e41]:
+            - generic [ref=f9e42]:
+              - generic [ref=f9e43]: Chocolat
+              - generic [ref=f9e46]:
+                - paragraph [ref=f9e47]: Bonnet Sous-Hijab
+                - paragraph [ref=f9e48]: Chocolat
+                - paragraph [ref=f9e49]: 5 000 F CFA
+              - button "+ Ajouter à la box" [ref=f9e50]
+            - generic [ref=f9e51]:
+              - generic [ref=f9e52]: Bordeaux
+              - generic [ref=f9e55]:
+                - paragraph [ref=f9e56]: Bonnet Sous-Hijab
+                - paragraph [ref=f9e57]: Bordeaux
+                - paragraph [ref=f9e58]: 5 000 F CFA
+              - button "+ Ajouter à la box" [ref=f9e59]
+            - generic [ref=f9e60]:
+              - generic [ref=f9e61]: Noir
+              - generic [ref=f9e64]:
+                - paragraph [ref=f9e65]: Bonnet Sous-Hijab
+                - paragraph [ref=f9e66]: Noir
+                - paragraph [ref=f9e67]: 5 000 F CFA
+              - button "+ Ajouter à la box" [ref=f9e68]
+            - generic [ref=f9e69]:
+              - generic [ref=f9e70]: Tons pastel
+              - generic [ref=f9e73]:
+                - paragraph [ref=f9e74]: Coffret Épingles à hijab — set de 6
+                - paragraph [ref=f9e75]: Tons pastel
+                - paragraph [ref=f9e76]: 6 500 F CFA
+              - button "+ Ajouter à la box" [ref=f9e77]
+            - generic [ref=f9e78]:
+              - generic [ref=f9e79]: Tons neutres
+              - generic [ref=f9e82]:
+                - paragraph [ref=f9e83]: Coffret Épingles à hijab — set de 6
+                - paragraph [ref=f9e84]: Tons neutres
+                - paragraph [ref=f9e85]: 6 500 F CFA
+              - button "+ Ajouter à la box" [ref=f9e86]
+            - generic [ref=f9e87]:
+              - generic [ref=f9e88]: Tons bleus
+              - generic [ref=f9e91]:
+                - paragraph [ref=f9e92]: Coffret Épingles à hijab — set de 6
+                - paragraph [ref=f9e93]: Tons bleus
+                - paragraph [ref=f9e94]: 6 500 F CFA
+              - button "+ Ajouter à la box" [ref=f9e95]
+            - generic [ref=f9e96]:
+              - generic [ref=f9e97]: Noir & blanc
+              - generic [ref=f9e100]:
+                - paragraph [ref=f9e101]: Coffret Épingles à hijab — set de 6
+                - paragraph [ref=f9e102]: Noir & blanc
+                - paragraph [ref=f9e103]: 6 500 F CFA
+              - button "+ Ajouter à la box" [ref=f9e104]
+            - generic [ref=f9e105]:
+              - generic [ref=f9e106]: Rose poudré
+              - generic [ref=f9e109]:
+                - paragraph [ref=f9e110]: Foulard Jersey Premium
+                - paragraph [ref=f9e111]: Rose poudré
+                - paragraph [ref=f9e112]: 12 000 F CFA
+              - button "+ Ajouter à la box" [ref=f9e113]
+            - generic [ref=f9e114]:
+              - generic [ref=f9e115]: Bleu ardoise
+              - generic [ref=f9e118]:
+                - paragraph [ref=f9e119]: Foulard Jersey Premium
+                - paragraph [ref=f9e120]: Bleu ardoise
+                - paragraph [ref=f9e121]: 12 000 F CFA
+              - button "+ Ajouter à la box" [ref=f9e122]
+            - generic [ref=f9e123]:
+              - generic [ref=f9e124]: Mauve brume
+              - generic [ref=f9e127]:
+                - paragraph [ref=f9e128]: Foulard Jersey Premium
+                - paragraph [ref=f9e129]: Mauve brume
+                - paragraph [ref=f9e130]: 12 000 F CFA
+              - button "+ Ajouter à la box" [ref=f9e131]
+            - generic [ref=f9e132]:
+              - generic [ref=f9e133]: Crème nude
+              - generic [ref=f9e136]:
+                - paragraph [ref=f9e137]: Foulard Jersey Premium
+                - paragraph [ref=f9e138]: Crème nude
+                - paragraph [ref=f9e139]: 12 000 F CFA
+              - button "+ Ajouter à la box" [ref=f9e140]
+            - generic [ref=f9e141]:
+              - generic [ref=f9e142]: Noir
+              - generic [ref=f9e145]:
+                - paragraph [ref=f9e146]: Foulard Jersey Premium
+                - paragraph [ref=f9e147]: Noir
+                - paragraph [ref=f9e148]: 12 000 F CFA
+              - button "+ Ajouter à la box" [ref=f9e149]
+            - generic [ref=f9e150]:
+              - generic [ref=f9e151]: Bordeaux
+              - generic [ref=f9e154]:
+                - paragraph [ref=f9e155]: Foulard Jersey Premium
+                - paragraph [ref=f9e156]: Bordeaux
+                - paragraph [ref=f9e157]: 12 000 F CFA
+              - button "+ Ajouter à la box" [ref=f9e158]
+            - generic [ref=f9e159]:
+              - generic [ref=f9e160]: Multicolore pastel
+              - generic [ref=f9e163]:
+                - paragraph [ref=f9e164]: Plaquette Épingles Perles — set de 12
+                - paragraph [ref=f9e165]: Multicolore pastel
+                - paragraph [ref=f9e166]: 4 000 F CFA
+              - button "+ Ajouter à la box" [ref=f9e167]
+  - contentinfo [ref=f9e168]:
+    - generic [ref=f9e169]:
+      - paragraph [ref=f9e171]: VELMIRYS
+      - generic [ref=f9e172]:
+        - paragraph [ref=f9e173]: Boutique
+        - list [ref=f9e174]:
+          - listitem [ref=f9e175]:
+            - link "Foulards" [ref=f9e176] [cursor=pointer]:
+              - /url: /boutique
+          - listitem [ref=f9e177]:
+            - link "Bonnets" [ref=f9e178] [cursor=pointer]:
+              - /url: /boutique
+          - listitem [ref=f9e179]:
+            - link "Épingles" [ref=f9e180] [cursor=pointer]:
+              - /url: /boutique
+          - listitem [ref=f9e181]:
+            - link "Box cadeau" [ref=f9e182] [cursor=pointer]:
+              - /url: /box
+      - generic [ref=f9e183]:
+        - paragraph [ref=f9e184]: Aide
+        - list [ref=f9e185]:
+          - listitem [ref=f9e186]:
+            - link "Contact" [ref=f9e187] [cursor=pointer]:
+              - /url: /contact
+          - listitem [ref=f9e188]:
+            - link "Livraison & retours" [ref=f9e189] [cursor=pointer]:
+              - /url: /legal/livraison-retours
+      - generic [ref=f9e190]:
+        - paragraph [ref=f9e191]: Suivez-nous
+        - list [ref=f9e192]:
+          - listitem [ref=f9e193]: Instagram
+          - listitem [ref=f9e194]: TikTok
+    - generic [ref=f9e195]:
+      - text: © 2026 VELMIRYS ·
+      - link "CGV" [ref=f9e196] [cursor=pointer]:
+        - /url: /legal/cgv
+      - text: ·
+      - link "Confidentialité" [ref=f9e197] [cursor=pointer]:
+        - /url: /legal/confidentialite
+  - button "Open Next.js Dev Tools" [ref=f9e203] [cursor=pointer]
+  - alert [ref=f9e207]
+  - generic:
+    - button
+    - dialog:
+      - banner:
+        - heading [level=2]: Panier (0)
+        - button: ✕
+      - generic:
+        - generic:
+          - paragraph: Votre panier est vide.
+          - link:
+            - /url: /boutique
+            - text: Découvrir la boutique

@@ -47,8 +47,9 @@ const SHADES = [
 const IMAGES = {
   manifeste:
     "https://images.unsplash.com/photo-1581044777550-4cfa60707c03?w=800&q=80&auto=format&fit=crop",
-  packaging:
-    "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=800&q=80&auto=format&fit=crop",
+  // Image manifeste locale — 4 femmes hijab (ci-joint), stockée en public/images/manifeste-velmirys.jpg
+  manifesteLocal: "/images/manifeste-velmirys.jpg",
+  packaging: "/images/packaging-velmirys.jpg",
   editorialSilk:
     "https://images.unsplash.com/photo-1582738411706-bfc82e9521b5?w=1200&q=80&auto=format&fit=crop",
   texture:
@@ -144,14 +145,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Manifeste — grid 2 cols premium + image lifestyle + serif outline */}
+      {/* Manifeste — grid 2 cols premium + image lifestyle */}
       <section
         className="relative mx-auto max-w-6xl px-6 py-24 md:py-28 grain overflow-hidden"
         aria-labelledby="manifesto-title"
       >
-        <p aria-hidden="true" className="pointer-events-none absolute -top-6 left-0 hidden select-none font-serif text-[28vw] leading-none tracking-tighter text-outline-ink md:block md:text-[18vw] lg:text-[14vw]">
-          01
-        </p>
         <div className="relative grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <ScrollReveal>
             <div className="max-w-xl">
@@ -175,16 +173,16 @@ export default function Home() {
           <ScrollReveal delay={0.12}>
             <div className="relative">
               <ParallaxImage
-                src={IMAGES.manifeste}
-                alt="Portrait d'une femme élégante portant un hijab en jersey crème, lumière naturelle douce, fond neutre — univers VELMIRYS"
+                src={IMAGES.manifesteLocal}
+                alt="Quatre femmes portant des hijabs VELMIRYS aux teintes douces — bordeaux, vert sauge, bleu ardoise et crème — posant ensemble avec sororité, univers VELMIRYS"
                 sizes="(max-width: 1024px) 100vw, 560px"
                 aspect="aspect-[4/5]"
                 containerClassName="rounded-2xl"
               />
               <div className="pointer-events-none absolute -bottom-4 -left-4 hidden rounded-2xl bg-cream p-4 shadow-sm border border-ink/5 md:block">
-                <p className="font-serif text-sm">Douceur &amp; tenue</p>
-                <p className="mt-1 max-w-[18ch] text-xs leading-relaxed text-ink/60">
-                  Jersey premium qui ne glisse pas, maille respirante — choisi sans compromis.
+                <p className="font-serif text-sm">Sororité &amp; élégance</p>
+                <p className="mt-1 max-w-[20ch] text-xs leading-relaxed text-ink/60">
+                  Quatre teintes, une même douceur — le jersey VELMIRYS qui sublime chaque carnation.
                 </p>
               </div>
             </div>
@@ -256,11 +254,8 @@ export default function Home() {
         </Link>
       </section>
 
-      {/* Box Builder — 3 steps + visuel packaging — serif outline 02 */}
+      {/* Box Builder — 3 steps + visuel packaging */}
       <section className="relative mx-auto max-w-6xl px-6 py-12 md:py-16" aria-labelledby="builder-title">
-        <p aria-hidden="true" className="pointer-events-none absolute -top-2 right-2 hidden select-none font-serif text-[22vw] leading-none tracking-tighter text-outline-accent md:block md:text-[12vw]">
-          02
-        </p>
         <div className="overflow-hidden rounded-[32px] border border-ink/5 bg-sand shadow-sm">
           <div className="grid gap-0 lg:grid-cols-2">
             <div className="p-8 md:p-10 lg:p-12">
@@ -302,26 +297,20 @@ export default function Home() {
               <div className="relative h-full">
                 <ParallaxImage
                   src={IMAGES.packaging}
-                  alt="Boîte cadeau VELMIRYS minimaliste crème ouverte avec papier de soie, présentation premium — emballage offert"
+                  alt="Flat lay VELMIRYS : 6 foulards jersey pliés avec étiquettes, 3 boîtes blanches siglées VELMIRYS avec papier de soie logo, carte THANK YOU et tulipe blanche — packaging réel"
                   sizes="(max-width: 1024px) 100vw, 560px"
-                  aspect="aspect-[4/3] lg:aspect-auto lg:h-full lg:min-h-[520px]"
-                  containerClassName="rounded-2xl"
+                  aspect="aspect-[4/3] lg:aspect-auto lg:h-full lg:min-h-[560px]"
+                  containerClassName="rounded-2xl shadow-lg"
+                  className="object-[center_30%]"
                 />
-                <div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-cream/90 px-4 py-2.5 text-xs font-medium shadow-sm backdrop-blur border border-ink/5">
-                  <span className="h-2 w-2 rounded-full bg-accent" aria-hidden="true" />
-                  Emballage cadeau offert
-                </div>
               </div>
             </ScrollReveal>
           </div>
         </div>
       </section>
 
-      {/* Éditorial — La douceur n'est pas un détail : parallax lifestyle — grain + serif outline 03 */}
+      {/* Éditorial — La douceur n'est pas un détail : parallax lifestyle — grain */}
       <section className="relative mx-auto max-w-6xl px-6 py-24 md:py-28 grain" aria-labelledby="editorial-title">
-        <p aria-hidden="true" className="pointer-events-none absolute -top-4 left-0 hidden select-none font-serif text-[22vw] leading-none tracking-tighter text-outline-ink md:block md:text-[12vw]">
-          03
-        </p>
         <div className="overflow-hidden rounded-[32px] border border-sand bg-cream shadow-sm">
           <div className="grid lg:grid-cols-2">
             <ScrollReveal delay={0.05} className="order-2 lg:order-1">
@@ -378,22 +367,81 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Réassurance — icônes + premium */}
-      <section className="border-t border-sand bg-cream/50" aria-label="Réassurance">
-        <div className="mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-3 md:gap-8">
-          {([1, 2, 3] as const).map((i) => (
-            <ScrollReveal key={i} delay={i * 0.06}>
-              <div className="flex gap-4">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-sand border border-ink/5 shadow-sm">
-                  <ReassuranceIcon name={i === 1 ? "gift" : i === 2 ? "chat" : "truck"} />
-                </div>
-                <div>
-                  <h3 className="font-serif text-[17px] leading-tight">{t(`reassurance.r${i}Title`)}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-ink/60">{t(`reassurance.r${i}Text`)}</p>
-                </div>
-              </div>
-            </ScrollReveal>
-          ))}
+      {/* Nos Engagements — repris de Stitch Luxury Scarf Landing Page Enriched § Nos engagements */}
+      <section className="mx-auto max-w-6xl px-6 py-24 md:py-28 text-center grain relative overflow-hidden" aria-labelledby="engagements-title">
+        <ScrollReveal>
+          <h2 id="engagements-title" className="relative font-serif text-3xl tracking-tight md:text-4xl">
+            {t("engagements.title")}
+          </h2>
+        </ScrollReveal>
+        <div className="relative mt-14 grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-8">
+          {/* Qualité Supérieure */}
+          <ScrollReveal delay={0.06}>
+            <div className="flex flex-col items-center">
+              <span className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-sand border border-ink/5 shadow-sm text-ink/70" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-6 w-6" aria-hidden="true">
+                  <path d="M12 2.5l3.4 3.4L12 9.3 8.6 5.9 12 2.5z" />
+                  <path d="M8.6 5.9l3.4 3.4 3.4-3.4L12 2.5 8.6 5.9z" opacity={0.6} />
+                  <path d="M6 7l6 13 6-13-2.6-1.1L12 9.3 8.6 5.9 6 7z" />
+                </svg>
+              </span>
+              <h3 className="text-xs tracking-[0.18em] font-medium text-ink">{t("engagements.e1Title")}</h3>
+              <p className="mt-3 max-w-xs text-sm leading-relaxed text-ink/60">{t("engagements.e1Text")}</p>
+            </div>
+          </ScrollReveal>
+          {/* Douceur Absolue */}
+          <ScrollReveal delay={0.12}>
+            <div className="flex flex-col items-center">
+              <span className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-sand border border-ink/5 shadow-sm text-ink/70" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-6 w-6" aria-hidden="true">
+                  <path d="M3 12c1.5-1 2.5-1 4 0s2.5 1 4 0 2.5-1 4 0 2.5 1 4 0" />
+                  <path d="M3 8c1.5-1 2.5-1 4 0s2.5 1 4 0 2.5-1 4 0 2.5 1 4 0" opacity={0.5} />
+                  <path d="M3 16c1.5-1 2.5-1 4 0s2.5 1 4 0 2.5-1 4 0 2.5 1 4 0" opacity={0.5} />
+                </svg>
+              </span>
+              <h3 className="text-xs tracking-[0.18em] font-medium text-ink">{t("engagements.e2Title")}</h3>
+              <p className="mt-3 max-w-xs text-sm leading-relaxed text-ink/60">{t("engagements.e2Text")}</p>
+            </div>
+          </ScrollReveal>
+          {/* Sélection à la Main */}
+          <ScrollReveal delay={0.18}>
+            <div className="flex flex-col items-center">
+              <span className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-sand border border-ink/5 shadow-sm text-ink/70" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-6 w-6" aria-hidden="true">
+                  <path d="M11 13l-2.5-2.5a1.8 1.8 0 0 1 2.5-2.5L12 9l1-1a1.8 1.8 0 1 1 2.5 2.5L13 13l-2 2-2-2z" />
+                  <path d="M7 15l-1.5 1.5a1.2 1.2 0 0 1-1.7-1.7L6 12" opacity={0.6} />
+                  <path d="M17 15l1.5 1.5a1.2 1.2 0 0 1-1.7 1.7L15 16" opacity={0.6} />
+                </svg>
+              </span>
+              <h3 className="text-xs tracking-[0.18em] font-medium text-ink">{t("engagements.e3Title")}</h3>
+              <p className="mt-3 max-w-xs text-sm leading-relaxed text-ink/60">{t("engagements.e3Text")}</p>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Avis clients — repris de Stitch § Testimonials */}
+      <section className="bg-sand/40 border-y border-sand" aria-labelledby="testimonials-title">
+        <div className="mx-auto max-w-6xl px-6 py-20 md:py-24 text-center">
+          <ScrollReveal>
+            <p id="testimonials-title" className="text-xs tracking-[0.28em] text-ink/50">{t("testimonials.surtitle")}</p>
+          </ScrollReveal>
+          <ScrollReveal delay={0.06}>
+            <div className="mx-auto mt-10 max-w-3xl">
+              <p className="font-serif text-[22px] leading-relaxed md:text-[26px] md:leading-[1.6] text-ink/90 italic">
+                &ldquo;{t("testimonials.quote")}&rdquo;
+              </p>
+              <div className="mx-auto mt-6 h-px w-10 bg-ink/15" aria-hidden="true" />
+              <p className="mt-6 text-xs tracking-[0.16em] font-medium text-ink/60">{t("testimonials.author")}</p>
+            </div>
+          </ScrollReveal>
+          <ScrollReveal delay={0.12}>
+            <div className="mt-8 flex justify-center gap-2" role="tablist" aria-label="Témoignages">
+              <span className="h-2 w-2 rounded-full bg-ink" aria-current="true" aria-label="Avis 1" />
+              <span className="h-2 w-2 rounded-full bg-ink/15" aria-label="Avis 2" />
+              <span className="h-2 w-2 rounded-full bg-ink/15" aria-label="Avis 3" />
+            </div>
+          </ScrollReveal>
         </div>
       </section>
     </>

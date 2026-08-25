@@ -1,0 +1,120 @@
+- generic [active] [ref=f10e1]:
+  - banner [ref=f10e2]:
+    - generic [ref=f10e3]:
+      - link "VELMIRYS" [ref=f10e4] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=f10e5]:
+        - link "Boutique" [ref=f10e6] [cursor=pointer]:
+          - /url: /boutique
+        - link "Box cadeau" [ref=f10e7] [cursor=pointer]:
+          - /url: /box
+        - link "À propos" [ref=f10e8] [cursor=pointer]:
+          - /url: /a-propos
+        - link "Contact" [ref=f10e9] [cursor=pointer]:
+          - /url: /contact
+      - generic [ref=f10e10]:
+        - button "Panier — 0 articles" [ref=f10e11]: Panier (0)
+        - link "Voir" [ref=f10e12] [cursor=pointer]:
+          - /url: /panier
+  - main [ref=f10e13]:
+    - generic [ref=f10e14]:
+      - generic [ref=f10e15]:
+        - heading "Composez votre box" [level=1] [ref=f10e16]
+        - paragraph [ref=f10e17]: Choisissez 2 à 5 articles. La boîte, le papier de soie et la carte sont offerts.
+      - generic [ref=f10e18]:
+        - generic [ref=f10e19]: 1. Choisissez
+        - generic [ref=f10e20]: 2. Personnalisez
+        - generic [ref=f10e21]: 3. Prévisualisez
+      - generic [ref=f10e22]:
+        - generic [ref=f10e29]:
+          - generic [ref=f10e30]:
+            - heading "Vos articles (2/5)" [level=3] [ref=f10e219]
+            - generic [ref=f10e32]: 2 article(s) — vous pouvez personnaliser.
+          - list [ref=f10e212]:
+            - listitem [ref=f10e213]:
+              - generic [ref=f10e215]: Bonnet Sous-Hijab — Chocolat
+              - generic [ref=f10e216]: 5 000 F CFA
+              - button "Retirer Bonnet Sous-Hijab — Chocolat" [ref=f10e217]: Retirer
+            - listitem [ref=f10e220]:
+              - generic [ref=f10e222]: Bonnet Sous-Hijab — Bordeaux
+              - generic [ref=f10e223]: 5 000 F CFA
+              - button "Retirer Bonnet Sous-Hijab — Bordeaux" [ref=f10e224]: Retirer
+          - paragraph [ref=f10e218]: "Total : 10 000 F CFA 16,00 €"
+          - paragraph [ref=f10e33]: Emballage cadeau offert
+        - generic [ref=f10e225]:
+          - generic [ref=f10e226]:
+            - heading "Votre message" [level=3] [ref=f10e227]
+            - generic [ref=f10e228]: Votre message cadeau (optionnel)
+            - textbox "Quelques mots pour elle…" [ref=f10e229]
+            - generic [ref=f10e230]:
+              - generic [ref=f10e231]: 250 caractères maximum, imprimés sur la carte.
+              - generic [ref=f10e232]: 0/250
+            - generic [ref=f10e233]:
+              - button "Joyeux anniversaire 🤍 Tu mérites le plus beau." [ref=f10e234]
+              - button "Merci d'être toi, tout simplement." [ref=f10e235]
+              - button "Une petite attention, juste parce que." [ref=f10e236]
+          - generic [ref=f10e237]:
+            - heading "Choisissez la carte" [level=3] [ref=f10e238]
+            - generic [ref=f10e239]:
+              - button "Thank You — Floral Thank You — Floral" [ref=f10e240]:
+                - generic [ref=f10e241]: Thank You — Floral
+                - paragraph [ref=f10e243]: Thank You — Floral
+              - button "Minimal — Crème Minimal — Crème" [ref=f10e244]:
+                - generic [ref=f10e245]: Minimal — Crème
+                - paragraph [ref=f10e247]: Minimal — Crème
+          - generic [ref=f10e248]:
+            - button "Modifier le contenu" [ref=f10e249]
+            - button "Voir ma box" [ref=f10e250]
+  - contentinfo [ref=f10e168]:
+    - generic [ref=f10e169]:
+      - paragraph [ref=f10e171]: VELMIRYS
+      - generic [ref=f10e172]:
+        - paragraph [ref=f10e173]: Boutique
+        - list [ref=f10e174]:
+          - listitem [ref=f10e175]:
+            - link "Foulards" [ref=f10e176] [cursor=pointer]:
+              - /url: /boutique
+          - listitem [ref=f10e177]:
+            - link "Bonnets" [ref=f10e178] [cursor=pointer]:
+              - /url: /boutique
+          - listitem [ref=f10e179]:
+            - link "Épingles" [ref=f10e180] [cursor=pointer]:
+              - /url: /boutique
+          - listitem [ref=f10e181]:
+            - link "Box cadeau" [ref=f10e182] [cursor=pointer]:
+              - /url: /box
+      - generic [ref=f10e183]:
+        - paragraph [ref=f10e184]: Aide
+        - list [ref=f10e185]:
+          - listitem [ref=f10e186]:
+            - link "Contact" [ref=f10e187] [cursor=pointer]:
+              - /url: /contact
+          - listitem [ref=f10e188]:
+            - link "Livraison & retours" [ref=f10e189] [cursor=pointer]:
+              - /url: /legal/livraison-retours
+      - generic [ref=f10e190]:
+        - paragraph [ref=f10e191]: Suivez-nous
+        - list [ref=f10e192]:
+          - listitem [ref=f10e193]: Instagram
+          - listitem [ref=f10e194]: TikTok
+    - generic [ref=f10e195]:
+      - text: © 2026 VELMIRYS ·
+      - link "CGV" [ref=f10e196] [cursor=pointer]:
+        - /url: /legal/cgv
+      - text: ·
+      - link "Confidentialité" [ref=f10e197] [cursor=pointer]:
+        - /url: /legal/confidentialite
+  - button "Open Next.js Dev Tools" [ref=f10e203] [cursor=pointer]
+  - alert [ref=f10e207]
+  - generic:
+    - button
+    - dialog:
+      - banner:
+        - heading [level=2]: Panier (0)
+        - button: ✕
+      - generic:
+        - generic:
+          - paragraph: Votre panier est vide.
+          - link:
+            - /url: /boutique
+            - text: Découvrir la boutique

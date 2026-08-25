@@ -1,0 +1,173 @@
+- generic [active] [ref=f3e1]:
+  - link "Aller au contenu principal" [ref=f3e2] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=f3e3]:
+    - generic [ref=f3e4]:
+      - link "VELMIRYS — Accueil" [ref=f3e5] [cursor=pointer]:
+        - /url: /
+        - text: VELMIRYS
+      - generic [ref=f3e6]:
+        - generic [ref=f3e7]: FCFA
+        - button "Panier — 0 articles" [ref=f3e10]
+        - button "Ouvrir le menu" [ref=f3e15]:
+          - generic [ref=f3e16]: ☰
+  - main [ref=f3e17]:
+    - region [ref=f3e18]:
+      - generic [ref=f3e19]:
+        - generic [ref=f3e20]:
+          - paragraph [ref=f3e22]: VELMIRYS
+          - heading "Le voile, porté comme un présent." [level=1] [ref=f3e24]
+          - paragraph [ref=f3e26]: Des foulards d'exception, une palette de teintes douces, et des box cadeaux composées à la main.
+          - generic [ref=f3e28]:
+            - link "Composer votre box" [ref=f3e29] [cursor=pointer]:
+              - /url: /box
+            - link "Découvrir la boutique" [ref=f3e30] [cursor=pointer]:
+              - /url: /boutique
+          - generic [ref=f3e32]:
+            - generic [ref=f3e33]: Emballage offert
+            - generic [ref=f3e35]: Jersey qui ne glisse pas
+        - img "Portrait d'une femme élégante portant un hijab en jersey crème, lumière naturelle douce, fond neutre — univers VELMIRYS" [ref=f3e39]
+    - region [ref=f3e40]:
+      - generic [ref=f3e41]:
+        - generic [ref=f3e43]:
+          - paragraph [ref=f3e44]: MANIFESTE
+          - heading "Un beau tissu se donne comme il se porte — avec intention." [level=2] [ref=f3e45]
+          - paragraph [ref=f3e46]: Chez VELMIRYS, chaque voile est choisi pour sa douceur, chaque teinte pour sa justesse. Nous plions, emballons et glissons une carte à la main, parce qu'un cadeau commence bien avant l'ouverture de la boîte.
+          - link "Découvrir notre univers" [ref=f3e47] [cursor=pointer]:
+            - /url: /a-propos
+            - text: Découvrir notre univers
+            - generic [ref=f3e48]: →
+        - img "Portrait d'une femme élégante portant un hijab en jersey crème, lumière naturelle douce, fond neutre — univers VELMIRYS" [ref=f3e52]
+    - region [ref=f3e53]:
+      - generic [ref=f3e56]:
+        - paragraph [ref=f3e57]: PALETTE
+        - heading "Six teintes, une seule exigence." [level=2] [ref=f3e58]
+        - paragraph [ref=f3e59]: Du rose poudré au bleu ardoise, notre palette est pensée pour flatter toutes les carnations et traverser les saisons. Trouvez la vôtre.
+      - generic [ref=f3e60]:
+        - 'link "Voir ce coloris : Rose poudré" [ref=f3e62] [cursor=pointer]':
+          - /url: /boutique
+          - generic [ref=f3e63]: Voir
+          - generic [ref=f3e66]: Rose poudré
+        - 'link "Voir ce coloris : Bleu ardoise" [ref=f3e68] [cursor=pointer]':
+          - /url: /boutique
+          - generic [ref=f3e69]: Voir
+          - generic [ref=f3e72]: Bleu ardoise
+        - 'link "Voir ce coloris : Mauve brume" [ref=f3e74] [cursor=pointer]':
+          - /url: /boutique
+          - generic [ref=f3e75]: Voir
+          - generic [ref=f3e78]: Mauve brume
+        - 'link "Voir ce coloris : Crème nude" [ref=f3e80] [cursor=pointer]':
+          - /url: /boutique
+          - generic [ref=f3e81]: Voir
+          - generic [ref=f3e84]: Crème nude
+        - 'link "Voir ce coloris : Noir" [ref=f3e86] [cursor=pointer]':
+          - /url: /boutique
+          - generic [ref=f3e87]: Voir
+          - generic [ref=f3e90]: Noir
+        - 'link "Voir ce coloris : Bordeaux" [ref=f3e92] [cursor=pointer]':
+          - /url: /boutique
+          - generic [ref=f3e93]: Voir
+          - generic [ref=f3e96]: Bordeaux
+      - link "Toute la boutique" [ref=f3e97] [cursor=pointer]:
+        - /url: /boutique
+        - text: Toute la boutique
+        - generic [ref=f3e98]: →
+    - region [ref=f3e99]:
+      - generic [ref=f3e101]:
+        - generic [ref=f3e102]:
+          - generic [ref=f3e103]:
+            - paragraph [ref=f3e104]: BOX CADEAU
+            - heading "Composez une box à son image" [level=2] [ref=f3e105]
+            - paragraph [ref=f3e106]: "Un foulard dans sa teinte préférée, un bonnet assorti, des épingles délicates… Choisissez 2 à 5 articles, ajoutez vos mots : nous nous chargeons du reste."
+          - generic [ref=f3e107]:
+            - generic [ref=f3e109]:
+              - paragraph [ref=f3e110]: "1"
+              - generic [ref=f3e111]:
+                - heading "Choisissez" [level=3] [ref=f3e112]
+                - paragraph [ref=f3e113]: 2 à 5 articles parmi nos foulards, bonnets et épingles.
+            - generic [ref=f3e115]:
+              - paragraph [ref=f3e116]: "2"
+              - generic [ref=f3e117]:
+                - heading "Personnalisez" [level=3] [ref=f3e118]
+                - paragraph [ref=f3e119]: "Une carte, un message : les mots qui comptent, imprimés avec soin."
+            - generic [ref=f3e121]:
+              - paragraph [ref=f3e122]: "3"
+              - generic [ref=f3e123]:
+                - heading "Offrez" [level=3] [ref=f3e124]
+                - paragraph [ref=f3e125]: L'emballage cadeau est offert. Elle n'a plus qu'à ouvrir.
+          - link "Commencer ma box" [ref=f3e127] [cursor=pointer]:
+            - /url: /box
+        - generic [ref=f3e129]:
+          - img "Boîte cadeau VELMIRYS minimaliste crème ouverte avec papier de soie, présentation premium — emballage offert" [ref=f3e131]
+          - generic [ref=f3e132]: Emballage cadeau offert
+    - region [ref=f3e134]:
+      - generic [ref=f3e136]:
+        - img "Tissu en soie drapé couleur blush aux plis fluides, gros plan texture premium — douceur VELMIRYS" [ref=f3e139]
+        - generic [ref=f3e140]:
+          - generic [ref=f3e141]:
+            - paragraph [ref=f3e142]: ÉDITORIAL
+            - heading "La douceur n'est pas un détail." [level=2] [ref=f3e143]
+            - paragraph [ref=f3e144]: Un jersey fluide qui ne glisse pas, une maille respirante qui tient toute la journée, des finitions nettes. Nous choisissons nos tissus comme on choisit un tissu pour soi — sans compromis.
+          - generic [ref=f3e146]:
+            - img "Gros plan texture tissu lin naturel beige, maille respirante et fibres — qualité VELMIRYS" [ref=f3e148]
+            - generic [ref=f3e149]:
+              - paragraph [ref=f3e150]: Maille respirante
+              - paragraph [ref=f3e151]: Tenue toute la journée, finitions nettes — choisi comme pour soi.
+          - link "Découvrir les matières" [ref=f3e153] [cursor=pointer]:
+            - /url: /boutique
+            - text: Découvrir les matières
+            - generic [ref=f3e154]: →
+    - region "Réassurance" [ref=f3e155]:
+      - generic [ref=f3e156]:
+        - generic [ref=f3e163]:
+          - heading "Emballage soigné offert" [level=3] [ref=f3e164]
+          - paragraph [ref=f3e165]: Boîte brandée, papier de soie et carte dans chaque commande.
+        - generic [ref=f3e173]:
+          - heading "Commande simple" [level=3] [ref=f3e174]
+          - paragraph [ref=f3e175]: "Validez votre panier : tout se confirme sur WhatsApp en quelques minutes."
+        - generic [ref=f3e184]:
+          - heading "Livraison" [level=3] [ref=f3e185]
+          - paragraph [ref=f3e186]: Zones et délais confirmés sur WhatsApp lors de la commande.
+  - contentinfo "Pied de page" [ref=f3e187]:
+    - generic [ref=f3e188]:
+      - paragraph [ref=f3e190]: VELMIRYS
+      - navigation "Boutique" [ref=f3e191]:
+        - paragraph [ref=f3e192]: Boutique
+        - list [ref=f3e193]:
+          - listitem [ref=f3e194]:
+            - link "Foulards" [ref=f3e195] [cursor=pointer]:
+              - /url: /boutique
+          - listitem [ref=f3e196]:
+            - link "Bonnets" [ref=f3e197] [cursor=pointer]:
+              - /url: /boutique
+          - listitem [ref=f3e198]:
+            - link "Épingles" [ref=f3e199] [cursor=pointer]:
+              - /url: /boutique
+          - listitem [ref=f3e200]:
+            - link "Box cadeau" [ref=f3e201] [cursor=pointer]:
+              - /url: /box
+      - navigation "Aide et informations" [ref=f3e202]:
+        - paragraph [ref=f3e203]: Aide
+        - list [ref=f3e204]:
+          - listitem [ref=f3e205]:
+            - link "À propos" [ref=f3e206] [cursor=pointer]:
+              - /url: /a-propos
+          - listitem [ref=f3e207]:
+            - link "Contact" [ref=f3e208] [cursor=pointer]:
+              - /url: /contact
+          - listitem [ref=f3e209]:
+            - link "Livraison & retours" [ref=f3e210] [cursor=pointer]:
+              - /url: /legal/livraison-retours
+      - generic [ref=f3e211]:
+        - paragraph [ref=f3e212]: Suivez-nous
+        - list [ref=f3e213]:
+          - listitem [ref=f3e214]: Instagram
+          - listitem [ref=f3e215]: TikTok
+    - generic [ref=f3e216]:
+      - text: © 2026 VELMIRYS ·
+      - link "CGV" [ref=f3e217] [cursor=pointer]:
+        - /url: /legal/cgv
+      - text: ·
+      - link "Confidentialité" [ref=f3e218] [cursor=pointer]:
+        - /url: /legal/confidentialite
+  - button "Open Next.js Dev Tools" [ref=f3e224] [cursor=pointer]

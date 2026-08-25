@@ -60,6 +60,14 @@
         "BLENDER_EXECUTABLE": "C:\\Program Files\\Blender Foundation\\Blender 5.2\\blender.exe"
       },
       "timeout": 120000
+    },
+    "stitch": {
+      "type": "remote",
+      "url": "https://stitch.googleapis.com/mcp",
+      "enabled": true,
+      "headers": {
+        "X-Goog-Api-Key": "AQ.Ab8RN6Ksfnb0kIJmxEGyMX2d1dmSDWLhNHByIHnHdme1dhUBLw"
+      }
     }
   }
 }

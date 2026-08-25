@@ -1,0 +1,21 @@
+﻿
+> web@0.1.0 dev C:\Users\Hp Elitebook\Desktop\Site Oumou\web
+> next dev
+
+Ôû▓ Next.js 16.3.1 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.56.1:3000
+- Environments: .env.local
+Ô£ô Ready in 829ms
+Ô£ô Running next.config.ts took 96ms
+node.exe : ÔÜá The Edge Runtime is deprecated. You can use the "nodejs" runtime instead. Learn more: 
+https://nextjs.org/docs/messages/edge-runtime-deprecated
+Au caractère C:\Program Files\nodejs\pnpm.ps1:16 : 5
++     & "$basedir/node$exe"  "$basedir/node_modules/corepack/dist/pnpm. ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (ÔÜá The Edge Ru...time-deprecated:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+- Experiments (use with caution):
+  ┬À optimizePackageImports
+

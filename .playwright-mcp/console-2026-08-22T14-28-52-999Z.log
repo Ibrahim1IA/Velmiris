@@ -1,0 +1,11 @@
+[    1067ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[    1091ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[    1422ms] [WARNING] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead. @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[   24047ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_TIMED_OUT @ https://raw.githubusercontent.com/pmndrs/drei-assets/456060a26bbeb8fdf79326f224b6d99b8bcce736/hdri/studio_small_03_1k.hdr:0
+[   24053ms] Error: Could not load studio_small_03_1k.hdr: Failed to fetch
+    at Object.onError (http://localhost:3000/_next/static/chunks/1km3_%40react-three_fiber_dist_031j2i-._.js:1272:48)
+    at http://localhost:3000/_next/static/chunks/0hqc_three_build_three_core_15pyy7s.js:32370:48
+[   24066ms] Error: Could not load studio_small_03_1k.hdr: Failed to fetch
+    at Object.onError (http://localhost:3000/_next/static/chunks/1km3_%40react-three_fiber_dist_031j2i-._.js:1272:48)
+    at http://localhost:3000/_next/static/chunks/0hqc_three_build_three_core_15pyy7s.js:32370:48
+[   24631ms] [LOG] THREE.WebGLRenderer: Context Lost. @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776

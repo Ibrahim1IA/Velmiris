@@ -86,11 +86,11 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     inLanguage: "fr-FR",
   };
   return (
-    <html lang="fr" className="h-full antialiased">
+    <html lang="fr" className="h-full antialiased" suppressHydrationWarning>
       <head>
         <Umami />
       </head>
-      <body className="min-h-full flex flex-col bg-cream text-ink font-sans">
+      <body className="min-h-full flex flex-col bg-cream text-ink font-sans" suppressHydrationWarning>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}

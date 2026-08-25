@@ -1,0 +1,35 @@
+[     177ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[     196ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[     661ms] [WARNING] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead. @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[   11322ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[   11342ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[   11798ms] [WARNING] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead. @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[   48367ms] [ERROR] Cannot update a component (`%s`) while rendering a different component (`%s`). To locate the bad setState() call inside `%s`, follow the stack trace as described in https://react.dev/link/setstate-in-render BoxBuilder BoxBuilder BoxBuilder @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:1052
+[  120074ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  120161ms] [LOG] [Fast Refresh] done in 54ms @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  120285ms] [LOG] [Fast Refresh] done in 54ms @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  120676ms] [LOG] THREE.WebGLRenderer: Context Lost. @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  132687ms] [LOG] [Fast Refresh] done in 54ms @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  132808ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  132826ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  133303ms] [WARNING] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead. @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  192634ms] [LOG] [BoxBuilder] handleAdd chocolat @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  193259ms] [LOG] [BoxBuilder] handleFlyingDone chocolat @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  193259ms] [LOG] [BoxBuilder] addItem chocolat @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  193261ms] [LOG] [BoxBuilder] addItem chocolat @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  193261ms] [ERROR] Cannot update a component (`%s`) while rendering a different component (`%s`). To locate the bad setState() call inside `%s`, follow the stack trace as described in https://react.dev/link/setstate-in-render BoxBuilder BoxBuilder BoxBuilder @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:1052
+[  255141ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  255733ms] [LOG] [Fast Refresh] done in 91ms @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  255752ms] [LOG] THREE.WebGLRenderer: Context Lost. @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  271216ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  271232ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  271678ms] [WARNING] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead. @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  299393ms] [LOG] [BoxBuilder] handleAdd chocolat @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  300017ms] [LOG] [BoxBuilder] handleFlyingDone chocolat @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  300018ms] [LOG] [BoxBuilder] addItem chocolat @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  339640ms] [LOG] [BoxBuilder] handleAdd bordeaux @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  340264ms] [LOG] [BoxBuilder] handleFlyingDone bordeaux @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  340264ms] [LOG] [BoxBuilder] addItem bordeaux @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  421332ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  421460ms] [LOG] [Fast Refresh] done in 39ms @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776
+[  421945ms] [LOG] THREE.WebGLRenderer: Context Lost. @ http://localhost:3000/_next/static/chunks/00sk_next_dist_0auxod_._.js:776

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Velmirys - Des foulards d'exception</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600&amp;family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-surface-variant": "#444748",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-background": "#1d1c16",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#474746",
+                        "on-secondary-container": "#65645f",
+                        "surface-variant": "#e7e2d9",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#4a473e",
+                        "surface-bright": "#fef9f0",
+                        "surface-container": "#f3ede4",
+                        "outline": "#747878",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-container": "#888379",
+                        "surface-tint": "#5f5e5e",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#1e1c14",
+                        "on-primary-fixed": "#1c1b1b",
+                        "surface-dim": "#ded9d1",
+                        "tertiary": "#000000",
+                        "primary": "#000000",
+                        "secondary-fixed": "#e5e2db",
+                        "secondary-fixed-dim": "#c9c6c0",
+                        "inverse-surface": "#32302b",
+                        "on-primary-container": "#858383",
+                        "surface-container-high": "#ede8df",
+                        "inverse-primary": "#c8c6c5",
+                        "on-surface": "#1d1c16",
+                        "outline-variant": "#c4c7c7",
+                        "background": "#fef9f0",
+                        "inverse-on-surface": "#f5f0e7",
+                        "tertiary-fixed": "#e8e2d6",
+                        "on-secondary-fixed": "#1c1c18",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "on-tertiary-fixed": "#1e1c14",
+                        "surface-container-low": "#f8f3ea",
+                        "on-secondary-fixed-variant": "#474742",
+                        "error-container": "#ffdad6",
+                        "surface-container-highest": "#e7e2d9",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed": "#e5e2e1",
+                        "secondary-container": "#e5e2db",
+                        "surface": "#fef9f0",
+                        "secondary": "#5f5e59",
+                        "tertiary-fixed-dim": "#cbc6ba",
+                        "primary-container": "#1c1b1b"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "unit": "8px",
+                        "stack-sm": "16px",
+                        "gutter": "24px",
+                        "margin-desktop": "64px",
+                        "section-gap": "120px",
+                        "container-max": "1280px",
+                        "margin-mobile": "20px",
+                        "stack-md": "32px"
+                    },
+                    fontFamily: {
+                        "headline-sm": ["Libre Caslon Text", "serif"],
+                        "label-caps": ["Hanken Grotesk", "sans-serif"],
+                        "body-lg": ["Hanken Grotesk", "sans-serif"],
+                        "display-lg": ["Libre Caslon Text", "serif"],
+                        "headline-md": ["Libre Caslon Text", "serif"],
+                        "testimonial-quote": ["Libre Caslon Text", "serif"],
+                        "display-lg-mobile": ["Libre Caslon Text", "serif"],
+                        "body-md": ["Hanken Grotesk", "sans-serif"]
+                    },
+                    fontSize: {
+                        "headline-sm": ["24px", { "lineHeight": "32px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "display-lg": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+                        "headline-md": ["32px", { "lineHeight": "40px", "fontWeight": "400" }],
+                        "testimonial-quote": ["28px", { "lineHeight": "42px", "fontWeight": "400" }],
+                        "display-lg-mobile": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.surface');
+            color: theme('colors.on-surface');
+            -webkit-font-smoothing: antialiased;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex flex-col min-h-screen">
+<!-- Top Navigation -->
+<nav class="bg-surface dark:bg-surface w-full top-0 sticky z-50 transition-all duration-300">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-unit w-full max-w-container-max mx-auto h-16">
+<!-- Mobile Menu Toggle (Left) -->
+<button aria-label="Menu" class="md:hidden text-primary dark:text-on-primary-fixed hover:opacity-70 transition-opacity p-2 -ml-2">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<!-- Brand Logo (Center) -->
+<a class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg tracking-tighter text-primary dark:text-on-primary-fixed absolute left-1/2 transform -translate-x-1/2" href="#">
+                LUMINA
+            </a>
+<!-- Right Actions -->
+<div class="flex items-center gap-4">
+<span class="hidden md:inline-flex font-label-caps text-label-caps text-primary border border-outline px-3 py-1 rounded-full cursor-pointer hover:bg-surface-container transition-colors">FR</span>
+<button aria-label="Cart" class="text-primary dark:text-on-primary-fixed hover:opacity-70 transition-opacity relative p-2 -mr-2">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+<span class="absolute top-1 right-1 bg-primary text-on-primary text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
+</button>
+</div>
+</div>
+</nav>
+<main class="flex-grow">
+<!-- Hero Section -->
+<section class="relative w-full h-[707px] min-h-[600px] flex items-center">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover" data-alt="A high-end editorial photograph of a beautiful woman wearing a luxurious flowing scarf in a sun-drenched field. The lighting is golden and warm, casting soft shadows. The overall mood is elegant, serene, and sophisticated, reflecting a soft luxury aesthetic. Warm color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzPQB8vsO3OB3quMkafaiirJp75VD3mzuvasMWpb4X1JJQNc7jiCdQu04sWTpLJL1-9gZfRWmW_iVIvADetEEXaoSEQnjhAH13jyQFXFUpvvnw-Dy7uBD25y2dbkhPZwNk7IgCf8eol5XTQaov8py5dhEk0jGfgExSexI40TL2UTugv7zmMIzc0T0CHaZBwy-Vhz3eVeCmZTwPUDG4NNjmGCOH6i8fo-pUBuGK3lfgTCLFzQk8_L3M"/>
+<div class="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent"></div>
+</div>
+<div class="relative z-10 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full text-white">
+<span class="font-label-caps text-label-caps tracking-widest uppercase mb-4 block opacity-90">VELMIRYS</span>
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg mb-6 max-w-2xl leading-tight text-white">
+                    Le voile, porté comme un présent.
+                </h1>
+<p class="font-body-lg text-body-lg mb-8 max-w-xl opacity-90 text-white">
+                    Des foulards d'exception, une palette de teintes douces, et des box cadeaux composées à la main.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="bg-white text-primary px-8 py-4 rounded-full font-body-md text-body-md font-semibold text-center hover:bg-surface-container transition-colors" href="#">Composer ma box</a>
+<a class="bg-transparent border border-white text-white px-8 py-4 rounded-full font-body-md text-body-md font-semibold text-center hover:bg-white/10 transition-colors" href="#">Découvrir la boutique</a>
+</div>
+</div>
+</section>
+<!-- Best Sellers Carousel -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<h2 class="font-headline-md text-headline-md mb-8 text-primary">Best Sellers</h2>
+<div class="flex gap-gutter overflow-x-auto hide-scrollbar pb-4 snap-x">
+<!-- Item 1 -->
+<div class="flex-none w-[200px] md:w-[280px] snap-start">
+<div class="aspect-square rounded-lg overflow-hidden mb-4 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A close-up photograph of a delicately folded silk scarf in a soft, dusty pink color (Rose Poudré). The texture is highly detailed, showing the luxurious drape and subtle sheen of the fabric. Soft, diffused lighting emphasizes the premium quality. Clean cream background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxYaEND8f1hmEaAUuzShE2SnPC3q3qvHfLKyX8zmLXfJV5VUYMi7HqPq1TE_iL9ud33qPwFnNt7kuWEt3Ok7XtVZMjO2yMW1y6Hvaz_NDQJKaqGJpdF9kNk3yGgMCKo5lGXBAOtY3MSg7qrkQYVpHeTrGYjOcAokH7bnmd6hOSJ5FajH6AQ4QYd046HzubEwydK_ZNpmlVq8IinSRbmHkH7A7oursgq-zqBq3KkDu1F_FBCeJlphzO"/>
+</div>
+<h3 class="font-body-md text-body-md text-primary font-semibold">Rose Poudré</h3>
+<p class="font-body-md text-body-md text-secondary">$13,00</p>
+</div>
+<!-- Item 2 -->
+<div class="flex-none w-[200px] md:w-[280px] snap-start">
+<div class="aspect-square rounded-lg overflow-hidden mb-4 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A close-up photograph of a luxuriously folded silk scarf in a sophisticated slate blue color (Bleu Ardoise). The lighting highlights the smooth, fluid folds of the fabric, conveying a sense of quiet elegance. Minimalist cream background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQ2DhzbIGjP7eXMEiFgMNGiImUmZ8wpbBtRpz3GEKOQnHbARq9m94P45L0A3Sp3hEqa-SevYQvwy7F4HJBJYdPrmrH-VW59PdYdSOOJlcLncPbV9j00kmwuUor3Nw6ZCLaFGb18Itf3UuyT2Dz0aNO8NO1tZzsBzE0vxDn8wxmbCBeXk_g6pvRT09Yk1s4k7DQ6R_pfHsVPApiFUZj0_fd1mzufZwsfrEz7LSZXyIY_6xhCYRJwIZ6"/>
+</div>
+<h3 class="font-body-md text-body-md text-primary font-semibold">Bleu Ardoise</h3>
+<p class="font-body-md text-body-md text-secondary">$19,00</p>
+</div>
+<!-- Item 3 -->
+<div class="flex-none w-[200px] md:w-[280px] snap-start">
+<div class="aspect-square rounded-lg overflow-hidden mb-4 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A close-up photograph of a softly draped silk scarf in a muted lavender hue (Mauve Lavande). The fabric looks exceptionally soft and lightweight, with gentle shadows enhancing its tactile quality. Shot against a neutral warm cream background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8U-6ruCvk9sUA1qArTDxaY_R6NkWAEzQ9jiaIeYu4FUlPpbBLSleKoNLe_RjRnz1e9aBP-AL3sZ_LtxmxCrw3YHV2wIr0mpU_5qRjt0y1AByRbeQ1XoqTM7mZenRI6i2S-AL1FezOWVnpb1g0hHsMgz6svxNiw4kyYZRVnmBoWd7vdakJW8v5P0juUpeatqbJk_vfB6rkHB3g89ADsIGlcrMs39Vzc2dVkXp0VEt7kQ1do6dkIINB"/>
+</div>
+<h3 class="font-body-md text-body-md text-primary font-semibold">Mauve Lavande</h3>
+<p class="font-body-md text-body-md text-secondary">$16,00</p>
+</div>
+<!-- Item 4 -->
+<div class="flex-none w-[200px] md:w-[280px] snap-start">
+<div class="aspect-square rounded-lg overflow-hidden mb-4 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A close-up photograph of a premium silk scarf in a creamy nude tone (Crème Nude). The intricate folds create a beautiful interplay of light and shadow, emphasizing the material's sheen and delicate nature. Elegant, soft luxury aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBA5x1jkvHfRv2FwlLHf-9pDLFBdFYhsqP1MIzkAqCXtAeWy78NhyOkOUHNzjqv8AQvRnJtaHjVL1RM6eAYRQ7Fy0U85wmzrQJDxAqcVyOnbZmQYOkVdAtiYz0cCYtJxHWQ1zygFgCDsoJ9mgQtF9hIlnZcqbJ9FR2TB_g9vCYr9OjDGRkSDrxcYOoAbK8KofffI147WNzWjrAzCqWH-noEctPf2OvZuTTxsYGZO44hnRANVlmdtSad"/>
+</div>
+<h3 class="font-body-md text-body-md text-primary font-semibold">Crème Nude</h3>
+<p class="font-body-md text-body-md text-secondary">$16,00</p>
+</div>
+<!-- Item 5 -->
+<div class="flex-none w-[200px] md:w-[280px] snap-start">
+<div class="aspect-square rounded-lg overflow-hidden mb-4 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A close-up photograph of a patterned silk scarf featuring black, beige, and abstract shapes. The fabric is elegantly crumpled, highlighting the dynamic pattern and rich texture. Shot in a soft, bright environment suitable for a luxury brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFHTuuoiAauzLd7w-Ytlydxd4AwDnhhvaHlkB7V59zOJ4thVOWIHnUKGKzmuWt2e68phmjwlSySy45U7e34ROS_deOK-oeo-8hmpsleCxtroIG8b9nWboR020DG0xcDA4-xcICOpZY2LT-Tfxk5xh6s1Es6JKfxitClk7kPTZ2Pdc3eSEYXGr791h1MZZ9iMFCu35IH28avqAQNrBxC53EUFUTNdiw7lNvWUPMBxVcQ3oS6LmZMqs_"/>
+</div>
+<h3 class="font-body-md text-body-md text-primary font-semibold">Noir</h3>
+<p class="font-body-md text-body-md text-secondary">$25,00</p>
+</div>
+</div>
+</section>
+<!-- Color Palette -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto bg-surface-container-low">
+<h2 class="font-headline-md text-headline-md mb-8 text-primary">Color palette</h2>
+<div class="flex gap-4 overflow-x-auto hide-scrollbar pb-4">
+<div class="flex flex-col items-center gap-2 flex-none w-24">
+<div class="w-20 h-20 rounded-xl bg-[#e6c1c5] shadow-sm"></div>
+<span class="font-body-md text-body-md text-[14px] text-center text-primary">Rose Poudré</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-none w-24">
+<div class="w-20 h-20 rounded-xl bg-[#4b5d73] shadow-sm"></div>
+<span class="font-body-md text-body-md text-[14px] text-center text-primary">Bleu Ardoise</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-none w-24">
+<div class="w-20 h-20 rounded-xl bg-[#9f859a] shadow-sm"></div>
+<span class="font-body-md text-body-md text-[14px] text-center text-primary">Mauve Lavande</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-none w-24">
+<div class="w-20 h-20 rounded-xl bg-[#f2eadc] shadow-sm border border-outline-variant"></div>
+<span class="font-body-md text-body-md text-[14px] text-center text-primary">Crème Nude</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-none w-24">
+<div class="w-20 h-20 rounded-xl bg-[#1e1c14] shadow-sm"></div>
+<span class="font-body-md text-body-md text-[14px] text-center text-primary">Noir</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-none w-24">
+<div class="w-20 h-20 rounded-xl bg-[#5c2a32] shadow-sm"></div>
+<span class="font-body-md text-body-md text-[14px] text-center text-primary">Bordeaux</span>
+</div>
+</div>
+</section>
+<!-- Gift Box Section -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="bg-surface-container rounded-3xl p-6 md:p-12 flex flex-col lg:flex-row gap-12 items-center">
+<div class="flex-1 w-full">
+<h2 class="font-headline-md text-headline-md mb-4 text-primary">Composez une box à son image</h2>
+<p class="font-body-md text-body-md mb-8 text-secondary">
+                        Un prerny flutiiers un taiete publiste; par pensort ausani, des, dyjingles defucclels. . Chainneur 2 à 3 articles, agosttr, son avois, reaus et composés à la main.
+                    </p>
+<div class="space-y-4 mb-8">
+<!-- Step 1 -->
+<div class="bg-surface rounded-xl p-4 flex gap-4 items-center shadow-sm">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center font-headline-sm text-headline-sm text-primary flex-shrink-0">1</div>
+<div>
+<h3 class="font-body-md text-body-md font-semibold text-primary">1. Choisissez</h3>
+<p class="font-body-md text-[14px] text-secondary">Selectionr articles, unn loiards, scarrits, accessoires, et levenjs.</p>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="bg-surface rounded-xl p-4 flex gap-4 items-center shadow-sm">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center font-headline-sm text-headline-sm text-primary flex-shrink-0">2</div>
+<div>
+<h3 class="font-body-md text-body-md font-semibold text-primary">2. Personnalisez</h3>
+<p class="font-body-md text-[14px] text-secondary">Ajouter un message, choislier un complent, choisirner ma box.</p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="bg-surface rounded-xl p-4 flex gap-4 items-center shadow-sm">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center font-headline-sm text-headline-sm text-primary flex-shrink-0">3</div>
+<div>
+<h3 class="font-body-md text-body-md font-semibold text-primary">3. Offrez</h3>
+<p class="font-body-md text-[14px] text-secondary">Entradguggue box micliēl. Fiit'en rête à donver.</p>
+</div>
+</div>
+</div>
+<a class="inline-block bg-primary text-white px-8 py-4 rounded-full font-body-md text-body-md font-semibold hover:bg-primary/90 transition-colors" href="#">Composer ma box</a>
+</div>
+<div class="flex-1 w-full">
+<img class="w-full h-auto rounded-2xl object-cover shadow-lg" data-alt="A beautifully styled flat lay photograph of a luxurious gift box on a soft pinkish-cream background. The box is adorned with a silky pink ribbon tied in a perfect bow and a small bouquet of dried flowers tucked underneath. Scattered rose petals surround the box. Elegant and romantic aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDT2947_SwE2xH27PQfMlICf4rinPZkNIFdMQgVjxRWQOU-Reutlv5rIYGSh5yKxoWGw-ftJioWaLRdj4yUM_yA3Yv2IZgLmSB9mcHyJ9bgya3L-Odh2YQnCEqoiq2xfg0chyXkd3bOOtDzoBKxUG2KkI6ZdSLb20eeET1GJdLXCzMnN9PXwv_WS5ogt0-mQ2YM0Z2LTdMfLEcasQ9oJx8tl3t6I0BajwPmfYsjgzJq2A88CtrGw3BJ"/>
+</div>
+</div>
+</section>
+<!-- Nos Engagements Section -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto text-center">
+<h2 class="font-headline-md text-headline-md mb-12 text-primary">Nos engagements</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-4xl text-secondary mb-4" data-icon="diamond">diamond</span>
+<h3 class="font-label-caps text-label-caps uppercase text-primary mb-3">Qualité Supérieure</h3>
+<p class="font-body-md text-body-md text-secondary max-w-xs">Des matières nobles sélectionnées avec le plus grand soin pour une durabilité exceptionnelle.</p>
+</div>
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-4xl text-secondary mb-4" data-icon="air">air</span>
+<h3 class="font-label-caps text-label-caps uppercase text-primary mb-3">Douceur Absolue</h3>
+<p class="font-body-md text-body-md text-secondary max-w-xs">Un toucher soyeux et léger, pensé pour le confort et l'élégance au quotidien.</p>
+</div>
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-4xl text-secondary mb-4" data-icon="handshake">handshake</span>
+<h3 class="font-label-caps text-label-caps uppercase text-primary mb-3">Sélection à la Main</h3>
+<p class="font-body-md text-body-md text-secondary max-w-xs">Chaque pièce est méticuleusement vérifiée et emballée par nos artisans passionnés.</p>
+</div>
+</div>
+</section>
+<!-- Testimonials -->
+<section class="py-section-gap bg-surface-container-low">
+<div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto text-center">
+<h2 class="font-label-caps text-label-caps uppercase text-secondary tracking-widest mb-12">Avis clients</h2>
+<div class="max-w-3xl mx-auto px-4">
+<p class="font-testimonial-quote text-testimonial-quote text-primary italic mb-6">
+                         "Un magnifique foulard, la matière est d'une douceur incroyable. Le packaging cadeau était juste parfait, une très belle attention."
+                     </p>
+<div class="w-10 h-[1px] bg-outline-variant mx-auto mb-6"></div>
+<p class="font-label-caps text-label-caps text-secondary">ÉLODIE M. — ACHAT VÉRIFIÉ</p>
+</div>
+<div class="flex justify-center gap-2 mt-8">
+<button aria-label="Slide 1" class="w-2 h-2 rounded-full bg-primary"></button>
+<button aria-label="Slide 2" class="w-2 h-2 rounded-full bg-outline-variant hover:bg-secondary transition-colors"></button>
+<button aria-label="Slide 3" class="w-2 h-2 rounded-full bg-outline-variant hover:bg-secondary transition-colors"></button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container dark:bg-surface-container-highest w-full mt-section-gap">
+<div class="flex flex-col gap-stack-md px-margin-mobile md:px-margin-desktop py-16 w-full max-w-container-max mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+<!-- Newsletter -->
+<div class="lg:col-span-2">
+<h3 class="font-headline-sm text-headline-sm text-primary mb-4">Rejoindre l'univers Velmirys</h3>
+<p class="font-body-md text-body-md text-secondary mb-6">Inscrivez-vous pour découvrir nos nouveautés, offres exclusives et inspirations.</p>
+<form class="flex gap-2 max-w-md">
+<input class="flex-grow bg-surface border border-outline-variant rounded-md px-4 py-3 font-body-md text-primary placeholder:text-outline focus:outline-none focus:border-primary focus:ring-0 transition-colors" placeholder="Votre adresse email" type="email"/>
+<button class="bg-primary text-white px-6 py-3 rounded-md font-body-md hover:bg-primary/90 transition-colors" type="submit">S'inscrire</button>
+</form>
+</div>
+<!-- Links Col 1 -->
+<div>
+<h4 class="font-label-caps text-label-caps uppercase text-secondary mb-6">La Maison</h4>
+<ul class="space-y-4">
+<li><a class="font-body-md text-body-md text-primary hover:opacity-70 transition-opacity" href="#">Collection</a></li>
+<li><a class="font-body-md text-body-md text-primary hover:opacity-70 transition-opacity" href="#">Journal</a></li>
+<li><a class="font-body-md text-body-md text-primary hover:opacity-70 transition-opacity" href="#">Ethics</a></li>
+</ul>
+</div>
+<!-- Links Col 2 -->
+<div>
+<h4 class="font-label-caps text-label-caps uppercase text-secondary mb-6">Aide</h4>
+<ul class="space-y-4">
+<li><a class="font-body-md text-body-md text-primary hover:opacity-70 transition-opacity" href="#">Contact</a></li>
+<li><a class="font-body-md text-body-md text-primary hover:opacity-70 transition-opacity" href="#">Livraison &amp; Retours</a></li>
+<li><a class="font-body-md text-body-md text-primary hover:opacity-70 transition-opacity" href="#">FAQ</a></li>
+</ul>
+</div>
+</div>
+<div class="pt-8 mt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
+<span class="font-label-caps text-label-caps tracking-widest text-on-surface-variant">LUMINA</span>
+<p class="font-body-md text-[12px] text-secondary">© 2024 LUMINA. ALL RIGHTS RESERVED.</p>
+</div>
+</div>
+</footer>
+</body></html>
