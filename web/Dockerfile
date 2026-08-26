@@ -30,6 +30,8 @@ ARG NEXT_PUBLIC_UMAMI_SRC
 ARG NEXT_PUBLIC_UMAMI_WEBSITE_ID
 
 ENV NEXT_TELEMETRY_DISABLED=1
+# Droplet 1 GB RAM + swap : autorise le heap V8 à déborder sur le swap pendant next build
+ENV NODE_OPTIONS=--max-old-space-size=3072
 # Fallback si build sans --build-arg (évite TODO)
 ENV NEXT_PUBLIC_SANITY_PROJECT_ID=${NEXT_PUBLIC_SANITY_PROJECT_ID}
 ENV NEXT_PUBLIC_SANITY_DATASET=${NEXT_PUBLIC_SANITY_DATASET}

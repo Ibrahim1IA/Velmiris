@@ -36,6 +36,19 @@ docker compose logs -f web
 - ⚠️ Arrêter tout serveur local sur le port 3000 (`pnpm dev`) avant `docker compose up -d` — le conteneur publie le port 3000.
 - Les `NEXT_PUBLIC_*` sont inlinées au build : après modification du `.env`, relancer `docker compose up -d --build`.
 - Les secrets ne sont jamais committés (`.env` est gitignoré) ; seule la liste des variables est dans `.env.example`.
+- Le warning « buildx isn't installed » est cosmétique — le build fonctionne avec le builder legacy.
+
+### Droplet 1 GB — swap requis (sinon `exit code 137` = OOM)
+
+Le build Docker (`pnpm install` + `next build`) dépasse 1 GB de RAM. Ajouter du swap une fois sur le droplet :
+
+```bash
+fallocate -l 4G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile
+echo '/swapfile none swap sw 0 0' >> /etc/fstab
+free -h   # vérifier que le swap est actif
+```
+
+Le premier build sur un droplet 1 vCPU prend 10-20 min — c'est normal. Les rebuilds suivants utilisent le cache Docker (quelques minutes si seul le code change).
 
 ## Getting Started
 
