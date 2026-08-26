@@ -1,0 +1,16 @@
+node_modules
+.next
+out
+build
+.git
+.gitignore
+.env
+.env.*
+!.env.example
+dev.log
+dev*.log
+prod.log
+.playwright-mcp
+test-results
+coverage
+.turbo
