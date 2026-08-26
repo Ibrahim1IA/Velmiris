@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/sanity/lib/fetch";
 import Price from "@/components/shop/Price";
 import ProductGallery from "@/components/shop/ProductGallery";
 import VariantSwatches from "@/components/shop/VariantSwatches";
@@ -36,7 +36,7 @@ type Product = {
 
 export async function generateStaticParams() {
   try {
-    const slugs: Array<{ slug: { current: string } }> = await client.fetch(
+    const slugs: Array<{ slug: { current: string } }> = await sanityFetch(
       `*[_type == "product" && defined(slug.current)]{ slug }`,
     );
     return slugs.map((p) => ({ slug: p.slug.current }));
@@ -55,7 +55,7 @@ export async function generateMetadata({
   const canonical = `${siteUrl}/boutique/${encodeURIComponent(slug)}`;
   const ogImage = `${siteUrl}/boutique/${encodeURIComponent(slug)}/opengraph-image`;
   try {
-    const product: (Product & { description?: string }) | null = await client.fetch(
+    const product: (Product & { description?: string }) | null = await sanityFetch(
       `*[_type == "product" && slug.current == $slug][0]{ title, description, priceXof, priceEur, variants[0]{ colorName } }`,
       { slug },
       { next: { revalidate: 60, tags: ["products"] } },
@@ -125,7 +125,9 @@ export default async function ProductPage({
   const [{ slug }, { variant: variantKey }] = await Promise.all([params, searchParams]);
 
   // Parallélise i18n + fetch produit ; suggestions après (dépend de _id)
-  const withTimeout = <T,>(p: Promise<T>, ms = 2500) =>
+  // Timeout court en CI uniquement (e2e offline) — en prod un premier rendu à froid dépasse 2,5 s.
+  const sanityTimeoutMs = process.env.CI ? 2500 : 20000;
+  const withTimeout = <T,>(p: Promise<T>, ms = sanityTimeoutMs) =>
     Promise.race([p, new Promise<never>((_, reject) => setTimeout(() => reject(new Error("sanity timeout e2e")), ms))]) as Promise<T>;
   let product: Product | null = null;
   let t: Awaited<ReturnType<typeof getTranslations>>;
@@ -133,7 +135,7 @@ export default async function ProductPage({
     [t, product] = await Promise.all([
       getTranslations("product"),
       withTimeout(
-        client.fetch<Product | null>(
+        sanityFetch<Product | null>(
           `*[_type == "product" && slug.current == $slug][0]{
         _id, title, slug, category, description, material, care,
         priceXof, priceEur,
@@ -144,7 +146,8 @@ export default async function ProductPage({
         ),
       ),
     ]);
-  } catch {
+  } catch (error) {
+    console.error("[boutique/slug] Échec du fetch Sanity (produit introuvable):", error);
     t = await getTranslations("product");
     product = null;
   }
@@ -169,7 +172,7 @@ export default async function ProductPage({
   }> = [];
   try {
     suggestions = await withTimeout(
-      client.fetch(
+      sanityFetch(
         `*[_type == "product" && _id != $id] | order(_createdAt desc)[0...4]{
       _id, title, slug, priceXof, priceEur, "hex": variants[0].hex
     }`,
@@ -177,7 +180,8 @@ export default async function ProductPage({
         { next: { revalidate: 60, tags: ["products"] } },
       ),
     );
-  } catch {
+  } catch (error) {
+    console.warn("[boutique/slug] Suggestions indisponibles:", error);
     suggestions = [];
   }
 

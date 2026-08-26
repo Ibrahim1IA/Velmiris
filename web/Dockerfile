@@ -2,7 +2,7 @@
 # Build sans CI/CD : sur le Droplet -> docker compose up -d --build
 # NEXT_PUBLIC_* sont baked au build (ARG) -> rebuild nécessaire si tu changes l'IP/domaine
 
-FROM node:20-alpine AS base
+FROM node:22-alpine AS base
 # pnpm baked dans l'image -> évite que corepack le retélécharge dans chaque stage
 RUN corepack enable && corepack prepare pnpm@10.25.0 --activate
 

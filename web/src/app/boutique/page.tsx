@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/sanity/lib/fetch";
 import { urlFor } from "@/sanity/lib/image";
 import Price from "@/components/shop/Price";
 import BoutiqueFilters from "@/components/shop/BoutiqueFilters";
@@ -79,7 +79,7 @@ export default async function BoutiquePage({
   let t: Awaited<ReturnType<typeof getTranslations>>;
   let products: Product[] = [];
   try {
-    const sanityPromise = client.fetch<Product[]>(
+    const sanityPromise = sanityFetch<Product[]>(
       `*[_type == "product" && (!defined($category) || category == $category)] | order(title asc) {
         _id, title, slug, category, priceXof, priceEur,
         variants[]{ _key, colorName, hex, sku, inStock, "images": images[0...1] }
@@ -87,11 +87,15 @@ export default async function BoutiquePage({
       { category: validCategory },
       { next: { revalidate: 60, tags: ["products"] } },
     );
-    // Timeout rapide e2e offline : 2.5s au lieu d'attendre 10s ConnectTimeout (PRD §9.3)
-    const timeoutPromise = new Promise<never>((_, reject) => setTimeout(() => reject(new Error("sanity timeout e2e")), 2500));
+    // Timeout court en CI uniquement (e2e offline, PRD §9.3) : en prod, un premier
+    // rendu à froid prend 1-3 s — un timeout de 2,5 s viderait la boutique et l'ISR
+    // figerait ce rendu vide pendant 60 s.
+    const sanityTimeoutMs = process.env.CI ? 2500 : 20000;
+    const timeoutPromise = new Promise<never>((_, reject) => setTimeout(() => reject(new Error("sanity timeout e2e")), sanityTimeoutMs));
     const fetchWithTimeout = Promise.race([sanityPromise, timeoutPromise]) as Promise<Product[]>;
     [t, products] = await Promise.all([getTranslations("boutique"), fetchWithTimeout]);
-  } catch {
+  } catch (error) {
+    console.error("[boutique] Échec du fetch Sanity (rendu sans produits):", error);
     t = await getTranslations("boutique");
     products = [];
   }

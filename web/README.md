@@ -24,6 +24,19 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 ### CI budgets perf (PRD §9.3)
 - Workflow `.github/workflows/ci.yml` : jobs `lint` (`pnpm lint`), `typecheck` (`tsc --noEmit`), `build` (`pnpm build` + `bundlesize` + `lhci`), `e2e` (`playwright install --with-deps chromium` + `pnpm build && pnpm test:e2e`) — cache pnpm, Node 20
 
+## Déploiement Docker (Droplet)
+
+```bash
+# À la racine du repo
+cp .env.example .env   # remplir les valeurs
+docker compose up -d   # build automatique au premier lancement
+docker compose logs -f web
+```
+
+- ⚠️ Arrêter tout serveur local sur le port 3000 (`pnpm dev`) avant `docker compose up -d` — le conteneur publie le port 3000.
+- Les `NEXT_PUBLIC_*` sont inlinées au build : après modification du `.env`, relancer `docker compose up -d --build`.
+- Les secrets ne sont jamais committés (`.env` est gitignoré) ; seule la liste des variables est dans `.env.example`.
+
 ## Getting Started
 
 First, run the development server:
