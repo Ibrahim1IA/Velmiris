@@ -29,9 +29,10 @@ export const productVariant = defineType({
     }),
     defineField({
       name: "images",
-      title: "Photos",
+      title: "Photos du coloris",
       type: "array",
       of: [{ type: "image", options: { hotspot: true } }],
+      description: "Optionnel — si vide, l'image générale du produit sera utilisée. Modifiable à tout moment.",
     }),
   ],
 });
@@ -72,9 +73,19 @@ export const product = defineType({
       of: [{ type: "string" }],
       description: "Une ligne par conseil (ex. « Lavage à la main ou 30°, cycle délicat »)",
     }),
-    // Double saisie manuelle FCFA/EUR — pas de taux auto (PRD §2 / G2)
+    // Triple saisie manuelle FCFA/EUR/GNF — pas de taux auto (PRD §2 / G2)
     defineField({ name: "priceXof", title: "Prix (FCFA)", type: "number", validation: (rule) => rule.required().min(0) }),
     defineField({ name: "priceEur", title: "Prix (EUR)", type: "number", validation: (rule) => rule.required().min(0) }),
+    defineField({ name: "priceGnf", title: "Prix (GNF)", type: "number", validation: (rule) => rule.required().min(0) }),
+    defineField({
+      name: "images",
+      title: "Photos du produit (image générale)",
+      type: "array",
+      of: [{ type: "image", options: { hotspot: true } }],
+      description:
+        "Obligatoire — au moins 1 image descriptive du produit. Utilisée pour toutes les variantes sans photo dédiée. Modifiable à tout moment. Si vide, le fond hex s'affiche (alerte admin).",
+      validation: (rule) => rule.required().min(1),
+    }),
     defineField({
       name: "featured",
       title: "Mise en avant (accueil « Nos teintes »)",
@@ -90,6 +101,6 @@ export const product = defineType({
     }),
   ],
   preview: {
-    select: { title: "title", media: "variants.0.images.0" },
+    select: { title: "title", media: "images.0" },
   },
 });

@@ -31,6 +31,8 @@ type Product = {
   care?: string[];
   priceXof: number;
   priceEur: number;
+  priceGnf: number;
+  images?: Array<{ asset?: unknown; hotspot?: unknown; crop?: unknown }>;
   variants: Variant[];
 };
 
@@ -56,7 +58,7 @@ export async function generateMetadata({
   const ogImage = `${siteUrl}/boutique/${encodeURIComponent(slug)}/opengraph-image`;
   try {
     const product: (Product & { description?: string }) | null = await sanityFetch(
-      `*[_type == "product" && slug.current == $slug][0]{ title, description, priceXof, priceEur, variants[0]{ colorName } }`,
+      `*[_type == "product" && slug.current == $slug][0]{ title, description, priceXof, priceEur, priceGnf, variants[0]{ colorName } }`,
       { slug },
       { next: { revalidate: 60, tags: ["products"] } },
     );
@@ -138,7 +140,7 @@ export default async function ProductPage({
         sanityFetch<Product | null>(
           `*[_type == "product" && slug.current == $slug][0]{
         _id, title, slug, category, description, material, care,
-        priceXof, priceEur,
+        priceXof, priceEur, priceGnf, images,
         variants[]{ _key, colorName, hex, sku, inStock, images }
       }`,
           { slug },
@@ -168,13 +170,14 @@ export default async function ProductPage({
     slug: { current: string };
     priceXof: number;
     priceEur: number;
+    priceGnf: number;
     hex: string;
   }> = [];
   try {
     suggestions = await withTimeout(
       sanityFetch(
         `*[_type == "product" && _id != $id] | order(_createdAt desc)[0...4]{
-      _id, title, slug, priceXof, priceEur, "hex": variants[0].hex
+      _id, title, slug, priceXof, priceEur, priceGnf, "hex": variants[0].hex
     }`,
         { id: product._id },
         { next: { revalidate: 60, tags: ["products"] } },
@@ -214,9 +217,9 @@ export default async function ProductPage({
       </Link>
 
       <div className="mt-6 grid gap-8 md:grid-cols-[1.1fr_0.9fr] md:gap-12">
-        {/* Galerie */}
+        {/* Galerie — fallback image variante → image générale produit */}
         <ProductGallery
-          images={selected.images}
+          images={selected.images?.length ? selected.images : product.images}
           hex={selected.hex}
           title={product.title}
           colorName={selected.colorName}
@@ -232,7 +235,7 @@ export default async function ProductPage({
           </h1>
 
           <div className="mt-4 flex flex-wrap items-baseline gap-3">
-            <Price priceXof={product.priceXof} priceEur={product.priceEur} className="text-2xl font-medium" secondaryClassName="text-sm text-ink/60" />
+            <Price priceXof={product.priceXof} priceEur={product.priceEur} priceGnf={product.priceGnf} className="text-2xl font-medium" secondaryClassName="text-sm text-ink/60" />
           </div>
 
           <p
@@ -302,9 +305,9 @@ export default async function ProductPage({
             const productUrl = `${siteUrl}/boutique/${product.slug.current}`;
             let imageUrls: string[] = [];
             try {
-              const firstWithImage = product.variants.find((v) => v.images?.[0]);
-              if (firstWithImage?.images?.[0]) {
-                const u = urlFor(firstWithImage.images[0] as never).width(1200).height(630).fit("crop").url();
+              const raw = selected.images?.[0] ?? product.images?.[0] ?? product.variants.find((v) => v.images?.[0])?.images?.[0];
+              if (raw) {
+                const u = urlFor(raw as never).width(1200).height(630).fit("crop").url();
                 if (u) imageUrls = [u];
               }
             } catch {
@@ -335,6 +338,15 @@ export default async function ProductPage({
                   "@type": "Offer",
                   price: product.priceEur,
                   priceCurrency: "EUR",
+                  availability,
+                  url: productUrl,
+                  priceValidUntil: "2027-12-31",
+                  seller: { "@type": "Organization", name: "VELMIRYS" },
+                },
+                {
+                  "@type": "Offer",
+                  price: product.priceGnf,
+                  priceCurrency: "GNF",
                   availability,
                   url: productUrl,
                   priceValidUntil: "2027-12-31",
@@ -383,7 +395,7 @@ export default async function ProductPage({
                   {s.title}
                 </p>
                 <p className="text-sm text-ink/60">
-                  <Price priceXof={s.priceXof} priceEur={s.priceEur} showSecondary={false} />
+                  <Price priceXof={s.priceXof} priceEur={s.priceEur} priceGnf={s.priceGnf} showSecondary={false} />
                 </p>
               </Link>
             ))}

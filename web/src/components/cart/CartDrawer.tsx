@@ -48,8 +48,8 @@ export default function CartDrawer({
     };
   }, [open, lines]);
 
-  const { totalXof, totalEur } = cartTotals(resolved);
-  const total = currency === "XOF" ? totalXof : totalEur;
+  const { totalXof, totalEur, totalGnf } = cartTotals(resolved);
+  const total = currency === "GNF" ? totalGnf : currency === "EUR" ? totalEur : totalXof;
   const count = lines.reduce(
     (acc, l) => (l.kind === "product" ? acc + l.qty : acc + l.items.reduce((s, it) => s + it.qty, 0)),
     0,
@@ -203,7 +203,10 @@ export default function CartDrawer({
                         {r.variant.colorName}
                       </p>
                       <p className="mt-1 text-sm font-medium">
-                        {formatPrice(currency === "XOF" ? r.product.priceXof : r.product.priceEur, currency)}
+                        {formatPrice(
+                          currency === "GNF" ? r.product.priceGnf : currency === "EUR" ? r.product.priceEur : r.product.priceXof,
+                          currency,
+                        )}
                       </p>
                       <div className="mt-2 flex items-center gap-2">
                         <button
@@ -256,7 +259,10 @@ export default function CartDrawer({
                       </p>
                     )}
                     <p className="mt-2 text-sm font-medium">
-                      {formatPrice(currency === "XOF" ? r.subtotalXof : r.subtotalEur, currency)}
+                      {formatPrice(
+                        currency === "GNF" ? r.subtotalGnf : currency === "EUR" ? r.subtotalEur : r.subtotalXof,
+                        currency,
+                      )}
                     </p>
                     <button
                       onClick={() => removeLine(r.index)}

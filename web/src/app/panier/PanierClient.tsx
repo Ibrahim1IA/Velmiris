@@ -47,7 +47,7 @@ export default function PanierClient() {
     };
   }, [lines, hydrated]);
 
-  const { totalXof, totalEur, count } = cartTotals(resolved);
+  const { totalXof, totalEur, totalGnf, count } = cartTotals(resolved);
 
   if (!hydrated || loading) {
     return (
@@ -114,7 +114,7 @@ export default function PanierClient() {
                     {r.variant.colorName}
                   </p>
                   <p className="mt-1 text-sm">
-                    <Price priceXof={r.product.priceXof} priceEur={r.product.priceEur} />
+                    <Price priceXof={r.product.priceXof} priceEur={r.product.priceEur} priceGnf={r.product.priceGnf} />
                   </p>
                   <div className="mt-3 flex items-center gap-2">
                     <button
@@ -147,7 +147,10 @@ export default function PanierClient() {
                   </div>
                 </div>
                 <p className="hidden text-sm font-medium md:block">
-                  {formatPrice(currency === "XOF" ? r.product.priceXof * r.qty : r.product.priceEur * r.qty, currency)}
+                  {formatPrice(
+                    (currency === "GNF" ? r.product.priceGnf : currency === "EUR" ? r.product.priceEur : r.product.priceXof) * r.qty,
+                    currency,
+                  )}
                 </p>
               </li>
             ) : (
@@ -180,7 +183,7 @@ export default function PanierClient() {
                         {it.product.title} — {it.variant.colorName} ×{it.qty}
                       </span>
                       <span className="text-ink/60">
-                        <Price priceXof={it.product.priceXof} priceEur={it.product.priceEur} showSecondary={false} />
+                        <Price priceXof={it.product.priceXof} priceEur={it.product.priceEur} priceGnf={it.product.priceGnf} showSecondary={false} />
                       </span>
                     </li>
                   ))}
@@ -191,7 +194,10 @@ export default function PanierClient() {
                   </p>
                 )}
                 <p className="mt-3 text-right text-sm font-medium">
-                  {formatPrice(currency === "XOF" ? r.subtotalXof : r.subtotalEur, currency)}
+                  {formatPrice(
+                    currency === "GNF" ? r.subtotalGnf : currency === "EUR" ? r.subtotalEur : r.subtotalXof,
+                    currency,
+                  )}
                 </p>
                 <Link
                   href="/box"
@@ -209,18 +215,25 @@ export default function PanierClient() {
           <dl className="mt-4 flex flex-col gap-2 text-sm">
             <div className="flex justify-between">
               <dt className="text-ink/60">{t("subtotal")}</dt>
-              <dd className="font-medium">{formatPrice(currency === "XOF" ? totalXof : totalEur, currency)}</dd>
+              <dd className="font-medium">
+                {formatPrice(currency === "GNF" ? totalGnf : currency === "EUR" ? totalEur : totalXof, currency)}
+              </dd>
             </div>
             <div className="flex justify-between text-xs text-ink/60">
               <dt />
-              <dd>{formatPrice(currency === "XOF" ? totalEur : totalXof, currency === "XOF" ? "EUR" : "XOF")}</dd>
+              <dd>
+                {formatPrice(
+                  currency === "EUR" ? totalXof : totalEur,
+                  currency === "EUR" ? "XOF" : "EUR",
+                )}
+              </dd>
             </div>
             <div className="flex justify-between border-t border-sand pt-3 text-base font-medium">
               <dt>{t("total")}</dt>
-              <dd>{formatPrice(currency === "XOF" ? totalXof : totalEur, currency)}</dd>
+              <dd>{formatPrice(currency === "GNF" ? totalGnf : currency === "EUR" ? totalEur : totalXof, currency)}</dd>
             </div>
           </dl>
-          <CheckoutForm totalXof={totalXof} totalEur={totalEur} currency={currency} />
+          <CheckoutForm totalXof={totalXof} totalEur={totalEur} totalGnf={totalGnf} currency={currency} />
           <Link
             href="/boutique"
             className="mt-4 flex min-h-[44px] w-full items-center justify-center rounded-full border border-ink/15 py-3 text-center text-sm hover:border-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"

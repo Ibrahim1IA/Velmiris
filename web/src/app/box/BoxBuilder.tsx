@@ -30,6 +30,7 @@ type Product = {
   category: "foulard" | "bonnet" | "epingle";
   priceXof: number;
   priceEur: number;
+  priceGnf: number;
   variants: ProductVariant[];
 };
 
@@ -85,6 +86,7 @@ export default function BoxBuilder({ products, cards, giftExamples, initialAdd }
         colorName: v.colorName,
         priceXof: p.priceXof,
         priceEur: p.priceEur,
+        priceGnf: p.priceGnf,
       };
       addItem(draft);
     }
@@ -107,6 +109,7 @@ export default function BoxBuilder({ products, cards, giftExamples, initialAdd }
 
   const totalXof = items.reduce((s, it) => s + it.priceXof, 0);
   const totalEur = items.reduce((s, it) => s + it.priceEur, 0);
+  const totalGnf = items.reduce((s, it) => s + (it.priceGnf ?? 0), 0);
   const canCustomize = items.length >= 2;
   const isFull = items.length >= 5;
 
@@ -121,6 +124,7 @@ export default function BoxBuilder({ products, cards, giftExamples, initialAdd }
       colorName: variant.colorName,
       priceXof: product.priceXof,
       priceEur: product.priceEur,
+      priceGnf: product.priceGnf,
     };
     // eslint-disable-next-line react-hooks/purity -- Date.now as key is intentional for animation
     setFlying({ hex: variant.hex, draft, key: Date.now() });
@@ -277,7 +281,9 @@ export default function BoxBuilder({ products, cards, giftExamples, initialAdd }
                     <span className="flex-1">
                       {it.title} — {it.colorName}
                     </span>
-                    <span className="text-xs text-ink/60">{formatPrice(currency === "XOF" ? it.priceXof : it.priceEur, currency)}</span>
+                    <span className="text-xs text-ink/60">
+                      {formatPrice(currency === "GNF" ? it.priceGnf : currency === "EUR" ? it.priceEur : it.priceXof, currency)}
+                    </span>
                     <button
                       type="button"
                       onClick={() => removeItem(idx)}
@@ -292,8 +298,10 @@ export default function BoxBuilder({ products, cards, giftExamples, initialAdd }
             )}
             {items.length > 0 && (
               <p className="mt-3 text-right text-sm font-medium">
-                Total : {formatPrice(currency === "XOF" ? totalXof : totalEur, currency)}{" "}
-                <span className="text-xs font-normal text-ink/60">{formatPrice(currency === "XOF" ? totalEur : totalXof, currency === "XOF" ? "EUR" : "XOF")}</span>
+                Total : {formatPrice(currency === "GNF" ? totalGnf : currency === "EUR" ? totalEur : totalXof, currency)}{" "}
+                <span className="text-xs font-normal text-ink/60">
+                  {formatPrice(currency === "EUR" ? totalXof : totalEur, currency === "EUR" ? "XOF" : "EUR")}
+                </span>
               </p>
             )}
             <p className="mt-1 text-right text-xs text-ink/60">Emballage cadeau offert</p>
@@ -349,7 +357,9 @@ export default function BoxBuilder({ products, cards, giftExamples, initialAdd }
                       <div className="px-1">
                         <p className="text-sm font-medium leading-tight">{product.title}</p>
                         <p className="text-xs text-ink/60">{variant.colorName}</p>
-                        <p className="mt-1 text-sm font-medium">{formatPrice(currency === "XOF" ? product.priceXof : product.priceEur, currency)}</p>
+                        <p className="mt-1 text-sm font-medium">
+                          {formatPrice(currency === "GNF" ? product.priceGnf : currency === "EUR" ? product.priceEur : product.priceXof, currency)}
+                        </p>
                       </div>
                       <button
                         type="button"
@@ -492,7 +502,9 @@ export default function BoxBuilder({ products, cards, giftExamples, initialAdd }
                     <li key={i} className="flex items-center gap-3 text-sm">
                       <span className="h-5 w-5 rounded-full border border-black/10" style={{ backgroundColor: it.hex }} aria-hidden="true" />
                       {it.title} — {it.colorName}
-                      <span className="ml-auto text-ink/60">{formatPrice(currency === "XOF" ? it.priceXof : it.priceEur, currency)}</span>
+                      <span className="ml-auto text-ink/60">
+                        {formatPrice(currency === "GNF" ? it.priceGnf : currency === "EUR" ? it.priceEur : it.priceXof, currency)}
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -508,10 +520,12 @@ export default function BoxBuilder({ products, cards, giftExamples, initialAdd }
                 )}
                 <div className="mt-3 flex justify-between text-base font-medium">
                   <span>Total</span>
-                  <span>{formatPrice(currency === "XOF" ? totalXof : totalEur, currency)}</span>
+                  <span>{formatPrice(currency === "GNF" ? totalGnf : currency === "EUR" ? totalEur : totalXof, currency)}</span>
                 </div>
                 <p className="mt-1 text-right text-xs text-green-700">Emballage cadeau offert</p>
-                <p className="text-right text-xs text-ink/60">{formatPrice(currency === "XOF" ? totalEur : totalXof, currency === "XOF" ? "EUR" : "XOF")}</p>
+                <p className="text-right text-xs text-ink/60">
+                  {formatPrice(currency === "EUR" ? totalXof : totalEur, currency === "EUR" ? "XOF" : "EUR")}
+                </p>
               </section>
 
               <button

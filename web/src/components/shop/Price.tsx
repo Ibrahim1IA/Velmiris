@@ -6,14 +6,22 @@ import { formatPrice } from "@/lib/format";
 interface Props {
   priceXof: number;
   priceEur: number;
+  priceGnf: number;
   className?: string;
   secondaryClassName?: string;
   showSecondary?: boolean;
 }
 
+function priceFor(currency: string, priceXof: number, priceEur: number, priceGnf: number): string {
+  if (currency === "EUR") return formatPrice(priceEur, "EUR");
+  if (currency === "GNF") return formatPrice(priceGnf, "GNF");
+  return formatPrice(priceXof, "XOF");
+}
+
 export default function Price({
   priceXof,
   priceEur,
+  priceGnf,
   className,
   secondaryClassName = "text-xs text-ink/60",
   showSecondary = true,
@@ -31,8 +39,11 @@ export default function Price({
     );
   }
 
-  const primary = currency === "XOF" ? formatPrice(priceXof, "XOF") : formatPrice(priceEur, "EUR");
-  const secondary = currency === "XOF" ? formatPrice(priceEur, "EUR") : formatPrice(priceXof, "XOF");
+  const primary = priceFor(currency, priceXof, priceEur, priceGnf);
+  // Secondaire = EUR si primaire FCFA/GNF, sinon FCFA
+  const secondaryCurrency = currency === "EUR" ? "XOF" : "EUR";
+  const secondary =
+    secondaryCurrency === "EUR" ? formatPrice(priceEur, "EUR") : formatPrice(priceXof, "XOF");
 
   return (
     <span>
@@ -42,9 +53,19 @@ export default function Price({
   );
 }
 
-export function PricePrimary({ priceXof, priceEur, className }: { priceXof: number; priceEur: number; className?: string }) {
+export function PricePrimary({
+  priceXof,
+  priceEur,
+  priceGnf,
+  className,
+}: {
+  priceXof: number;
+  priceEur: number;
+  priceGnf: number;
+  className?: string;
+}) {
   const currency = useCurrency((s) => s.currency);
   const hydrated = useCurrency((s) => s.hydrated);
   if (!hydrated) return <span className={className}>{formatPrice(priceXof, "XOF")}</span>;
-  return <span className={className}>{formatPrice(currency === "XOF" ? priceXof : priceEur, currency)}</span>;
+  return <span className={className}>{priceFor(currency, priceXof, priceEur, priceGnf)}</span>;
 }

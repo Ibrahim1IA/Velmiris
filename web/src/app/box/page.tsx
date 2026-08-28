@@ -48,6 +48,7 @@ type Product = {
   category: "foulard" | "bonnet" | "epingle";
   priceXof: number;
   priceEur: number;
+  priceGnf: number;
   variants: ProductVariant[];
 };
 
@@ -76,7 +77,7 @@ export default async function BoxPage({
       withTimeout(
         client.fetch<Product[]>(
           `*[_type == "product"] | order(title asc) {
-        _id, title, slug, category, priceXof, priceEur,
+        _id, title, slug, category, priceXof, priceEur, priceGnf,
         variants[]{ _key, colorName, hex, sku, inStock }
       }`,
           {},

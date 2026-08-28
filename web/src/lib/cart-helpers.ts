@@ -7,6 +7,7 @@ export type ResolvedProduct = {
   slug: { current: string };
   priceXof: number;
   priceEur: number;
+  priceGnf: number;
   variants: Array<{
     _key: string;
     colorName: string;
@@ -37,6 +38,7 @@ export type ResolvedLine =
       }>;
       subtotalXof: number;
       subtotalEur: number;
+      subtotalGnf: number;
     };
 
 export async function resolveCartLines(lines: CartLine[]): Promise<ResolvedLine[]> {
@@ -55,7 +57,7 @@ export async function resolveCartLines(lines: CartLine[]): Promise<ResolvedLine[
   try {
     products = await client.fetch(
       `*[_type == "product" && _id in $ids]{
-        _id, title, slug, priceXof, priceEur,
+        _id, title, slug, priceXof, priceEur, priceGnf,
         variants[]{ _key, colorName, hex, inStock, sku }
       }`,
       { ids },
@@ -99,6 +101,10 @@ export async function resolveCartLines(lines: CartLine[]): Promise<ResolvedLine[
         (s: number, it) => s + it.product.priceEur * it.qty,
         0,
       );
+      const subtotalGnf = items.reduce(
+        (s: number, it) => s + (it.product.priceGnf ?? 0) * it.qty,
+        0,
+      );
       resolved.push({
         kind: "box",
         index,
@@ -108,6 +114,7 @@ export async function resolveCartLines(lines: CartLine[]): Promise<ResolvedLine[
         items,
         subtotalXof,
         subtotalEur,
+        subtotalGnf,
       });
     }
   });
@@ -117,17 +124,20 @@ export async function resolveCartLines(lines: CartLine[]): Promise<ResolvedLine[
 export function cartTotals(resolved: ResolvedLine[]) {
   let totalXof = 0;
   let totalEur = 0;
+  let totalGnf = 0;
   let count = 0;
   for (const r of resolved) {
     if (r.kind === "product") {
       totalXof += r.product.priceXof * r.qty;
       totalEur += r.product.priceEur * r.qty;
+      totalGnf += (r.product.priceGnf ?? 0) * r.qty;
       count += r.qty;
     } else {
       totalXof += r.subtotalXof;
       totalEur += r.subtotalEur;
+      totalGnf += r.subtotalGnf;
       count += r.items.reduce((s, it) => s + it.qty, 0);
     }
   }
-  return { totalXof, totalEur, count };
+  return { totalXof, totalEur, totalGnf, count };
 }

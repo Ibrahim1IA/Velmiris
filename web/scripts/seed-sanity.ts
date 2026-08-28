@@ -72,12 +72,13 @@ type SeedProduct = {
   care?: string[];
   priceXof: number;
   priceEur: number;
+  priceGnf: number;
   featured: boolean;
   variants: SeedVariant[];
 };
 
 async function seed() {
-  // TODO-CONTENU : prix réels FCFA/EUR (CONTENUS-A-FOURNIR.md §E) — valeurs provisoires ci-dessous
+  // TODO-CONTENU : prix réels FCFA/EUR/GNF (CONTENUS-A-FOURNIR.md §E) — valeurs provisoires ci-dessous
   const products: SeedProduct[] = [
     {
       _type: "product",
@@ -90,6 +91,7 @@ async function seed() {
       care: ["Lavage à la main ou en machine à 30°, cycle délicat", "Séchage à plat", "Repassage à basse température"],
       priceXof: 12000, // placeholder
       priceEur: 18, // placeholder
+      priceGnf: 180000, // placeholder — à ajuster manuellement (GNF)
       featured: true,
       variants: scarfColors.map((c) => ({
         _type: "productVariant",
@@ -110,6 +112,7 @@ async function seed() {
       care: ["Lavage 30°", "Séchage à plat"],
       priceXof: 5000, // placeholder
       priceEur: 8, // placeholder
+      priceGnf: 75000, // placeholder — à ajuster manuellement (GNF)
       featured: false,
       variants: bonnetColors.map((c) => ({
         _type: "productVariant",
@@ -128,6 +131,7 @@ async function seed() {
         "Des épingles à hijab aux couleurs assorties à vos voiles, présentées dans un coffret blanc brandé. Discrètes, solides, et sans danger pour vos tissus les plus délicats.",
       priceXof: 6500, // placeholder
       priceEur: 10, // placeholder
+      priceGnf: 97000, // placeholder — à ajuster manuellement (GNF)
       featured: false,
       variants: [
         { _key: "tons-pastel", colorName: "Tons pastel", hex: "#E8C4C4" },
@@ -145,6 +149,7 @@ async function seed() {
         "Douze épingles droites coiffées de perles aux teintes douces, pour fixer vos voiles avec élégance. Présentées sur leur plaquette, prêtes à offrir — ou à garder pour soi.",
       priceXof: 4000, // placeholder
       priceEur: 6, // placeholder
+      priceGnf: 60000, // placeholder — à ajuster manuellement (GNF)
       featured: false,
       variants: [
         {

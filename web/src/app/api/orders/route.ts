@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
     if (!Array.isArray(lines) || lines.length === 0) {
       return NextResponse.json({ error: "Panier vide." }, { status: 400 });
     }
-    if (currency !== "XOF" && currency !== "EUR") {
+    if (currency !== "XOF" && currency !== "EUR" && currency !== "GNF") {
       return NextResponse.json({ error: "Devise invalide." }, { status: 400 });
     }
     // Validation lignes
@@ -115,9 +115,10 @@ export async function POST(req: NextRequest) {
       title: string;
       priceXof: number;
       priceEur: number;
+      priceGnf: number;
       variants: Array<{ _key: string; colorName: string; sku?: string; inStock: boolean }>;
     }> = await sanityServer.fetch(
-      `*[_type == "product" && _id in $ids]{ _id, title, priceXof, priceEur, variants[]{ _key, colorName, inStock, sku } }`,
+      `*[_type == "product" && _id in $ids]{ _id, title, priceXof, priceEur, priceGnf, variants[]{ _key, colorName, inStock, sku } }`,
       { ids: productIds },
     );
 
@@ -134,6 +135,12 @@ export async function POST(req: NextRequest) {
     const orderBoxes: OrderData["boxes"] = [];
     let subtotal = 0;
 
+    function unitPriceFor(product: { priceXof: number; priceEur: number; priceGnf: number }, cur: Currency) {
+      if (cur === "EUR") return product.priceEur;
+      if (cur === "GNF") return product.priceGnf;
+      return product.priceXof;
+    }
+
     for (const line of lines) {
       if (line.kind === "product") {
         const product = byProduct.get(line.productId);
@@ -141,7 +148,7 @@ export async function POST(req: NextRequest) {
         const variant = product.variants.find((v) => v._key === line.variantId);
         if (!variant) return NextResponse.json({ error: `Variante introuvable: ${line.variantId}` }, { status: 400 });
         if (!variant.inStock) return NextResponse.json({ error: `Article épuisé: ${product.title} — ${variant.colorName}` }, { status: 400 });
-        const unitPrice = currency === "XOF" ? product.priceXof : product.priceEur;
+        const unitPrice = unitPriceFor(product, currency as Currency);
         subtotal += unitPrice * line.qty;
         orderItems.push({ name: product.title, color: variant.colorName, qty: line.qty, unitPrice });
       } else {
@@ -156,7 +163,7 @@ export async function POST(req: NextRequest) {
           const variant = product.variants.find((v) => v._key === it.variantId);
           if (!variant) return NextResponse.json({ error: `Variante box introuvable: ${it.variantId}` }, { status: 400 });
           if (!variant.inStock) return NextResponse.json({ error: `Article box épuisé: ${product.title} — ${variant.colorName}` }, { status: 400 });
-          const unitPrice = currency === "XOF" ? product.priceXof : product.priceEur;
+          const unitPrice = unitPriceFor(product, currency as Currency);
           boxSubtotal += unitPrice * it.qty;
           boxItems.push({ name: product.title, color: variant.colorName, qty: it.qty, unitPrice });
         }
@@ -225,7 +232,7 @@ export async function POST(req: NextRequest) {
       const line = lines[idx];
       if (line.kind === "product") {
         const product = byProduct.get(line.productId)!;
-        const unitPrice = currency === "XOF" ? product.priceXof : product.priceEur;
+        const unitPrice = unitPriceFor(product, currency as Currency);
         const { error } = await supabase.from("order_items").insert({
           order_id: order.id,
           parent_box_id: null,
@@ -251,7 +258,7 @@ export async function POST(req: NextRequest) {
         }
         for (const it of line.items) {
           const product = byProduct.get(it.productId)!;
-          const unitPrice = currency === "XOF" ? product.priceXof : product.priceEur;
+          const unitPrice = unitPriceFor(product, currency as Currency);
           const { error } = await supabase.from("order_items").insert({
             order_id: order.id,
             parent_box_id: box.id,

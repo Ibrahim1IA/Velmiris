@@ -12,6 +12,7 @@ export interface DraftItem {
   colorName: string;
   priceXof: number;
   priceEur: number;
+  priceGnf: number;
 }
 
 interface BoxDraftState {
