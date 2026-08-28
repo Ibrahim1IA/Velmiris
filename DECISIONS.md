@@ -1,5 +1,17 @@
 # DECISIONS — VELMIRYS
 
+## 2026-08-28 — Déploiement : build local → GHCR → droplet pull
+
+### 1. Registry GitHub Container Registry (ghcr.io)
+- Cause: build `next build` sur Droplet 1 GB explosait le heap Node (`--max-old-space-size=3072` + swap obligatoire). Plus robuste en CI locale.
+- Choix: build local (Windows) via `deploy.ps1` → push `ghcr.io/ibrahim1ia/velmirys-web` → droplet `docker compose pull && up -d`. `image:` remplace `build:` dans `docker-compose.yml`.
+- Tagging: `latest` + `sha-$(git rev-parse --short HEAD)` (rollback = éditer `IMAGE_TAG=sha-xxx` dans `.env` du droplet). Authentification via PAT GitHub scope `write:packages` (local) et `read:packages` (droplet), `docker login ghcr.io`.
+- Sécurité: `deploy.ps1` filtre uniquement `NEXT_PUBLIC_*` en `--build-arg`. Les clés privées (.env : `SANITY_WRITE_TOKEN`, `SUPABASE_SECRET_KEY`, `RESEND_API_KEY`) ne sont jamais poussées en ARG — visibles sinon dans `docker history`.
+- Rollback: sur le droplet, éditer `.env` (`IMAGE_TAG=sha-xxxxxxx`) → `docker compose pull && up -d`.
+- Fichiers: `deploy.ps1`, `docker-compose.yml` (image GHCR), `web/Dockerfile` (inchangé, utilisé par le build local).
+
+---
+
 ## 2026-08-23 — Fix build font Turbopack + images homepage
 
 ### 1. Build Error `Can't resolve '@vercel/turbopack-next/internal/font/google/font'`

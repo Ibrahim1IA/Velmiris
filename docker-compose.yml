@@ -1,23 +1,20 @@
-# VELMIRYS — déploiement Droplet
-# Usage : clone → cp .env.example .env (remplir) → docker compose up -d
-# Les NEXT_PUBLIC_* sont passées en build args (inlinées au build Next.js).
-# Modifier NEXT_PUBLIC_* (IP/domaine...) nécessite : docker compose up -d --build
+# VELMIRYS — déploiement Droplet (image pré-buildée via GHCR)
+# Workflow : build local (deploy.ps1) → push GHCR → droplet pull.
+# Usage droplet : docker compose pull && docker compose up -d
+# Les NEXT_PUBLIC_* sont inlinées au build (deploy.ps1 passe les --build-arg).
+# Rollback : éditer IMAGE_TAG=sha-xxxxxxx dans le .env du droplet.
+#
+# ⚠️ Ne PAS builder sur le droplet (1 GB RAM → node heap explosé).
+#    Le build se fait en local, le droplet ne fait que pull.
 
 services:
   web:
-    build:
-      context: ./web
-      dockerfile: Dockerfile
-      args:
-        NEXT_PUBLIC_SANITY_PROJECT_ID: ${NEXT_PUBLIC_SANITY_PROJECT_ID}
-        NEXT_PUBLIC_SANITY_DATASET: ${NEXT_PUBLIC_SANITY_DATASET:-production}
-        NEXT_PUBLIC_SANITY_API_VERSION: ${NEXT_PUBLIC_SANITY_API_VERSION:-2026-08-19}
-        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
-        NEXT_PUBLIC_SHOP_WHATSAPP_NUMBER: ${NEXT_PUBLIC_SHOP_WHATSAPP_NUMBER}
-        NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
-        NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY}
-        NEXT_PUBLIC_UMAMI_SRC: ${NEXT_PUBLIC_UMAMI_SRC:-}
-        NEXT_PUBLIC_UMAMI_WEBSITE_ID: ${NEXT_PUBLIC_UMAMI_WEBSITE_ID:-}
+    image: ghcr.io/ibrahim1ia/velmirys-web:${IMAGE_TAG:-latest}
+    # Fallback local (déconseillé sur droplet 1 GB) :
+    #   build:
+    #     context: ./web
+    #     dockerfile: Dockerfile
+    #   deploy.ps1 passe les --build-arg NEXT_PUBLIC_* automatiquement.
     ports:
       - "3000:3000"
     env_file:
