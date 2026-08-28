@@ -1,6 +1,6 @@
 // Modèle panier — PRD §11.1
 
-export type Currency = "XOF" | "EUR";
+export type Currency = "XOF" | "EUR" | "GNF";
 
 export interface CartProductLine {
   kind: "product";

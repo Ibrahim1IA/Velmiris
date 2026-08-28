@@ -27,6 +27,8 @@ type Product = {
   category: "foulard" | "bonnet" | "epingle";
   priceXof: number;
   priceEur: number;
+  priceGnf: number;
+  images?: Array<{ asset?: unknown; hotspot?: unknown; crop?: unknown }>;
   variants: ProductVariant[];
 };
 
@@ -81,7 +83,7 @@ export default async function BoutiquePage({
   try {
     const sanityPromise = sanityFetch<Product[]>(
       `*[_type == "product" && (!defined($category) || category == $category)] | order(title asc) {
-        _id, title, slug, category, priceXof, priceEur,
+        _id, title, slug, category, priceXof, priceEur, priceGnf, "images": images[0...1],
         variants[]{ _key, colorName, hex, sku, inStock, "images": images[0...1] }
       }`,
       { category: validCategory },
@@ -174,9 +176,10 @@ export default async function BoutiquePage({
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
           {filtered.map(({ product, variant }, index) => {
             const href = `/boutique/${product.slug.current}?variant=${variant._key}`;
-            const hasImage = variant.images?.[0];
-            const imageUrl = hasImage
-              ? urlFor(hasImage as never)
+            // Fallback: image variante → image générale produit → hex (alerte admin)
+            const rawImage = variant.images?.[0] ?? product.images?.[0];
+            const imageUrl = rawImage
+              ? urlFor(rawImage as never)
                   .width(600)
                   .height(750)
                   .fit("crop")
@@ -233,7 +236,7 @@ export default async function BoutiquePage({
                   </p>
                   <p className="text-sm text-ink/60">{variant.colorName}</p>
                   <p className="mt-1 flex flex-wrap items-baseline gap-x-2 text-sm">
-                    <Price priceXof={product.priceXof} priceEur={product.priceEur} className="font-medium" />
+                    <Price priceXof={product.priceXof} priceEur={product.priceEur} priceGnf={product.priceGnf} className="font-medium" />
                   </p>
                 </div>
               </Link>

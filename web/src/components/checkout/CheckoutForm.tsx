@@ -10,10 +10,12 @@ import { track } from "@/lib/analytics";
 export default function CheckoutForm({
   totalXof,
   totalEur,
+  totalGnf,
   currency = "XOF",
 }: {
   totalXof: number;
   totalEur: number;
+  totalGnf: number;
   currency?: Currency;
 }) {
   const router = useRouter();
@@ -26,7 +28,7 @@ export default function CheckoutForm({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const total = currency === "XOF" ? totalXof : totalEur;
+  const total = currency === "GNF" ? totalGnf : currency === "EUR" ? totalEur : totalXof;
   const [fieldErrors, setFieldErrors] = useState<{ name?: string; phone?: string; zone?: string }>({});
 
   async function onSubmit(e: React.FormEvent) {

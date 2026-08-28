@@ -10,7 +10,9 @@ type OgProduct = {
   title: string;
   priceXof: number;
   priceEur: number;
+  priceGnf?: number;
   description?: string;
+  images?: Array<{ asset?: { _ref?: string; _id?: string } }>;
   variants: Array<{
     colorName: string;
     hex: string;
@@ -38,7 +40,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
   try {
     product = await client.fetch<OgProduct | null>(
       `*[_type == "product" && slug.current == $slug][0]{
-        title, priceXof, priceEur, description,
+        title, priceXof, priceEur, priceGnf, description, images,
         variants[]{ colorName, hex, images }
       }`,
       { slug },

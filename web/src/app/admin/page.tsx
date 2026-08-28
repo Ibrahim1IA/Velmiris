@@ -102,7 +102,7 @@ export default async function AdminPage({
                     <div className="font-medium">{order.customers?.full_name ?? "—"}</div>
                     <div className="text-xs text-ink/60">{order.customers?.phone} · {order.customers?.delivery_zone}</div>
                   </td>
-                  <td className="px-4 py-3">{formatPrice(Number(order.total), order.currency as "XOF" | "EUR")}</td>
+                  <td className="px-4 py-3">{formatPrice(Number(order.total), order.currency as "XOF" | "EUR" | "GNF")}</td>
                   <td className="px-4 py-3">
                     <span className={`rounded-full px-2 py-1 text-xs ${order.status === "en_attente" ? "bg-amber-100" : order.status === "annulee" ? "bg-red-100" : "bg-green-100"}`}>
                       {STATUS_LABEL[order.status] ?? order.status}

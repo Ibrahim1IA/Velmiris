@@ -4,7 +4,7 @@ import type { Currency } from "./types";
 export function formatPrice(amount: number, currency: Currency): string {
   return new Intl.NumberFormat("fr-FR", {
     style: "currency",
-    currency, // XOF → « FCFA » en fr-FR ; EUR → « € »
-    maximumFractionDigits: currency === "XOF" ? 0 : 2,
+    currency, // XOF → « FCFA » en fr-FR ; EUR → « € » ; GNF → « GNF »
+    maximumFractionDigits: currency === "EUR" ? 2 : 0,
   }).format(amount);
 }
