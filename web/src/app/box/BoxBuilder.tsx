@@ -21,6 +21,7 @@ type ProductVariant = {
   hex: string;
   sku?: string;
   inStock: boolean;
+  images?: unknown[];
 };
 
 type Product = {
@@ -31,6 +32,7 @@ type Product = {
   priceXof: number;
   priceEur: number;
   priceGnf: number;
+  images?: unknown[];
   variants: ProductVariant[];
 };
 
@@ -87,6 +89,7 @@ export default function BoxBuilder({ products, cards, giftExamples, initialAdd }
         priceXof: p.priceXof,
         priceEur: p.priceEur,
         priceGnf: p.priceGnf,
+        image: (v.images?.[0] ?? p.images?.[0] ?? null) as unknown,
       };
       addItem(draft);
     }
@@ -125,6 +128,7 @@ export default function BoxBuilder({ products, cards, giftExamples, initialAdd }
       priceXof: product.priceXof,
       priceEur: product.priceEur,
       priceGnf: product.priceGnf,
+      image: (variant.images?.[0] ?? product.images?.[0] ?? null) as unknown,
     };
     // eslint-disable-next-line react-hooks/purity -- Date.now as key is intentional for animation
     setFlying({ hex: variant.hex, draft, key: Date.now() });
@@ -271,13 +275,19 @@ export default function BoxBuilder({ products, cards, giftExamples, initialAdd }
             </div>
             {items.length > 0 && (
               <ul className="mt-3 flex flex-col gap-2" aria-label="Articles dans la box">
-                {items.map((it, idx) => (
+                {items.map((it, idx) => {
+                  const imgUrl = it.image ? urlFor(it.image as never).width(80).height(80).fit("crop").url() : null;
+                  return (
                   <li key={idx} className="flex items-center gap-3 text-sm">
-                    <span
-                      className="h-6 w-6 shrink-0 rounded-full border border-black/10"
-                      style={{ backgroundColor: it.hex }}
-                      aria-hidden="true"
-                    />
+                    <span className="relative h-12 w-10 shrink-0 overflow-hidden rounded-lg bg-sand">
+                      {imgUrl ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={imgUrl} alt={`${it.title} — ${it.colorName}`} className="h-full w-full object-cover" loading="lazy" />
+                      ) : (
+                        <span className="block h-full w-full" style={{ backgroundColor: it.hex }} aria-hidden="true" />
+                      )}
+                      <span className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full border-2 border-white shadow-sm" style={{ backgroundColor: it.hex }} aria-hidden="true" />
+                    </span>
                     <span className="flex-1">
                       {it.title} — {it.colorName}
                     </span>
@@ -293,7 +303,8 @@ export default function BoxBuilder({ products, cards, giftExamples, initialAdd }
                       Retirer
                     </button>
                   </li>
-                ))}
+                  );
+                })}
               </ul>
             )}
             {items.length > 0 && (
@@ -345,15 +356,27 @@ export default function BoxBuilder({ products, cards, giftExamples, initialAdd }
                   const disabled = !variant.inStock || isFull;
                   return (
                     <div key={`${product._id}-${variant._key}`} className="flex flex-col gap-2 rounded-2xl border border-sand bg-cream p-3">
+                      {(() => {
+                        const raw = (variant.images?.[0] ?? product.images?.[0]) as unknown;
+                        const imgUrl = raw ? urlFor(raw as never).width(400).height(300).fit("crop").url() : null;
+                        return (
                       <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-sand">
-                        <div className="h-full w-full" style={{ backgroundColor: variant.hex }} aria-hidden="true" />
+                        {imgUrl ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={imgUrl} alt={`${product.title} — ${variant.colorName}`} className="h-full w-full object-cover" loading="lazy" />
+                        ) : (
+                          <div className="h-full w-full" style={{ backgroundColor: variant.hex }} aria-hidden="true" />
+                        )}
                         {!variant.inStock && (
                           <span className="absolute left-2 top-2 rounded-full bg-ink px-2 py-0.5 text-xs text-cream">Épuisé</span>
                         )}
-                        <span className="absolute bottom-2 right-2 rounded-full bg-cream px-2 py-0.5 text-xs shadow" aria-hidden="true">
+                        <span className="absolute bottom-2 right-2 flex items-center gap-1 rounded-full bg-cream/95 px-2 py-0.5 text-xs shadow backdrop-blur" aria-hidden="true">
+                          <span className="h-3 w-3 rounded-full border border-black/10" style={{ backgroundColor: variant.hex }} aria-hidden="true" />
                           {variant.colorName}
                         </span>
                       </div>
+                        );
+                      })()}
                       <div className="px-1">
                         <p className="text-sm font-medium leading-tight">{product.title}</p>
                         <p className="text-xs text-ink/60">{variant.colorName}</p>

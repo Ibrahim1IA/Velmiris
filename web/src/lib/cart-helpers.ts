@@ -1,4 +1,4 @@
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/sanity/lib/fetch";
 import type { CartLine } from "@/lib/types";
 
 export type ResolvedProduct = {
@@ -8,14 +8,20 @@ export type ResolvedProduct = {
   priceXof: number;
   priceEur: number;
   priceGnf: number;
+  images?: unknown[];
   variants: Array<{
     _key: string;
     colorName: string;
     hex: string;
     inStock: boolean;
     sku?: string;
+    images?: unknown[];
   }>;
 };
+
+export function variantImage(variant: ResolvedProduct["variants"][number], product: ResolvedProduct): unknown | null {
+  return (variant.images?.[0] ?? product.images?.[0] ?? null) as unknown;
+}
 
 export type ResolvedLine =
   | {
@@ -55,16 +61,17 @@ export async function resolveCartLines(lines: CartLine[]): Promise<ResolvedLine[
   if (ids.length === 0) return [];
   let products: ResolvedProduct[] = [];
   try {
-    products = await client.fetch(
+    products = await sanityFetch<ResolvedProduct[]>(
       `*[_type == "product" && _id in $ids]{
-        _id, title, slug, priceXof, priceEur, priceGnf,
-        variants[]{ _key, colorName, hex, inStock, sku }
+        _id, title, slug, priceXof, priceEur, priceGnf, images,
+        variants[]{ _key, colorName, hex, inStock, sku, images }
       }`,
       { ids },
+      { next: { revalidate: 60, tags: ["products"] } },
     );
   } catch (err) {
     console.warn("[cart] resolveCartLines: Sanity fetch failed (CORS ?)", err);
-    return [];
+    throw err;
   }
   const byId = new Map(products.map((p) => [p._id, p]));
 

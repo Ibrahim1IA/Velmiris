@@ -155,18 +155,19 @@ export default async function BoutiquePage({
         <p className="mt-3 max-w-2xl text-ink/60">{t("subtitle")}</p>
       </header>
 
-      <div className="sticky top-[69px] z-30 -mx-6 mb-8 flex flex-col gap-3 border-y border-sand bg-cream/90 px-6 py-3 backdrop-blur supports-[backdrop-filter]:bg-cream/85 md:flex-row md:items-center md:justify-between">
+      {/* Filtres — scroll away (usage ponctuel) */}
+      <div className="mb-4 flex flex-col gap-3 md:mb-6">
         <BoutiqueFilters labels={filterLabels} />
-        <div className="flex items-center gap-3">
+      </div>
+      {/* Recherche — seule sticky */}
+      <div className="sticky top-[69px] z-30 -mx-6 mb-8 border-y border-sand bg-cream/90 px-6 py-3 backdrop-blur supports-[backdrop-filter]:bg-cream/85">
+        <div className="flex items-center gap-3 md:justify-between">
           <BoutiqueSearchBar placeholder={t("search.placeholder")} label={t("search.label")} />
-          <p className="hidden text-sm text-ink/60 md:block" aria-live="polite" aria-atomic="true">
+          <p className="shrink-0 text-sm text-ink/60" aria-live="polite" aria-atomic="true">
             {t("count", { count: filtered.length })}
           </p>
         </div>
       </div>
-      <p className="mb-4 text-sm text-ink/60 md:hidden" aria-live="polite" aria-atomic="true">
-        {t("count", { count: filtered.length })}
-      </p>
 
       {filtered.length === 0 ? (
         <p className="py-16 text-center text-ink/60">

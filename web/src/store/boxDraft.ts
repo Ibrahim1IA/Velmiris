@@ -13,6 +13,7 @@ export interface DraftItem {
   priceXof: number;
   priceEur: number;
   priceGnf: number;
+  image?: unknown;
 }
 
 interface BoxDraftState {
@@ -66,7 +67,7 @@ export const useBoxDraft = create<BoxDraftState>()(
     }),
     {
       name: "velmirys-box-draft",
-      version: 1,
+      version: 2,
       // expiration 7j vérifiée à l'hydratation
       onRehydrateStorage: () => (state) => {
         if (state?.createdAt && Date.now() - state.createdAt > SEVEN_DAYS) {

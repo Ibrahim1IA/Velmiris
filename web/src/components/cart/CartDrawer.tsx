@@ -10,8 +10,10 @@ import { formatPrice } from "@/lib/format";
 import {
   resolveCartLines,
   cartTotals,
+  variantImage,
   type ResolvedLine,
 } from "@/lib/cart-helpers";
+import { urlFor } from "@/sanity/lib/image";
 
 export default function CartDrawer({
   open,
@@ -27,18 +29,23 @@ export default function CartDrawer({
   const currency = useCurrency((s) => s.currency);
   const [resolved, setResolved] = useState<ResolvedLine[]>([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     if (!open) return;
     let cancelled = false;
     // eslint-disable-next-line react-hooks/set-state-in-effect -- fetch on drawer open
     setLoading(true);
+    setError(false);
     resolveCartLines(lines)
       .then((r) => {
         if (!cancelled) setResolved(r);
       })
       .catch(() => {
-        if (!cancelled) setResolved([]);
+        if (!cancelled) {
+          setResolved([]);
+          setError(true);
+        }
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -178,6 +185,10 @@ export default function CartDrawer({
             <p className="py-8 text-center text-sm text-ink/60" role="status" aria-live="polite">
               Chargement…
             </p>
+          ) : error ? (
+            <p className="py-8 text-center text-sm text-ink/60" role="alert">
+              Impossible de charger le contenu du panier. Réessayez plus tard.
+            </p>
           ) : (
             <ul className="flex flex-col gap-6">
               {resolved.map((r) =>
@@ -186,11 +197,21 @@ export default function CartDrawer({
                     key={`p-${r.index}`}
                     className="flex gap-4 border-b border-sand pb-6"
                   >
-                    <div
-                      className="h-20 w-16 shrink-0 rounded-xl"
-                      style={{ backgroundColor: r.variant.hex }}
-                      aria-hidden
-                    />
+                    {(() => {
+                      const raw = variantImage(r.variant, r.product);
+                      const imgUrl = raw ? urlFor(raw as never).width(128).height(160).fit("crop").url() : null;
+                      return (
+                    <div className="relative h-20 w-16 shrink-0 overflow-hidden rounded-xl bg-sand">
+                      {imgUrl ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={imgUrl} alt={`${r.product.title} — ${r.variant.colorName}`} className="h-full w-full object-cover" loading="lazy" />
+                      ) : (
+                        <div className="h-full w-full" style={{ backgroundColor: r.variant.hex }} aria-hidden="true" />
+                      )}
+                      <span className="absolute bottom-1 right-1 h-3.5 w-3.5 rounded-full border-2 border-white shadow-sm" style={{ backgroundColor: r.variant.hex }} aria-hidden="true" />
+                    </div>
+                      );
+                    })()}
                     <div className="flex flex-1 flex-col">
                       <Link
                         href={`/boutique/${r.product.slug.current}?variant=${r.variant._key}`}
@@ -245,13 +266,25 @@ export default function CartDrawer({
                       {t("boxCount", { n: r.index + 1 })} — {r.items.length}{" "}
                       articles
                     </p>
-                    <ul className="mt-2 flex flex-col gap-1">
-                      {r.items.map((it, j) => (
-                        <li key={j} className="text-sm text-ink/70">
-                          • {it.product.title} — {it.variant.colorName} ×
-                          {it.qty}
+                    <ul className="mt-2 flex flex-col gap-2">
+                      {r.items.map((it, j) => {
+                        const raw = variantImage(it.variant, it.product);
+                        const imgUrl = raw ? urlFor(raw as never).width(80).height(80).fit("crop").url() : null;
+                        return (
+                        <li key={j} className="flex items-center gap-2 text-sm text-ink/70">
+                          <span className="relative h-10 w-8 shrink-0 overflow-hidden rounded-lg bg-sand">
+                            {imgUrl ? (
+                              // eslint-disable-next-line @next/next/no-img-element
+                              <img src={imgUrl} alt={`${it.product.title} — ${it.variant.colorName}`} className="h-full w-full object-cover" loading="lazy" />
+                            ) : (
+                              <span className="block h-full w-full" style={{ backgroundColor: it.variant.hex }} aria-hidden="true" />
+                            )}
+                            <span className="absolute -bottom-1 -right-1 h-3 w-3 rounded-full border-2 border-white" style={{ backgroundColor: it.variant.hex }} aria-hidden="true" />
+                          </span>
+                          {it.product.title} — {it.variant.colorName} ×{it.qty}
                         </li>
-                      ))}
+                        );
+                      })}
                     </ul>
                     {r.giftMessage && (
                       <p className="mt-2 text-sm italic text-ink/60">

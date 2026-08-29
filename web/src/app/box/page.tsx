@@ -39,6 +39,7 @@ type ProductVariant = {
   hex: string;
   sku?: string;
   inStock: boolean;
+  images?: unknown[];
 };
 
 type Product = {
@@ -49,6 +50,7 @@ type Product = {
   priceXof: number;
   priceEur: number;
   priceGnf: number;
+  images?: unknown[];
   variants: ProductVariant[];
 };
 
@@ -77,8 +79,8 @@ export default async function BoxPage({
       withTimeout(
         client.fetch<Product[]>(
           `*[_type == "product"] | order(title asc) {
-        _id, title, slug, category, priceXof, priceEur, priceGnf,
-        variants[]{ _key, colorName, hex, sku, inStock }
+        _id, title, slug, category, priceXof, priceEur, priceGnf, images,
+        variants[]{ _key, colorName, hex, sku, inStock, images }
       }`,
           {},
           { next: { revalidate: 60, tags: ["products"] } },
