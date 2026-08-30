@@ -286,13 +286,8 @@ export async function POST(req: NextRequest) {
         // ignore, fallback env
       }
       if (notifyTo.length === 0 && process.env.SHOP_EMAIL) notifyTo = [process.env.SHOP_EMAIL];
-      // Exigence : nimagamoumou@gmail.com toujours en copie (tant que non retiré volontairement en Studio)
-      const requiredExtra = "nimagamoumou@gmail.com";
-      if (notifyTo.length > 0 && !notifyTo.map((e) => e.toLowerCase()).includes(requiredExtra)) {
-        notifyTo = [...notifyTo, requiredExtra];
-      }
-      // dedupe
-      notifyTo = Array.from(new Set(notifyTo.map((e) => e.toLowerCase()))).map((l) => notifyTo.find((o) => o.toLowerCase() === l)!);
+      // dedupe + normalise (Studio seule source de vérité)
+      notifyTo = Array.from(new Set(notifyTo.map((e) => e.toLowerCase().trim()))).map((l) => notifyTo.find((o) => o.toLowerCase().trim() === l)!);
       if (notifyTo.length > 0) {
         try {
           const resend = new Resend(resendKey);

@@ -166,17 +166,26 @@ async function seed() {
 
   const existingShopEmail = process.env.SHOP_EMAIL && !process.env.SHOP_EMAIL.startsWith("TODO") ? process.env.SHOP_EMAIL : null;
   const existingAdminEmail = process.env.ADMIN_EMAIL && !process.env.ADMIN_EMAIL.startsWith("TODO") ? process.env.ADMIN_EMAIL : null;
-  const notificationEmails = [existingShopEmail, "nimagamoumou@gmail.com"].filter(Boolean) as string[];
-  const adminEmails = [existingAdminEmail || existingShopEmail, "nimagamoumou@gmail.com"].filter(Boolean) as string[];
-  // dedupe
+  const notificationEmails = [existingShopEmail].filter(Boolean) as string[];
+  const adminUsers = [existingAdminEmail || existingShopEmail].filter(Boolean).map((email) => ({ email: email as string, role: "admin" as const }));
+  // dedupe strings for notification
   const uniq = (arr: string[]) => Array.from(new Set(arr.map((s) => s.toLowerCase()))).map((l) => arr.find((o) => o.toLowerCase() === l)!) ;
+  const uniqUsers = (arr: { email: string; role: "admin" | "collaborateur" }[]) => {
+    const seen = new Set<string>();
+    return arr.filter((u) => {
+      const k = u.email.toLowerCase();
+      if (seen.has(k)) return false;
+      seen.add(k);
+      return true;
+    });
+  };
   const settings = {
     _id: "siteSettings",
     _type: "siteSettings",
     whatsappNumber: process.env.NEXT_PUBLIC_SHOP_WHATSAPP_NUMBER || "221770000000", // TODO
     email: existingShopEmail || "contact@velmirys.com",
     notificationEmails: uniq(notificationEmails),
-    adminEmails: uniq(adminEmails),
+    adminUsers: uniqUsers(adminUsers),
     giftMessageExamples: [
       "Joyeux anniversaire 🤍 Tu mérites le plus beau.",
       "Merci d'être toi, tout simplement.",
@@ -194,7 +203,7 @@ async function seed() {
   await tx.commit();
   console.log(`✅ Seed terminé : ${products.length} produits + réglages + homeSettings`);
   console.log(`   notificationEmails: ${notificationEmails.join(", ")}`);
-  console.log(`   adminEmails: ${adminEmails.join(", ")}`);
+  console.log(`   adminUsers: ${adminUsers.map((u) => `${u.email} (${u.role})`).join(", ")}`);
 }
 
 seed().catch((err) => {

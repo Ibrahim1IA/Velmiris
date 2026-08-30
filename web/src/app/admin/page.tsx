@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { createClient } from "next-sanity";
 import { createAuthServerClient } from "@/lib/supabase/auth";
 import { createServerClient } from "@/lib/supabase/server";
 import { formatPrice } from "@/lib/format";
-import { apiVersion, dataset, projectId } from "@/sanity/env";
+import { getAllowedAdminEmails, getUserRole } from "@/lib/admin";
 
 export const dynamic = "force-dynamic";
 
@@ -24,35 +23,12 @@ export default async function AdminPage({
 }) {
   const { status } = await searchParams;
 
-  // Auth
+  // Auth — Studio seule source de vérité
   const auth = await createAuthServerClient();
   const { data: { user } } = await auth.auth.getUser();
   if (!user) redirect("/admin/login");
-  // Admin emails — Sanity-first, env fallback
-  let allowedAdminEmails: string[] = [];
-  try {
-    const sanity = createClient({ projectId, dataset, apiVersion, useCdn: false, perspective: "published" });
-    const s = await sanity.fetch<{ adminEmails?: string[] } | null>(`*[_type == "siteSettings"][0]{ adminEmails }`);
-    if (s?.adminEmails?.length) allowedAdminEmails = s.adminEmails.filter(Boolean).map((e) => e.toLowerCase());
-  } catch {}
-  if (allowedAdminEmails.length === 0) {
-    const fallback = process.env.ADMIN_EMAIL || process.env.SHOP_EMAIL;
-    if (fallback) allowedAdminEmails = [fallback.toLowerCase()];
-  }
-  // Exigence : nimagamoumou@gmail.com toujours autorisé (merge tant que Studio ne l'a pas retiré volontairement)
-  {
-    const extra = "nimagamoumou@gmail.com";
-    if (allowedAdminEmails.length > 0 && !allowedAdminEmails.includes(extra)) {
-      allowedAdminEmails = [...allowedAdminEmails, extra];
-    } else if (allowedAdminEmails.length === 0) {
-      allowedAdminEmails = [extra];
-    }
-    // dedupe + normalise
-    allowedAdminEmails = Array.from(new Set(allowedAdminEmails.map((e) => e.toLowerCase()))).map(
-      (l) => allowedAdminEmails.find((o) => o.toLowerCase() === l)!,
-    );
-  }
-  if (allowedAdminEmails.length > 0 && user.email && !allowedAdminEmails.includes(user.email.toLowerCase())) {
+  const allowedAdminEmails = await getAllowedAdminEmails();
+  if (allowedAdminEmails.length > 0 && user.email && !allowedAdminEmails.includes(user.email.toLowerCase().trim())) {
     return (
       <div className="mx-auto max-w-2xl px-6 py-16 text-center">
         <h1 className="font-serif text-2xl">Accès refusé</h1>
@@ -63,6 +39,7 @@ export default async function AdminPage({
       </div>
     );
   }
+  const currentRole = await getUserRole(user.email);
 
   // Data — utilise service_role pour lire malgré RLS
   const supabase = createServerClient();
@@ -86,7 +63,11 @@ export default async function AdminPage({
       <div className="flex flex-wrap items-center justify-between gap-4">
         <h1 className="font-serif text-3xl">Admin — Commandes ({orders?.length ?? 0})</h1>
         <div className="flex items-center gap-2">
-          <span className="text-sm text-ink/60">{user.email}</span>
+          {currentRole === "admin" && (
+            <Link href="/admin/users" className="rounded-full border border-ink/15 px-4 py-1.5 text-sm hover:border-ink">Gérer les accès</Link>
+          )}
+          <Link href="/studio" className="rounded-full border border-ink/15 px-4 py-1.5 text-sm hover:border-ink">Studio</Link>
+          <span className="text-sm text-ink/60">{user.email} {currentRole ? `· ${currentRole}` : ""}</span>
           <form action="/admin/logout" method="post">
             <button className="rounded-full border border-ink/15 px-4 py-1.5 text-sm hover:border-ink">Déconnexion</button>
           </form>
