@@ -272,34 +272,98 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Notification email (Resend) — non bloquant — Sanity-first, env fallback
-    const resendKey = process.env.RESEND_API_KEY;
-    if (resendKey) {
-      let notifyTo: string[] = [];
+    // Notification email (Resend) — multi-actif, 1 clé = 1 owner onboarding@resend.dev
+    // Studio: notificationEmails (liste) + activeNotificationEmails (actifs, vide = tous)
+    // Env: RESEND_API_KEYS='{"email":"re_..."}' + fallback RESEND_API_KEY. Chaque email utilise sa propre clé.
+    const resendFrom = process.env.RESEND_FROM_EMAIL || "VELMIRYS <onboarding@resend.dev>";
+    const resendKeysMap = new Map<string, string>();
+    try {
+      let raw = process.env.RESEND_API_KEYS;
+      if (raw && raw.trim() && raw.trim() !== "TODO") {
+        raw = raw.trim();
+        // env_file peut conserver les quotes externes '...' ou "..."
+        if ((raw.startsWith("'") && raw.endsWith("'")) || (raw.startsWith('"') && raw.endsWith('"'))) {
+          raw = raw.slice(1, -1);
+        }
+        const parsed = JSON.parse(raw) as Record<string, string>;
+        for (const [k, v] of Object.entries(parsed)) {
+          if (k && v && !String(v).startsWith("TODO") && String(v).trim()) {
+            resendKeysMap.set(k.toLowerCase().trim(), String(v).trim());
+          }
+        }
+      }
+    } catch (e) {
+      console.warn("[orders] RESEND_API_KEYS JSON invalide", e);
+    }
+    const defaultResendKey = process.env.RESEND_API_KEY;
+    const hasAnyKey =
+      resendKeysMap.size > 0 ||
+      (defaultResendKey && !defaultResendKey.startsWith("TODO") && defaultResendKey.trim() !== "");
+    if (!hasAnyKey) {
+      console.warn("[orders] Aucune clé Resend configurée — email non envoyé", { ref });
+    } else {
+      let allEmails: string[] = [];
+      let activeEmails: string[] = [];
       try {
-        const s = await sanityServer.fetch<{ notificationEmails?: string[]; email?: string } | null>(
-          `*[_type == "siteSettings"][0]{ notificationEmails, email }`,
-        );
-        if (s?.notificationEmails?.length) notifyTo = s.notificationEmails.filter(Boolean);
-        else if (s?.email) notifyTo = [s.email];
+        const s = await sanityServer.fetch<{
+          notificationEmails?: string[] | null;
+          activeNotificationEmails?: string[] | null;
+          email?: string | null;
+        } | null>(`*[_type == "siteSettings"][0]{ notificationEmails, activeNotificationEmails, email }`);
+        if (s?.notificationEmails?.length) allEmails = s.notificationEmails.filter(Boolean);
+        else if (s?.email) allEmails = [s.email];
+        if (s?.activeNotificationEmails?.length) activeEmails = s.activeNotificationEmails.filter(Boolean);
       } catch {
         // ignore, fallback env
       }
-      if (notifyTo.length === 0 && process.env.SHOP_EMAIL) notifyTo = [process.env.SHOP_EMAIL];
-      // dedupe + normalise (Studio seule source de vérité)
-      notifyTo = Array.from(new Set(notifyTo.map((e) => e.toLowerCase().trim()))).map((l) => notifyTo.find((o) => o.toLowerCase().trim() === l)!);
-      if (notifyTo.length > 0) {
-        try {
-          const resend = new Resend(resendKey);
-          const itemsList = [...orderItems.map((i) => `• ${i.name} — ${i.color} ×${i.qty}`), ...orderBoxes.flatMap((b, n) => [`Box n°${n + 1} (${b.cardName})`, ...b.items.map((i) => `  • ${i.name} — ${i.color} ×${i.qty}`)])].join("\n");
-          await resend.emails.send({
-            from: "VELMIRYS <onboarding@resend.dev>",
-            to: notifyTo.length === 1 ? notifyTo[0] : notifyTo,
-            subject: `Nouvelle commande ${ref} — ${customerName.trim()}`,
-            text: `Réf: ${ref}\nClient: ${customerName.trim()} — ${phone.trim()} — ${deliveryZone.trim()}\nDevise: ${currency}\nTotal: ${total}\n\n${itemsList}\n\nVoir Supabase: orders ref ${ref}`,
+      if (allEmails.length === 0 && process.env.SHOP_EMAIL) allEmails = [process.env.SHOP_EMAIL];
+      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const clean = (arr: string[]) =>
+        [...new Set(arr.map((e) => e.toLowerCase().trim()).filter((e) => e && emailRe.test(e)))];
+      allEmails = clean(allEmails);
+      activeEmails = clean(activeEmails);
+      // Vide = tous (choix utilisateur)
+      let notifyTo: string[];
+      if (activeEmails.length === 0) {
+        notifyTo = allEmails;
+      } else {
+        const activeSet = new Set(activeEmails);
+        notifyTo = allEmails.filter((e) => activeSet.has(e));
+        if (notifyTo.length === 0) {
+          console.warn("[orders] activeNotificationEmails ne matche aucun notificationEmails — fallback tous", {
+            ref,
+            allEmails,
+            activeEmails,
           });
-        } catch (e) {
-          console.warn("[orders] resend failed", e);
+          notifyTo = allEmails;
+        }
+      }
+      if (notifyTo.length === 0) {
+        console.warn("[orders] aucun destinataire email valide", { ref });
+      } else {
+        const itemsList = [
+          ...orderItems.map((i) => `• ${i.name} — ${i.color} ×${i.qty}`),
+          ...orderBoxes.flatMap((b, n) => [
+            `Box n°${n + 1} (${b.cardName})`,
+            ...b.items.map((i) => `  • ${i.name} — ${i.color} ×${i.qty}`),
+          ]),
+        ].join("\n");
+        const subject = `Nouvelle commande ${ref} — ${customerName.trim()}`;
+        const text = `Réf: ${ref}\nClient: ${customerName.trim()} — ${phone.trim()} — ${deliveryZone.trim()}\nDevise: ${currency}\nTotal: ${total}\n\n${itemsList}\n\nVoir Supabase: orders ref ${ref}`;
+        for (const to of notifyTo) {
+          const key = resendKeysMap.get(to) || defaultResendKey;
+          if (!key || key.startsWith("TODO") || !key.trim()) {
+            console.error("[orders] clé Resend manquante pour ce destinataire — skip", { ref, to });
+            continue;
+          }
+          try {
+            const resend = new Resend(key);
+            const { data, error } = await resend.emails.send({ from: resendFrom, to, subject, text });
+            if (error) console.error("[orders] resend failed", { ref, to, error });
+            else console.info("[orders] resend ok", { ref, to, id: data?.id });
+          } catch (e) {
+            console.error("[orders] resend exception", { ref, to, e });
+          }
         }
       }
     }

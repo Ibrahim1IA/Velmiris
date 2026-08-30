@@ -27,7 +27,8 @@ export const siteSettings = defineType({
     defineField({
       name: "notificationEmails",
       title: "Emails de notification commande",
-      description: "Destinataires Resend à chaque commande (plusieurs possibles). Si vide, utilise SHOP_EMAIL (env).",
+      description:
+        "Liste des emails pouvant recevoir les notifications. Ajoutez un email puis sa clé Resend dans .env (RESEND_API_KEYS). Cochez les actifs ci-dessous.",
       type: "array",
       of: [{ type: "string" }],
       validation: (rule) =>
@@ -35,6 +36,26 @@ export const siteSettings = defineType({
           if (!vals || vals.length === 0) return true;
           const bad = (vals as string[]).filter((v) => !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
           return bad.length ? `Emails invalides: ${bad.join(", ")}` : true;
+        }),
+    }),
+    defineField({
+      name: "activeNotificationEmails",
+      title: "Emails actifs (notifications)",
+      description:
+        "Cochez les destinataires actifs (multi-actif). Vide = tous les emails ci-dessus reçoivent. Chaque actif doit être dans la liste ci-dessus. La clé Resend correspondante doit être dans .env RESEND_API_KEYS.",
+      type: "array",
+      of: [{ type: "string" }],
+      validation: (rule) =>
+        rule.unique().custom((vals, ctx) => {
+          if (!vals || vals.length === 0) return true;
+          const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          const bad = (vals as string[]).filter((v) => !emailRe.test(v));
+          if (bad.length) return `Emails invalides: ${bad.join(", ")}`;
+          const parent = ctx.parent as { notificationEmails?: string[] } | undefined;
+          const allowed = new Set((parent?.notificationEmails || []).map((e) => e.toLowerCase().trim()));
+          const notAllowed = (vals as string[]).filter((v) => !allowed.has(v.toLowerCase().trim()));
+          if (notAllowed.length) return `Doit être dans notificationEmails: ${notAllowed.join(", ")}`;
+          return true;
         }),
     }),
     defineField({
