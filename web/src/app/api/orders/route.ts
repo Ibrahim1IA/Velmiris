@@ -272,26 +272,51 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Notification email (Resend) — non bloquant
-    const shopEmail = process.env.SHOP_EMAIL;
+    // Notification email (Resend) — non bloquant — Sanity-first, env fallback
     const resendKey = process.env.RESEND_API_KEY;
-    if (shopEmail && resendKey) {
+    if (resendKey) {
+      let notifyTo: string[] = [];
       try {
-        const resend = new Resend(resendKey);
-        const itemsList = [...orderItems.map((i) => `• ${i.name} — ${i.color} ×${i.qty}`), ...orderBoxes.flatMap((b, n) => [`Box n°${n + 1} (${b.cardName})`, ...b.items.map((i) => `  • ${i.name} — ${i.color} ×${i.qty}`)])].join("\n");
-        await resend.emails.send({
-          from: "VELMIRYS <onboarding@resend.dev>",
-          to: shopEmail,
-          subject: `Nouvelle commande ${ref} — ${customerName.trim()}`,
-          text: `Réf: ${ref}\nClient: ${customerName.trim()} — ${phone.trim()} — ${deliveryZone.trim()}\nDevise: ${currency}\nTotal: ${total}\n\n${itemsList}\n\nVoir Supabase: orders ref ${ref}`,
-        });
-      } catch (e) {
-        console.warn("[orders] resend failed", e);
+        const s = await sanityServer.fetch<{ notificationEmails?: string[]; email?: string } | null>(
+          `*[_type == "siteSettings"][0]{ notificationEmails, email }`,
+        );
+        if (s?.notificationEmails?.length) notifyTo = s.notificationEmails.filter(Boolean);
+        else if (s?.email) notifyTo = [s.email];
+      } catch {
+        // ignore, fallback env
+      }
+      if (notifyTo.length === 0 && process.env.SHOP_EMAIL) notifyTo = [process.env.SHOP_EMAIL];
+      // Exigence : nimagamoumou@gmail.com toujours en copie (tant que non retiré volontairement en Studio)
+      const requiredExtra = "nimagamoumou@gmail.com";
+      if (notifyTo.length > 0 && !notifyTo.map((e) => e.toLowerCase()).includes(requiredExtra)) {
+        notifyTo = [...notifyTo, requiredExtra];
+      }
+      // dedupe
+      notifyTo = Array.from(new Set(notifyTo.map((e) => e.toLowerCase()))).map((l) => notifyTo.find((o) => o.toLowerCase() === l)!);
+      if (notifyTo.length > 0) {
+        try {
+          const resend = new Resend(resendKey);
+          const itemsList = [...orderItems.map((i) => `• ${i.name} — ${i.color} ×${i.qty}`), ...orderBoxes.flatMap((b, n) => [`Box n°${n + 1} (${b.cardName})`, ...b.items.map((i) => `  • ${i.name} — ${i.color} ×${i.qty}`)])].join("\n");
+          await resend.emails.send({
+            from: "VELMIRYS <onboarding@resend.dev>",
+            to: notifyTo.length === 1 ? notifyTo[0] : notifyTo,
+            subject: `Nouvelle commande ${ref} — ${customerName.trim()}`,
+            text: `Réf: ${ref}\nClient: ${customerName.trim()} — ${phone.trim()} — ${deliveryZone.trim()}\nDevise: ${currency}\nTotal: ${total}\n\n${itemsList}\n\nVoir Supabase: orders ref ${ref}`,
+          });
+        } catch (e) {
+          console.warn("[orders] resend failed", e);
+        }
       }
     }
 
-    // WhatsApp
-    const rawNumber = process.env.NEXT_PUBLIC_SHOP_WHATSAPP_NUMBER || "";
+    // WhatsApp — Sanity-first, env fallback
+    let rawNumber = "";
+    try {
+      const s = await sanityServer.fetch<{ whatsappNumber?: string } | null>(`*[_type == "siteSettings"][0]{ whatsappNumber }`);
+      rawNumber = s?.whatsappNumber || process.env.NEXT_PUBLIC_SHOP_WHATSAPP_NUMBER || "";
+    } catch {
+      rawNumber = process.env.NEXT_PUBLIC_SHOP_WHATSAPP_NUMBER || "";
+    }
     const shopNumber = rawNumber.replace(/[^0-9]/g, "");
     const message = buildWhatsAppMessage(payload);
     const whatsappUrl = shopNumber ? buildWhatsAppUrl(shopNumber, message) : "";

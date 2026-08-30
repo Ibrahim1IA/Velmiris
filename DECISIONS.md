@@ -1,5 +1,26 @@
 # DECISIONS — VELMIRYS
 
+## 2026-08-29 — Fix panier vide + bouton box cassé sur droplet (CORS + erreurs silencieuses)
+
+### 1. Root cause — Origines CORS Sanity client-side
+- Cause: `resolveCartLines` (`web/src/lib/cart-helpers.ts`) évoque `@/sanity/lib/client` → fetch côté navigateur vers API Sanity. Lès origines CORS (1anohn14) n'incluaient que localhost et IP `157.230.85.193:3000` (ancien droplet). Sur le droplet `198.199.82.42` le navigateur lançait une Origin non autorisée → `catch`retour `[]` → panier déroulant + page panier affichaient vide, et le bouton « ajouter la box » semblait cassé (le add zustand réussissait mais le drawer vide semblait mentir).
+- Choix: ajout de `http://198.199.82.42` (transition HTTP) et `https://velmirys.duckdns.org` (définitif) aux origines CORS, `allowCredentials: true` (cohérent avec les 5 origines existantes).
+- Sécurité: le fetch reste anonyme/public (pas de token client), pas d'escalade.
+
+### 2. Durcissement erreurs — plus de vide silencieux
+- `web/src/lib/cart-helpers.ts` : catch remplace `return []` par `throw` (propagation aux appelants).
+- `web/src/components/cart/CartDrawer.tsx` + `web/src/app/panier/PanierClient.tsx` : état `error` ajouté au `.catch`, rendu « Impossible de charger le contenu du panier. Réessayez plus tard. » (role=alert) au lieu d'un écran vide composite qui ressemblait explicitement à un panier vide — la confusion reported.
+- Fichiers: cart-helpers, CartDrawer, PanierClient.
+
+### 3. Config déploiement — NEXT_PUBLIC_SITE_URL DuckDNS
+- `.env` (racine) et `web/.env.production`: `NEXT_PUBLIC_SITE_URL="https://velmirys.duckdns.org"` (sans slash final). Rebuild obligatoire (NEXT_PUBLIC_* baked au build; util `deploy.ps1`).
+- Note: `deploy.ps1` filtre uniquement `NEXT_PUBLIC_*` — j'ai volontairement réécrit seulement la ligne next_public_site_url dans `web/.env.production`, les clés sensibles (SUPABASE_SECRET_KEY) restent intactes.
+
+### 4. Regression test
+- E2E Playwright `e2e/checkout.spec.ts` Parcours B (box → add box au panier → panier Box n°1 → checkout) passe [chromium] › 1 passed (23s). L'échec du drawer empty silencieux aurait été causé il y a — couvert par le mock Sanity routé.
+
+---
+
 ## 2026-08-28 — Déploiement : build local → GHCR → droplet pull
 
 ### 1. Registry GitHub Container Registry (ghcr.io)

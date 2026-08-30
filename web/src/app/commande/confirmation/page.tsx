@@ -1,9 +1,11 @@
 import Link from "next/link";
+import { createClient } from "next-sanity";
 import { createServerClient } from "@/lib/supabase/server";
 import { buildWhatsAppMessage, buildWhatsAppUrl } from "@/lib/whatsapp";
 import { formatPrice } from "@/lib/format";
 import type { OrderData } from "@/lib/types";
 import ConfirmationActions from "./ConfirmationActions";
+import { apiVersion, dataset, projectId } from "@/sanity/env";
 
 export const dynamic = "force-dynamic";
 
@@ -50,7 +52,15 @@ export default async function ConfirmationPage({
   }
 
   const payload = order.payload as OrderData;
-  const shopNumber = (process.env.NEXT_PUBLIC_SHOP_WHATSAPP_NUMBER || "").replace(/[^0-9]/g, "");
+  let rawShopNumber = "";
+  try {
+    const sanityServer = createClient({ projectId, dataset, apiVersion, useCdn: false, perspective: "published" });
+    const s = await sanityServer.fetch<{ whatsappNumber?: string } | null>(`*[_type == "siteSettings"][0]{ whatsappNumber }`);
+    rawShopNumber = s?.whatsappNumber || process.env.NEXT_PUBLIC_SHOP_WHATSAPP_NUMBER || "";
+  } catch {
+    rawShopNumber = process.env.NEXT_PUBLIC_SHOP_WHATSAPP_NUMBER || "";
+  }
+  const shopNumber = rawShopNumber.replace(/[^0-9]/g, "");
   const message = buildWhatsAppMessage(payload);
   const whatsappUrl = shopNumber ? buildWhatsAppUrl(shopNumber, message) : "";
 

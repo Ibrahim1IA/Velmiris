@@ -164,10 +164,19 @@ async function seed() {
     },
   ];
 
+  const existingShopEmail = process.env.SHOP_EMAIL && !process.env.SHOP_EMAIL.startsWith("TODO") ? process.env.SHOP_EMAIL : null;
+  const existingAdminEmail = process.env.ADMIN_EMAIL && !process.env.ADMIN_EMAIL.startsWith("TODO") ? process.env.ADMIN_EMAIL : null;
+  const notificationEmails = [existingShopEmail, "nimagamoumou@gmail.com"].filter(Boolean) as string[];
+  const adminEmails = [existingAdminEmail || existingShopEmail, "nimagamoumou@gmail.com"].filter(Boolean) as string[];
+  // dedupe
+  const uniq = (arr: string[]) => Array.from(new Set(arr.map((s) => s.toLowerCase()))).map((l) => arr.find((o) => o.toLowerCase() === l)!) ;
   const settings = {
     _id: "siteSettings",
     _type: "siteSettings",
     whatsappNumber: process.env.NEXT_PUBLIC_SHOP_WHATSAPP_NUMBER || "221770000000", // TODO
+    email: existingShopEmail || "contact@velmirys.com",
+    notificationEmails: uniq(notificationEmails),
+    adminEmails: uniq(adminEmails),
     giftMessageExamples: [
       "Joyeux anniversaire 🤍 Tu mérites le plus beau.",
       "Merci d'être toi, tout simplement.",
@@ -180,8 +189,12 @@ async function seed() {
     tx.createOrReplace({ ...p, _id: p.slug.current });
   }
   tx.createOrReplace(settings);
+  // Home singleton — n'écrase pas si déjà édité en Studio
+  tx.createIfNotExists({ _id: "homeSettings", _type: "homeSettings" });
   await tx.commit();
-  console.log(`✅ Seed terminé : ${products.length} produits + réglages`);
+  console.log(`✅ Seed terminé : ${products.length} produits + réglages + homeSettings`);
+  console.log(`   notificationEmails: ${notificationEmails.join(", ")}`);
+  console.log(`   adminEmails: ${adminEmails.join(", ")}`);
 }
 
 seed().catch((err) => {

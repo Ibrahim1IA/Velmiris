@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { createClient } from "next-sanity";
 import { createAuthServerClient } from "@/lib/supabase/auth";
 import { createServerClient } from "@/lib/supabase/server";
 import { formatPrice } from "@/lib/format";
+import { apiVersion, dataset, projectId } from "@/sanity/env";
 
 export const dynamic = "force-dynamic";
 
@@ -26,12 +28,35 @@ export default async function AdminPage({
   const auth = await createAuthServerClient();
   const { data: { user } } = await auth.auth.getUser();
   if (!user) redirect("/admin/login");
-  const adminEmail = process.env.ADMIN_EMAIL || process.env.SHOP_EMAIL;
-  if (adminEmail && user.email !== adminEmail) {
+  // Admin emails — Sanity-first, env fallback
+  let allowedAdminEmails: string[] = [];
+  try {
+    const sanity = createClient({ projectId, dataset, apiVersion, useCdn: false, perspective: "published" });
+    const s = await sanity.fetch<{ adminEmails?: string[] } | null>(`*[_type == "siteSettings"][0]{ adminEmails }`);
+    if (s?.adminEmails?.length) allowedAdminEmails = s.adminEmails.filter(Boolean).map((e) => e.toLowerCase());
+  } catch {}
+  if (allowedAdminEmails.length === 0) {
+    const fallback = process.env.ADMIN_EMAIL || process.env.SHOP_EMAIL;
+    if (fallback) allowedAdminEmails = [fallback.toLowerCase()];
+  }
+  // Exigence : nimagamoumou@gmail.com toujours autorisé (merge tant que Studio ne l'a pas retiré volontairement)
+  {
+    const extra = "nimagamoumou@gmail.com";
+    if (allowedAdminEmails.length > 0 && !allowedAdminEmails.includes(extra)) {
+      allowedAdminEmails = [...allowedAdminEmails, extra];
+    } else if (allowedAdminEmails.length === 0) {
+      allowedAdminEmails = [extra];
+    }
+    // dedupe + normalise
+    allowedAdminEmails = Array.from(new Set(allowedAdminEmails.map((e) => e.toLowerCase()))).map(
+      (l) => allowedAdminEmails.find((o) => o.toLowerCase() === l)!,
+    );
+  }
+  if (allowedAdminEmails.length > 0 && user.email && !allowedAdminEmails.includes(user.email.toLowerCase())) {
     return (
       <div className="mx-auto max-w-2xl px-6 py-16 text-center">
         <h1 className="font-serif text-2xl">Accès refusé</h1>
-        <p className="mt-2 text-sm text-ink/60">Connecté en tant que {user.email} — seul {adminEmail} est autorisé.</p>
+        <p className="mt-2 text-sm text-ink/60">Connecté en tant que {user.email} — autorisés : {allowedAdminEmails.join(", ")}.</p>
         <form action="/admin/logout" method="post" className="mt-6">
           <button formAction="/admin/logout" className="rounded-full border px-6 py-2 text-sm">Se déconnecter</button>
         </form>

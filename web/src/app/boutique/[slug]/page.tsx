@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
@@ -163,7 +164,7 @@ export default async function ProductPage({
 
   const basePath = `/boutique/${product.slug.current}`;
 
-  // Suggestions — même catégorie ou autre (max 4)
+  // Suggestions — même catégorie ou autre (max 4) — image prioritaire, hex fallback
   let suggestions: Array<{
     _id: string;
     title: string;
@@ -172,12 +173,14 @@ export default async function ProductPage({
     priceEur: number;
     priceGnf: number;
     hex: string;
+    images?: Array<{ asset?: unknown; hotspot?: unknown; crop?: unknown }>;
+    variants?: Array<{ _key: string; hex: string; images?: Array<{ asset?: unknown; hotspot?: unknown; crop?: unknown }> }>;
   }> = [];
   try {
     suggestions = await withTimeout(
       sanityFetch(
         `*[_type == "product" && _id != $id] | order(_createdAt desc)[0...4]{
-      _id, title, slug, priceXof, priceEur, priceGnf, "hex": variants[0].hex
+      _id, title, slug, priceXof, priceEur, priceGnf, "hex": variants[0].hex, images, variants[]{ _key, hex, images }
     }`,
         { id: product._id },
         { next: { revalidate: 60, tags: ["products"] } },
@@ -379,26 +382,50 @@ export default async function ProductPage({
             {t("suggestions")}
           </h2>
           <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
-            {suggestions.map((s) => (
-              <Link
-                key={s._id}
-                href={`/boutique/${s.slug.current}`}
-                className="group flex flex-col gap-2 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
-                aria-label={s.title}
-              >
-                <div
-                  className="aspect-[4/5] rounded-2xl transition-transform group-hover:scale-[1.02]"
-                  style={{ backgroundColor: s.hex }}
-                  aria-hidden="true"
-                />
-                <p className="text-sm font-medium group-hover:text-accent">
-                  {s.title}
-                </p>
-                <p className="text-sm text-ink/60">
-                  <Price priceXof={s.priceXof} priceEur={s.priceEur} priceGnf={s.priceGnf} showSecondary={false} />
-                </p>
-              </Link>
-            ))}
+            {suggestions.map((s) => {
+              const hex = s.hex || s.variants?.[0]?.hex || "#F3EDE4";
+              const rawImage = s.variants?.[0]?.images?.[0] ?? s.images?.[0] ?? null;
+              let imageUrl: string | null = null;
+              try {
+                imageUrl = rawImage ? urlFor(rawImage as never).width(600).height(750).fit("crop").quality(80).auto("format").url() : null;
+              } catch {
+                imageUrl = null;
+              }
+              return (
+                <Link
+                  key={s._id}
+                  href={`/boutique/${s.slug.current}`}
+                  className="group flex flex-col gap-2 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+                  aria-label={s.title}
+                >
+                  <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-sand">
+                    {imageUrl ? (
+                      <Image
+                        src={imageUrl}
+                        alt={s.title}
+                        width={600}
+                        height={750}
+                        sizes="(max-width: 768px) 50vw, 25vw"
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div
+                        className="h-full w-full transition-transform duration-300 group-hover:scale-[1.03]"
+                        style={{ backgroundColor: hex }}
+                        aria-hidden="true"
+                      />
+                    )}
+                  </div>
+                  <p className="text-sm font-medium group-hover:text-accent">
+                    {s.title}
+                  </p>
+                  <p className="text-sm text-ink/60">
+                    <Price priceXof={s.priceXof} priceEur={s.priceEur} priceGnf={s.priceGnf} showSecondary={false} />
+                  </p>
+                </Link>
+              );
+            })}
           </div>
         </section>
       )}
