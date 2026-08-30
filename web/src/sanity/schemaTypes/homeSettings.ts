@@ -93,9 +93,29 @@ export const homeSettings = defineType({
     }),
 
     // ── Témoignages ──
-    defineField({ name: "testimonialsSurtitle", title: "Témoignages — Sur-titre", type: "string" }),
-    defineField({ name: "testimonialQuote", title: "Témoignages — Citation", type: "text", rows: 3 }),
-    defineField({ name: "testimonialAuthor", title: "Témoignages — Auteur", type: "string" }),
+    defineField({ name: "testimonialsSurtitle", title: "Témoignages — Sur-titre", type: "string", description: "Ex. AVIS CLIENTS" }),
+    defineField({
+      name: "testimonials",
+      title: "Témoignages — Avis (1 à 5)",
+      description: "Carrousel auto-play 5s. Ajoutez 1 à 5 témoignages. Rétrocompat : ancien champ unique migré auto.",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          name: "testimonial",
+          title: "Avis",
+          fields: [
+            { name: "quote", title: "Citation", type: "text", rows: 3, validation: (r) => r.required() },
+            { name: "author", title: "Auteur", type: "string", description: "Ex. ÉLODIE M. — ACHAT VÉRIFIÉ", validation: (r) => r.required() },
+          ],
+          preview: { select: { title: "author", subtitle: "quote" } },
+        },
+      ],
+      validation: (r) => r.min(1).max(5),
+    }),
+    // Rétrocompat — ancien modèle singulier (gardé caché, migration auto côté front)
+    defineField({ name: "testimonialQuote", title: "Témoignages — Citation (ancien, déprécié)", type: "text", rows: 3, hidden: true }),
+    defineField({ name: "testimonialAuthor", title: "Témoignages — Auteur (ancien, déprécié)", type: "string", hidden: true }),
   ],
   preview: {
     select: { title: "heroTitle", subtitle: "heroSurtitle", media: "heroImage" },

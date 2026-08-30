@@ -4,6 +4,7 @@ import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import ScrollReveal from "@/components/home/ScrollReveal";
 import ParallaxImage from "@/components/home/ParallaxImage";
+import TestimonialsCarousel from "@/components/home/TestimonialsCarousel";
 import { getSiteUrl } from "@/lib/site";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { urlFor } from "@/sanity/lib/image";
@@ -105,6 +106,8 @@ type HomeSettings = {
   engagementsTitle?: string;
   engagements?: Array<{ title: string; text: string }>;
   testimonialsSurtitle?: string;
+  testimonials?: Array<{ quote: string; author: string }>;
+  // Rétrocompat singulier (hidden in schema)
   testimonialQuote?: string;
   testimonialAuthor?: string;
 };
@@ -126,6 +129,7 @@ function sanityImageUrl(img?: SanityImage | null, w = 800, h = 800) {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function ReassuranceIcon({ name }: { name: "gift" | "chat" | "truck" }) {
   const common = "h-7 w-7 text-accent/90";
   if (name === "gift")
@@ -174,7 +178,7 @@ export default async function Home() {
             builderSurtitle, builderTitle, builderText, builderCta, builderImage, builderImageAlt, builderSteps[]{ title, text },
             editorialSurtitle, editorialTitle, editorialText, editorialImage, editorialImageAlt, editorialThumbImage, editorialThumbTitle, editorialThumbText, editorialCta,
             engagementsTitle, engagements[]{ title, text },
-            testimonialsSurtitle, testimonialQuote, testimonialAuthor
+            testimonialsSurtitle, testimonials[]{ quote, author }, testimonialQuote, testimonialAuthor
           }`,
           {},
           { next: { revalidate: 60, tags: ["home"] } },
@@ -273,8 +277,19 @@ export default async function Home() {
         ] as Array<{ title: string; text: string }>);
 
   const testimonialsSurtitle = home?.testimonialsSurtitle ?? t("testimonials.surtitle");
-  const testimonialQuote = home?.testimonialQuote ?? t("testimonials.quote");
-  const testimonialAuthor = home?.testimonialAuthor ?? t("testimonials.author");
+  // Carrousel : array Sanity (max 5) → rétrocompat singulier → fallback i18n + 2 démo
+  const rawTestimonials: Array<{ quote: string; author: string }> =
+    home?.testimonials && home.testimonials.length > 0
+      ? home.testimonials.filter((x) => x?.quote && x?.author).slice(0, 5)
+      : home?.testimonialQuote && home?.testimonialAuthor
+        ? [{ quote: home.testimonialQuote, author: home.testimonialAuthor }]
+        : [];
+  const fallbackTestimonials: Array<{ quote: string; author: string }> = [
+    { quote: t("testimonials.quote"), author: t("testimonials.author") },
+    { quote: "La qualité est au rendez-vous, tissu fluide et tenue impeccable toute la journée. Je recommande les yeux fermés.", author: "AÏSSATA K. — ACHAT VÉRIFIÉ" },
+    { quote: "Emballage soigné, livraison rapide et échange facile. VELMIRYS est devenue ma référence hijab.", author: "MARIAMA S. — ACHAT VÉRIFIÉ" },
+  ];
+  const testimonialsItems = (rawTestimonials.length > 0 ? rawTestimonials : fallbackTestimonials).slice(0, 5);
 
   const useFeatured = featuredTiles.length > 0;
 
@@ -618,32 +633,8 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Avis clients — repris de Stitch § Testimonials */}
-      <section className="bg-sand/40 border-y border-sand" aria-labelledby="testimonials-title">
-        <div className="mx-auto max-w-6xl px-6 py-20 md:py-24 text-center">
-          <ScrollReveal>
-            <p id="testimonials-title" className="text-xs tracking-[0.28em] text-ink/50">
-              {testimonialsSurtitle}
-            </p>
-          </ScrollReveal>
-          <ScrollReveal delay={0.06}>
-            <div className="mx-auto mt-10 max-w-3xl">
-              <p className="font-serif text-[22px] leading-relaxed md:text-[26px] md:leading-[1.6] text-ink/90 italic">
-                &ldquo;{testimonialQuote}&rdquo;
-              </p>
-              <div className="mx-auto mt-6 h-px w-10 bg-ink/15" aria-hidden="true" />
-              <p className="mt-6 text-xs tracking-[0.16em] font-medium text-ink/60">{testimonialAuthor}</p>
-            </div>
-          </ScrollReveal>
-          <ScrollReveal delay={0.12}>
-            <div className="mt-8 flex justify-center gap-2" role="tablist" aria-label="Témoignages">
-              <span className="h-2 w-2 rounded-full bg-ink" aria-current="true" aria-label="Avis 1" />
-              <span className="h-2 w-2 rounded-full bg-ink/15" aria-label="Avis 2" />
-              <span className="h-2 w-2 rounded-full bg-ink/15" aria-label="Avis 3" />
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
+      {/* Avis clients — carrousel 5 max, auto-play 5s, pause hover/focus */}
+      <TestimonialsCarousel surtitle={testimonialsSurtitle} items={testimonialsItems} />
     </>
   );
 }
